@@ -1,0 +1,46 @@
+[project]
+name = "hexlet-code"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = "==3.14.*"
+dependencies = [
+    "dj-database-url>=3.1.2",
+    "django==5.2.14",
+    "django-bootstrap5>=26.2",
+    "python-dotenv>=1.2.2",
+    "uvicorn>=0.47.0",
+]
+
+[dependency-groups]
+dev = [
+    "black>=26.3.1",
+    "djlint>=1.36.4",
+    "mypy>=1.19.1",
+    "pytest>=9.0.2",
+    "ruff>=0.15.8",
+]
+
+[tool.black]
+line-length = 120
+
+[tool.ruff]
+lint.select = [
+    "PLR", # refactoring
+    "PLW", # warning
+    "UP", # pyupgrade
+    "E",  # pycodestyle errors
+    "F",  # pyflakes
+    "W",  # pycodestyle warnings
+    "I",  # isort
+    "B",  # flake8-bugbear
+    "C",  # flake8-comprehensions
+    "UP", # pyupgrade
+    "YTT", # flake8-2020
+    "ASYNC", # async
+    "NPY",  # numpy
+]
+
+lint.ignore = ["E501", "B012", "B024", "C901", "F401", "F403", "F405", "E402", "PLR0913", "I001"]
+
+target-version = "py314"
