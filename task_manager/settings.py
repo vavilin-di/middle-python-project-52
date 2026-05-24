@@ -78,7 +78,16 @@ WSGI_APPLICATION = "task_manager.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {"default": dj_database_url.parse(environ.get("DATABASE_URL", ""))}
+# Для тестов используем SQLite, даже если задана DATABASE_URL
+if environ.get("DJANGO_ENV") == "test" or environ.get("USE_SQLITE_FOR_TESTS"):
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
+    }
+else:
+    DATABASES = {"default": dj_database_url.parse(environ.get("DATABASE_URL", ""))}
 
 
 # Password validation
@@ -121,6 +130,9 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# Use pytest as test runner for manage.py test
+TEST_RUNNER = "pytest_django.runner.TestRunner"
 
 BOOTSTRAPS = {
     "css_url": "https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css",
