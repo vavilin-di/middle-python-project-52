@@ -16,12 +16,16 @@ Including another URLconf
 """
 
 from django.contrib import admin
-from django.urls import path
+from django.urls import include, path
 from django.urls.resolvers import URLPattern, URLResolver
 
-from .applications.index.views import index
+from .applications.index.views import CustomLoginView, CustomLogoutView, index
+from .applications.users.urls import urlpatterns as users_urls
 
 urlpatterns: list[URLResolver | URLPattern] = [
     path("admin/", admin.site.urls),
     path("", index, name="index"),
+    path("login/", CustomLoginView.as_view(redirect_field_name=None), name="login"),
+    path("logout/", CustomLogoutView.as_view(redirect_field_name=None), name="logout"),
+    path("users/", include((users_urls, "users")), name="users"),
 ]
