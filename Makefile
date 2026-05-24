@@ -14,3 +14,9 @@ migrate:
 
 dev:
 	uv run manage.py runserver
+
+start:
+	uv run uvicorn task_manager.asgi:application
+
+render-start:
+	uvicorn task_manager.asgi:application
