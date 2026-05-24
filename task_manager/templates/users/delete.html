@@ -1,0 +1,10 @@
+{% extends '../common/common_template.html' %}
+{% load django_bootstrap5 %}
+{% block content %}
+    <h1>Удаление пользователя</h1>
+    <form action="{% url 'users:delete' user.id %}" method="post">
+        {% csrf_token %}
+        <p>Вы уверены, что хотите удалить пользователя {{ user.username }}?</p>
+        {% bootstrap_button "Да, удалить" button_type="submit" button_class="btn-primary" %}
+    </form>
+{% endblock %}

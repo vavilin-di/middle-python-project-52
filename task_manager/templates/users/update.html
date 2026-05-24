@@ -1,0 +1,10 @@
+{% extends '../common/common_template.html' %}
+{% load django_bootstrap5 %}
+{% block content %}
+    <h1>Изменение пользователя</h1>
+    <form action="{% url 'users:update' user.id %}" method="post">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        {% bootstrap_button "Изменить" button_type="submit" button_class="btn-primary" %}
+    </form>
+{% endblock %}
