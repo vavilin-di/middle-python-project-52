@@ -1,0 +1,10 @@
+{% extends '../common/common_template.html' %}
+{% load django_bootstrap5 %}
+{% block content %}
+    <h1>Создать статус</h1>
+    <form action="{% url 'statuses:create' %}" method="post">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        {% bootstrap_button "Создать" button_type="submit" button_class="btn-primary" %}
+    </form>
+{% endblock %}

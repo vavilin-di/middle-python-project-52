@@ -20,7 +20,7 @@
         </li>
         {% if user.is_authenticated %}
           <li class="nav-item">
-            <a class="nav-link" href="#">Статусы</a>
+            <a class="nav-link" href="{% url 'statuses:list' %}">Статусы</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Метки</a>
