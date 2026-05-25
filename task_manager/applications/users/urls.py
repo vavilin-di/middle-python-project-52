@@ -3,8 +3,6 @@ from django.urls.resolvers import URLPattern
 
 from .views import UserCreateView, UserDeleteView, UserListView, UserUpdateView
 
-app_name = "users"
-
 urlpatterns: list[URLPattern] = [
     path("create/", UserCreateView.as_view(), name="create"),
     path("", UserListView.as_view(), name="list"),
