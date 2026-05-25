@@ -8,5 +8,4 @@ class CustomUserCreateForm(UserCreationForm):
 
 class CustomUserUpdateForm(CustomUserCreateForm):
     def clean_username(self):
-        """Reject usernames that differ only in case."""
         return self.cleaned_data.get("username")
