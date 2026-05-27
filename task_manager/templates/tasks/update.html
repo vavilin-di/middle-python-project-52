@@ -1,0 +1,10 @@
+{% extends '../common/common_template.html' %}
+{% load django_bootstrap5 %}
+{% block content %}
+    <h1>Изменение задачи</h1>
+    <form action="{% url 'tasks:update' task.id %}" method="post">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        {% bootstrap_button "Изменить" button_type="submit" button_class="btn-primary" %}
+    </form>
+{% endblock %}

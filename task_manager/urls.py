@@ -21,6 +21,7 @@ from django.urls.resolvers import URLPattern, URLResolver
 
 from .applications.index.views import CustomLoginView, CustomLogoutView, index
 from .applications.statuses.urls import urlpatterns as statuses_urls
+from .applications.tasks.urls import urlpatterns as tasks_urls
 from .applications.users.urls import urlpatterns as users_urls
 
 urlpatterns: list[URLResolver | URLPattern] = [
@@ -30,4 +31,5 @@ urlpatterns: list[URLResolver | URLPattern] = [
     path("logout/", CustomLogoutView.as_view(redirect_field_name=None), name="logout"),
     path("users/", include((users_urls, "users")), name="users"),
     path("statuses/", include((statuses_urls, "statuses")), name="statuses"),
+    path("tasks/", include((tasks_urls, "tasks")), name="tasks"),
 ]

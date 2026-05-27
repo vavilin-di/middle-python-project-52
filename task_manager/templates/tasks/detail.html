@@ -1,0 +1,46 @@
+{% extends '../common/common_template.html' %}
+{% load django_bootstrap5 %}
+{% block content %}
+    <h1 class="pb-4">Просмотр задачи</h1>
+    <div class="card">
+        <div class="card-header bg-secondary text-light">
+            <h4>{{ task.name }}</h4>
+        </div>
+        <div class="card-body">
+            <p class="card-title">{{ task.description }}</p>
+            <hr>
+            <div class="container text-left d-grid row-gap-2">
+                <div class="row">
+                    <div class="col-6 fw-semibold">Автор</div>
+                    <div class="col-6">{{ task.author_name }}</div>
+                </div>
+                <div class="row">
+                    <div class="col-6 fw-semibold">Исполнитель</div>
+                    <div class="col-6">{{ task.executor_name }}</div>
+                </div>
+                <div class="row">
+                    <div class="col-6 fw-semibold">Статус</div>
+                    <div class="col-6">{{ task.status_name }}</div>
+                </div>
+                <div class="row">
+                    <div class="col-6 fw-semibold">Дата создания</div>
+                    <div class="col-6">{{ task.created_at | date:"d.m.Y H:i" }}</div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <p class="fw-semibold">Метки:</p>
+                        <ul>
+                            {% for label_name in task.label_names %}<li>{{ label_name }}</li>{% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="vstack gap-1">
+                <a href="{% url 'tasks:update' task.id %}">Изменить</a>
+                <a href="{% url 'tasks:delete' task.id %}">Удалить</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

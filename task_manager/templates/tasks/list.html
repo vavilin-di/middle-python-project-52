@@ -1,0 +1,42 @@
+{% extends '../common/common_template.html' %}
+{% load django_bootstrap5 %}
+{% block content %}
+    <h1>Задачи</h1>
+    {% url 'tasks:create' as create_link %}
+    {% with 'Создать задачу' as create_button_title %}
+        {% bootstrap_button create_button_title href=create_link button_class="btn-primary" %}
+    {% endwith %}
+    {% if tasks %}
+        <table class="table table-unbordered table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Имя</th>
+                    <th>Статус</th>
+                    <th>Автор</th>
+                    <th>Исполнитель</th>
+                    <th>Дата создания</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for task in tasks %}
+                    <tr>
+                        <td>{{ task.id }}</td>
+                        <td>
+                            <a href="{% url 'tasks:detail' task.id %}">{{ task.name }}</a>
+                        </td>
+                        <td>{{ task.status_name }}</td>
+                        <td>{{ task.author_name }}</td>
+                        <td>{{ task.executor_name }}</td>
+                        <td>{{ task.created_at | date:"d.m.Y H:i" }}</td>
+                        <td class="vstack gap-1">
+                            <a href="{% url 'tasks:update' task.id %}">Изменить</a>
+                            <a href="{% url 'tasks:delete' task.id %}">Удалить</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+{% endblock %}

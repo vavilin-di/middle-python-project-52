@@ -1,0 +1,10 @@
+{% extends '../common/common_template.html' %}
+{% load django_bootstrap5 %}
+{% block content %}
+    <h1>Удаление задачи</h1>
+    <form action="{% url 'tasks:delete' task.id %}" method="post">
+        {% csrf_token %}
+        <p>Вы уверены, что хотите удалить задачу {{ task.name }}?</p>
+        {% bootstrap_button "Да, удалить" button_type="submit" button_class="btn-primary" %}
+    </form>
+{% endblock %}
