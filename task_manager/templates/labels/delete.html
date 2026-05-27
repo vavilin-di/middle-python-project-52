@@ -1,0 +1,10 @@
+{% extends '../common/common_template.html' %}
+{% load django_bootstrap5 %}
+{% block content %}
+    <h1>Удаление метки</h1>
+    <form action="{% url 'labels:delete' label.id %}" method="post">
+        {% csrf_token %}
+        <p>Вы уверены, что хотите удалить метку {{ label.name }}?</p>
+        {% bootstrap_button "Да, удалить" button_type="submit" button_class="btn-primary" %}
+    </form>
+{% endblock %}
