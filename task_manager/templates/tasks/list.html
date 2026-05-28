@@ -1,13 +1,15 @@
-{% extends '../common/common_template.html' %}
+{% extends '../common/list_template.html' %}
 {% load django_bootstrap5 %}
-{% block content %}
-    <h1>Задачи</h1>
+{% block page_title %}<h1>Задачи</h1>{% endblock %}
+{% block create_button %}
     {% url "tasks:create" as create_link %}
-    {% bootstrap_button "Создать задачу" href=create_link button_class="btn-primary mt-3 mb-3" %}
+    {% bootstrap_button "Создать задачу" href=create_link button_class="btn-primary" %}
+{% endblock %}
+{% block page_filters %}
     {# Из-за ошибки в django-bootstrap5, которая не позволяет не устанавливать класс `is_valid` #}
     {# полям формы (из-за чего они выделяются как валидированные, что излишне и противоречит макету) #}
     {# принято решение добавить отрисовку полей вручную #}
-    <div class="card mb-3">
+    <div class="card">
         <div class="card-body bg-light">
             <form action="{% url 'tasks:list' %}" method="get" novalidate>
                 <div class="mb-3">
@@ -34,7 +36,7 @@
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="id_labels">Метки</label>
-                    <select name="labels" class="form-select" id="id_labels" multiple>
+                    <select name="labels" class="form-select" id="id_labels" multiple size="3">
                         {% for value, label in filter_form.labels.field.choices %}
                             <option value="{{ value }}"
                                     {% if value|stringformat:"s" in filter_form.labels.value %}selected{% endif %}>
@@ -50,37 +52,35 @@
             </form>
         </div>
     </div>
-    {% if tasks %}
-        <table class="table table-unbordered table-striped">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Имя</th>
-                    <th>Статус</th>
-                    <th>Автор</th>
-                    <th>Исполнитель</th>
-                    <th>Дата создания</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for task in tasks %}
-                    <tr>
-                        <td>{{ task.id }}</td>
-                        <td>
-                            <a href="{% url 'tasks:detail' task.id %}">{{ task.name }}</a>
-                        </td>
-                        <td>{{ task.status_name }}</td>
-                        <td>{{ task.author_name }}</td>
-                        <td>{{ task.executor_name }}</td>
-                        <td>{{ task.created_at | date:"d.m.Y H:i" }}</td>
-                        <td class="vstack gap-1">
-                            <a href="{% url 'tasks:update' task.id %}">Изменить</a>
-                            <a href="{% url 'tasks:delete' task.id %}">Удалить</a>
-                        </td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    {% endif %}
 {% endblock %}
+{% if tasks %}
+    {% block table_headers_row %}
+        <tr>
+            <th>ID</th>
+            <th>Имя</th>
+            <th>Статус</th>
+            <th>Автор</th>
+            <th>Исполнитель</th>
+            <th>Дата создания</th>
+            <th></th>
+        </tr>
+    {% endblock %}
+    {% block table_rows %}
+        {% for task in tasks %}
+            <tr>
+                <td>{{ task.id }}</td>
+                <td>
+                    <a href="{% url 'tasks:detail' task.id %}">{{ task.name }}</a>
+                </td>
+                <td>{{ task.status_name }}</td>
+                <td>{{ task.author_name }}</td>
+                <td>{{ task.executor_name }}</td>
+                <td>{{ task.created_at | date:"d.m.Y H:i" }}</td>
+                <td class="vstack gap-1">
+                    <a href="{% url 'tasks:update' task.id %}">Изменить</a>
+                    <a href="{% url 'tasks:delete' task.id %}">Удалить</a>
+                </td>
+            </tr>
+        {% endfor %}
+    {% endblock %}
+{% endif %}

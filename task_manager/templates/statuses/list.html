@@ -1,32 +1,30 @@
-{% extends '../common/common_template.html' %}
+{% extends '../common/list_template.html' %}
 {% load django_bootstrap5 %}
-{% block content %}
-    <h1>Статусы</h1>
+{% block page_title %}<h1>Статусы</h1>{% endblock %}
+{% block create_button %}
     {% url 'statuses:create' as create_link %}
     {% bootstrap_button "Создать статус" href=create_link button_class="btn-primary" %}
-    {% if statuses %}
-        <table class="table table-unbordered table-striped">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Имя</th>
-                    <th>Дата создания</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for status in statuses %}
-                    <tr>
-                        <td>{{ status.id }}</td>
-                        <td>{{ status.name }}</td>
-                        <td>{{ status.created_at | date:"d.m.Y H:i" }}</td>
-                        <td class="vstack gap-1">
-                            <a href="{% url 'statuses:update' status.id %}">Изменить</a>
-                            <a href="{% url 'statuses:delete' status.id %}">Удалить</a>
-                        </td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    {% endif %}
 {% endblock %}
+{% if statuses %}
+    {% block table_headers_row %}
+        <tr>
+            <th>ID</th>
+            <th>Имя</th>
+            <th>Дата создания</th>
+            <th></th>
+        </tr>
+    {% endblock %}
+    {% block table_rows %}
+        {% for status in statuses %}
+            <tr>
+                <td>{{ status.id }}</td>
+                <td>{{ status.name }}</td>
+                <td>{{ status.created_at | date:"d.m.Y H:i" }}</td>
+                <td class="vstack gap-1">
+                    <a href="{% url 'statuses:update' status.id %}">Изменить</a>
+                    <a href="{% url 'statuses:delete' status.id %}">Удалить</a>
+                </td>
+            </tr>
+        {% endfor %}
+    {% endblock %}
+{% endif %}

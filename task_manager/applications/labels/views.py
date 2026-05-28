@@ -9,6 +9,8 @@ from task_manager.utilities.views_mixins import MessageSendingLoginRequiredMixin
 from .forms import LabelCreateForm, LabelUpdateForm
 from .models import Label
 
+LABELS_PER_PAGE = 10
+
 
 class LabelCreateView(MessageSendingLoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = Label
@@ -23,6 +25,7 @@ class LabelListView(MessageSendingLoginRequiredMixin, ListView):
     model = Label
     context_object_name = "labels"
     template_name = "labels/list.html"
+    paginate_by = LABELS_PER_PAGE
 
     _no_permissions_message = "У вас нет прав для просмотра меток"
 

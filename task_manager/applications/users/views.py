@@ -10,6 +10,8 @@ from task_manager.utilities.views_mixins import MessageSendingLoginRequiredMixin
 
 from .forms import CustomUserCreateForm, CustomUserUpdateForm
 
+USERS_PER_PAGE = 10
+
 
 class UserCreateView(SuccessMessageMixin, CreateView):
     model = User
@@ -23,6 +25,7 @@ class UserListView(ListView):
     model = User
     context_object_name = "users"
     template_name = "users/list.html"
+    paginate_by = USERS_PER_PAGE
 
     def get_queryset(self) -> QuerySet:
         return (

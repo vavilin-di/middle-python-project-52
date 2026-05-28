@@ -13,6 +13,8 @@ from task_manager.utilities.views_mixins import MessageSendingLoginRequiredMixin
 
 from ..models import Task
 
+TASKS_PER_PAGE = 10
+
 
 class TaskListFilter(FilterSet):
     own_tasks = BooleanFilter(
@@ -31,6 +33,7 @@ class TaskListView(MessageSendingLoginRequiredMixin, ListView):
     model = Task
     context_object_name = "tasks"
     template_name = "tasks/list.html"
+    paginate_by = TASKS_PER_PAGE
 
     _no_permissions_message = "У вас нет прав для просмотра задач"
 

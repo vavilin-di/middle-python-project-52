@@ -9,6 +9,8 @@ from task_manager.utilities.views_mixins import MessageSendingLoginRequiredMixin
 from .forms import StatusCreateForm, StatusUpdateForm
 from .models import Status
 
+STATUSES_PER_PAGE = 10
+
 
 class StatusCreateView(MessageSendingLoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = Status
@@ -23,6 +25,7 @@ class StatusListView(MessageSendingLoginRequiredMixin, ListView):
     model = Status
     context_object_name = "statuses"
     template_name = "statuses/list.html"
+    paginate_by = STATUSES_PER_PAGE
 
     _no_permissions_message = "У вас нет прав для просмотра статусов"
 

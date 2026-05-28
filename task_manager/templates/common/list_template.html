@@ -1,0 +1,24 @@
+{% extends '../common/common_template.html' %}
+{% load django_bootstrap5 %}
+{% block content %}
+    <div class="mb-4">
+        {% block page_title %}{% endblock %}
+    </div>
+    <div class="mb-4">
+        {% block create_button %}{% endblock %}
+    </div>
+    <div class="mb-4">
+        {% block page_filters %}{% endblock %}
+    </div>
+    <table class="table table-unbordered table-striped mb-4">
+        <thead>
+            {% block table_headers_row %}{% endblock %}
+        </thead>
+        <tbody>
+            {% block table_rows %}{% endblock %}
+        </tbody>
+    </table>
+    {% if page_obj.has_next or page_obj.has_previous %}
+        {% bootstrap_pagination page_obj justify_content="center" %}
+    {% endif %}
+{% endblock %}

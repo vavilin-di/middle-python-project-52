@@ -1,32 +1,30 @@
-{% extends '../common/common_template.html' %}
+{% extends '../common/list_template.html' %}
 {% load django_bootstrap5 %}
-{% block content %}
-    <h1>Метки</h1>
+{% block page_title %}<h1>Метки</h1>{% endblock %}
+{% block create_button %}
     {% url 'labels:create' as create_link %}
     {% bootstrap_button "Создать метку" href=create_link button_class="btn-primary" %}
-    {% if labels %}
-        <table class="table table-unbordered table-striped">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Имя</th>
-                    <th>Дата создания</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for label in labels %}
-                    <tr>
-                        <td>{{ label.id }}</td>
-                        <td>{{ label.name }}</td>
-                        <td>{{ label.created_at | date:"d.m.Y H:i" }}</td>
-                        <td class="vstack gap-1">
-                            <a href="{% url 'labels:update' label.id %}">Изменить</a>
-                            <a href="{% url 'labels:delete' label.id %}">Удалить</a>
-                        </td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    {% endif %}
 {% endblock %}
+{% if labels %}
+    {% block table_headers %}
+        <tr>
+            <th>ID</th>
+            <th>Имя</th>
+            <th>Дата создания</th>
+            <th></th>
+        </tr>
+    {% endblock %}
+    {% block table_rows %}
+        {% for label in labels %}
+            <tr>
+                <td>{{ label.id }}</td>
+                <td>{{ label.name }}</td>
+                <td>{{ label.created_at | date:"d.m.Y H:i" }}</td>
+                <td class="vstack gap-1">
+                    <a href="{% url 'labels:update' label.id %}">Изменить</a>
+                    <a href="{% url 'labels:delete' label.id %}">Удалить</a>
+                </td>
+            </tr>
+        {% endfor %}
+    {% endblock %}
+{% endif %}
