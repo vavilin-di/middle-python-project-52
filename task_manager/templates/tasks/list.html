@@ -2,10 +2,54 @@
 {% load django_bootstrap5 %}
 {% block content %}
     <h1>Задачи</h1>
-    {% url 'tasks:create' as create_link %}
-    {% with 'Создать задачу' as create_button_title %}
-        {% bootstrap_button create_button_title href=create_link button_class="btn-primary" %}
-    {% endwith %}
+    {% url "tasks:create" as create_link %}
+    {% bootstrap_button "Создать задачу" href=create_link button_class="btn-primary mt-3 mb-3" %}
+    {# Из-за ошибки в django-bootstrap5, которая не позволяет не устанавливать класс `is_valid` #}
+    {# полям формы (из-за чего они выделяются как валидированные, что излишне и противоречит макету) #}
+    {# принято решение добавить отрисовку полей вручную #}
+    <div class="card mb-3">
+        <div class="card-body bg-light">
+            <form action="{% url 'tasks:list' %}" method="get" novalidate>
+                <div class="mb-3">
+                    <label class="form-label" for="id_status">Статус</label>
+                    <select name="status" class="form-select" id="id_status">
+                        {% for value, label in filter_form.status.field.choices %}
+                            <option value="{{ value }}"
+                                    {% if filter_form.status.value|stringformat:"s" == value|stringformat:"s" %}selected{% endif %}>
+                                {{ label }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="id_executor">Исполнитель</label>
+                    <select name="executor" class="form-select" id="id_executor">
+                        {% for value, label in filter_form.executor.field.choices %}
+                            <option value="{{ value }}"
+                                    {% if filter_form.executor.value|stringformat:"s" == value|stringformat:"s" %}selected{% endif %}>
+                                {{ label }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="id_labels">Метки</label>
+                    <select name="labels" class="form-select" id="id_labels" multiple>
+                        {% for value, label in filter_form.labels.field.choices %}
+                            <option value="{{ value }}"
+                                    {% if value|stringformat:"s" in filter_form.labels.value %}selected{% endif %}>
+                                {{ label }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="d-flex justify-content-between mt-3">
+                    {% bootstrap_button "Показать" button_type="submit" button_class="btn-primary" %}
+                    {% bootstrap_button "Сбросить" button_type="reset" button_class="btn-secondary" %}
+                </div>
+            </form>
+        </div>
+    </div>
     {% if tasks %}
         <table class="table table-unbordered table-striped">
             <thead>
