@@ -8,6 +8,7 @@ class Status(models.Model):
         db_table = "statuses"
         verbose_name = "Статус"
         verbose_name_plural = "Статусы"
+        ordering = ["id"]
 
     id = models.AutoField(verbose_name="ID", primary_key=True)
     name = models.CharField(verbose_name="Имя", max_length=255, unique=True, null=False)

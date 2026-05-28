@@ -27,7 +27,7 @@ class StatusListView(MessageSendingLoginRequiredMixin, ListView):
     _no_permissions_message = "У вас нет прав для просмотра статусов"
 
     def get_queryset(self) -> QuerySet:
-        return super().get_queryset().values("id", "name", "created_at").order_by("id")
+        return super().get_queryset().values("id", "name", "created_at")
 
 
 class StatusUpdateView(MessageSendingLoginRequiredMixin, SuccessMessageMixin, UpdateView):

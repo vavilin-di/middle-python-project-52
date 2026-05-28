@@ -8,6 +8,7 @@ class Task(models.Model):
         db_table = "tasks"
         verbose_name = "Задача"
         verbose_name_plural = "Задачи"
+        ordering = ["id"]
 
     id = models.AutoField(verbose_name="ID", primary_key=True)
     name = models.CharField(verbose_name="Имя", max_length=255, null=False)

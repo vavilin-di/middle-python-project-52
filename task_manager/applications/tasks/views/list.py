@@ -36,15 +36,11 @@ class TaskListView(MessageSendingLoginRequiredMixin, ListView):
 
     def get_queryset(self) -> QuerySet:
         self.filterset = TaskListFilter(self.request.GET, queryset=super().get_queryset(), request=self.request)
-        return (
-            self.filterset.qs.annotate(
-                status_name=F("status__name"),
-                author_name=Concat(F("author__first_name"), Value(" "), F("author__last_name")),
-                executor_name=Concat(F("executor__first_name"), Value(" "), F("executor__last_name")),
-            )
-            .values("id", "name", "status_name", "author_name", "executor_name", "created_at")
-            .order_by("id")
-        )
+        return self.filterset.qs.annotate(
+            status_name=F("status__name"),
+            author_name=Concat(F("author__first_name"), Value(" "), F("author__last_name")),
+            executor_name=Concat(F("executor__first_name"), Value(" "), F("executor__last_name")),
+        ).values("id", "name", "status_name", "author_name", "executor_name", "created_at")
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context_data = super().get_context_data(**kwargs)
@@ -72,5 +68,4 @@ class TaskDetailView(MessageSendingLoginRequiredMixin, DetailView):
             .values(
                 "id", "name", "description", "status_name", "author_name", "executor_name", "label_names", "created_at"
             )
-            .order_by("id")
         )

@@ -8,6 +8,7 @@ class Label(models.Model):
         db_table = "labels"
         verbose_name = "Метка"
         verbose_name_plural = "Метки"
+        ordering = ["id"]
 
     id = models.AutoField(verbose_name="ID", primary_key=True)
     name = models.CharField(verbose_name="Имя", max_length=255, unique=True, null=False)
