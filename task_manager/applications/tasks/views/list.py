@@ -9,6 +9,7 @@ from django_filters import FilterSet
 from django_filters.filters import BooleanFilter
 from django_filters.views import FilterView
 
+from task_manager.utilities.aggregates import ArrayAggregation
 from task_manager.utilities.views_mixins import MessageSendingLoginRequiredMixin
 
 from ..models import Task
@@ -66,7 +67,7 @@ class TaskDetailView(MessageSendingLoginRequiredMixin, DetailView):
                 status_name=F("status__name"),
                 author_name=Concat(F("author__first_name"), Value(" "), F("author__last_name")),
                 executor_name=Concat(F("executor__first_name"), Value(" "), F("executor__last_name")),
-                label_names=ArrayAgg("labels__name"),
+                label_names=ArrayAggregation("labels__name"),
             )
             .values(
                 "id", "name", "description", "status_name", "author_name", "executor_name", "label_names", "created_at"
