@@ -34,4 +34,5 @@ urlpatterns: list[URLResolver | URLPattern] = [
     path("statuses/", include((statuses_urls, "statuses")), name="statuses"),
     path("labels/", include((labels_urls, "labels")), name="labels"),
     path("tasks/", include((tasks_urls, "tasks")), name="tasks"),
+    path("i18n/", include("django.conf.urls.i18n")),
 ]

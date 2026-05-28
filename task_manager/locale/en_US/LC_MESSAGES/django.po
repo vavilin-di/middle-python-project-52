@@ -1,0 +1,355 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-29 01:22+0700\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+# Models
+msgid "LabelVerboseName"
+msgstr "Label"
+
+msgid "LabelVerboseNamePlural"
+msgstr "Labels"
+
+msgid "LabelID"
+msgstr "ID"
+
+msgid "StatusVerboseName"
+msgstr "Status"
+
+msgid "StatusVerboseNamePlural"
+msgstr "Statuses"
+
+msgid "StatusID"
+msgstr "ID"
+
+msgid "TaskVerboseName"
+msgstr "Task"
+
+msgid "TaskVerboseNamePlural"
+msgstr "Tasks"
+
+msgid "TaskID"
+msgstr "ID"
+
+msgid "TaskDescription"
+msgstr "Description"
+
+msgid "TaskName"
+msgstr "Name"
+
+msgid "TaskCreatedAt"
+msgstr "Date of creation"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Author"
+msgstr "Author"
+
+msgid "Executor"
+msgstr "Executor"
+
+msgid "Labels"
+msgstr "Labels"
+
+# Header and navigation
+msgid "SiteTitle"
+msgstr "Task Manager"
+
+msgid "UsersListTitle"
+msgstr "Users"
+
+msgid "StatusesListTitle"
+msgstr "Statuses"
+
+msgid "LabelsListTitle"
+msgstr "Labels"
+
+msgid "TasksListTitle"
+msgstr "Tasks"
+
+msgid "LogoutTitle"
+msgstr "Logout"
+
+msgid "LoginTitle"
+msgstr "Login"
+
+msgid "SignUpTitle"
+msgstr "Sign up"
+
+# Index page
+msgid "IndexGreeting"
+msgstr "Hello from Hexlet!"
+
+msgid "IndexSubtitle"
+msgstr "Practical programming courses"
+
+msgid "LearnMore"
+msgstr "Learn more"
+
+# Login
+msgid "LoginButtonText"
+msgstr "Log in"
+
+# Users
+msgid "RegisterButtonText"
+msgstr "Register"
+
+msgid "UserName"
+msgstr "Username"
+
+msgid "UserFullName"
+msgstr "Full name"
+
+msgid "UserCreatedAt"
+msgstr "Date of creation"
+
+msgid "UserUpdateLink"
+msgstr "Update"
+
+msgid "UserDeleteLink"
+msgstr "Delete"
+
+msgid "UserUpdateTitle"
+msgstr "Update user"
+
+msgid "UserUpdateButtonText"
+msgstr "Update"
+
+msgid "UserDeleteTitle"
+msgstr "Delete user"
+
+msgid "ConfirmDeleteButtonText"
+msgstr "Yes, delete"
+
+# Statuses
+msgid "StatusCreateTitle"
+msgstr "Create status"
+
+msgid "StatusCreateButtonText"
+msgstr "Create status"
+
+msgid "StatusName"
+msgstr "Name"
+
+msgid "StatusCreatedAt"
+msgstr "Date of creation"
+
+msgid "StatusUpdateLink"
+msgstr "Update"
+
+msgid "StatusDeleteLink"
+msgstr "Delete"
+
+msgid "StatusUpdateTitle"
+msgstr "Update status"
+
+msgid "StatusUpdateButtonText"
+msgstr "Update"
+
+msgid "StatusDeleteTitle"
+msgstr "Delete status"
+
+# Labels
+msgid "LabelCreateTitle"
+msgstr "Create label"
+
+msgid "LabelCreateButtonText"
+msgstr "Create label"
+
+msgid "LabelName"
+msgstr "Name"
+
+msgid "LabelCreatedAt"
+msgstr "Date of creation"
+
+msgid "LabelUpdateLink"
+msgstr "Update"
+
+msgid "LabelDeleteLink"
+msgstr "Delete"
+
+msgid "LabelUpdateTitle"
+msgstr "Update label"
+
+msgid "LabelUpdateButtonText"
+msgstr "Update"
+
+msgid "LabelDeleteTitle"
+msgstr "Delete label"
+
+# Tasks
+msgid "TaskCreateTitle"
+msgstr "Create task"
+
+msgid "TaskCreateButtonText"
+msgstr "Create task"
+
+msgid "TaskFilterStatus"
+msgstr "Status"
+
+msgid "TaskFilterExecutor"
+msgstr "Executor"
+
+msgid "TaskFilterLabels"
+msgstr "Labels"
+
+msgid "TaskFilterOwnTasks"
+msgstr "Only own tasks"
+
+msgid "TaskFilterShowButton"
+msgstr "Show"
+
+msgid "TaskFilterResetButton"
+msgstr "Reset"
+
+msgid "TaskTableName"
+msgstr "Name"
+
+msgid "TaskTableStatus"
+msgstr "Status"
+
+msgid "TaskTableAuthor"
+msgstr "Author"
+
+msgid "TaskTableExecutor"
+msgstr "Executor"
+
+msgid "TaskTableCreatedAt"
+msgstr "Date of creation"
+
+msgid "TaskUpdateLink"
+msgstr "Update"
+
+msgid "TaskDeleteLink"
+msgstr "Delete"
+
+msgid "TaskDetailTitle"
+msgstr "View task"
+
+msgid "TaskDetailAuthor"
+msgstr "Author"
+
+msgid "TaskDetailExecutor"
+msgstr "Executor"
+
+msgid "TaskDetailStatus"
+msgstr "Status"
+
+msgid "TaskDetailCreatedAt"
+msgstr "Date of creation"
+
+msgid "TaskDetailLabels"
+msgstr "Labels:"
+
+msgid "TaskUpdateTitle"
+msgstr "Update task"
+
+msgid "TaskUpdateButtonText"
+msgstr "Update"
+
+msgid "TaskDeleteTitle"
+msgstr "Delete task"
+
+# Success messages
+msgid "UserCreatedSuccess"
+msgstr "User successfully registered"
+
+msgid "UserUpdatedSuccess"
+msgstr "User successfully updated"
+
+msgid "UserDeletedSuccess"
+msgstr "User successfully deleted"
+
+msgid "StatusCreatedSuccess"
+msgstr "Status successfully created"
+
+msgid "StatusUpdatedSuccess"
+msgstr "Status successfully updated"
+
+msgid "StatusDeletedSuccess"
+msgstr "Status successfully deleted"
+
+msgid "LabelCreatedSuccess"
+msgstr "Label successfully created"
+
+msgid "LabelUpdatedSuccess"
+msgstr "Label successfully updated"
+
+msgid "LabelDeletedSuccess"
+msgstr "Label successfully deleted"
+
+msgid "TaskCreatedSuccess"
+msgstr "Task successfully created"
+
+msgid "TaskUpdatedSuccess"
+msgstr "Task successfully updated"
+
+msgid "TaskDeletedSuccess"
+msgstr "Task successfully deleted"
+
+msgid "LoginSuccess"
+msgstr "You are logged in"
+
+msgid "LogoutSuccess"
+msgstr "You are logged out"
+
+# No permission messages
+msgid "UserUpdateNoPermission"
+msgstr "You do not have permission to update"
+
+msgid "UserDeleteNoPermission"
+msgstr "You do not have permission to delete"
+
+msgid "StatusCreateNoPermission"
+msgstr "You do not have permission to create a status"
+
+msgid "StatusListNoPermission"
+msgstr "You do not have permission to view statuses"
+
+msgid "StatusUpdateNoPermission"
+msgstr "You do not have permission to update a status"
+
+msgid "StatusDeleteNoPermission"
+msgstr "You do not have permission to delete a status"
+
+msgid "LabelCreateNoPermission"
+msgstr "You do not have permission to create a label"
+
+msgid "LabelListNoPermission"
+msgstr "You do not have permission to view labels"
+
+msgid "LabelUpdateNoPermission"
+msgstr "You do not have permission to update a label"
+
+msgid "LabelDeleteNoPermission"
+msgstr "You do not have permission to delete a label"
+
+msgid "TaskCreateNoPermission"
+msgstr "You do not have permission to create a task"
+
+msgid "TaskUpdateNoPermission"
+msgstr "You do not have permission to update a task"
+
+msgid "TaskDeleteNoPermission"
+msgstr "Only the author can delete a task"
+
+msgid "TaskListNoPermission"
+msgstr "You do not have permission to view tasks"
+
+msgid "TaskDetailNoPermission"
+msgstr "You do not have permission to view the task"

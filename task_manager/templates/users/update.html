@@ -1,10 +1,12 @@
 {% extends '../common/common_template.html' %}
 {% load django_bootstrap5 %}
+{% load i18n %}
 {% block content %}
-    <h1>Изменение пользователя</h1>
+    <h1>{% trans 'UserUpdateTitle' %}</h1>
     <form action="{% url 'users:update' user.id %}" method="post">
         {% csrf_token %}
         {% bootstrap_form form %}
-        {% bootstrap_button "Изменить" button_type="submit" button_class="btn-primary" %}
+        {% trans 'UserUpdateButtonText' as update_button_text %}
+        {% bootstrap_button update_button_text button_type="submit" button_class="btn-primary" %}
     </form>
 {% endblock %}

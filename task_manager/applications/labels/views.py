@@ -2,6 +2,7 @@ from django.contrib.auth.mixins import UserPassesTestMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import QuerySet
 from django.urls import reverse_lazy
+from django.utils.translation import gettext_lazy as _
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
 from task_manager.utilities.views_mixins import MessageSendingLoginRequiredMixin
@@ -17,8 +18,8 @@ class LabelCreateView(MessageSendingLoginRequiredMixin, SuccessMessageMixin, Cre
     form_class = LabelCreateForm
     template_name = "labels/create.html"
     success_url = reverse_lazy("labels:list")
-    success_message = "Метка успешно создана"
-    _no_permissions_message = "У вас нет прав для создания метки"
+    success_message = _("LabelCreatedSuccess")
+    _no_permissions_message = _("LabelCreateNoPermission")
 
 
 class LabelListView(MessageSendingLoginRequiredMixin, ListView):
@@ -27,7 +28,7 @@ class LabelListView(MessageSendingLoginRequiredMixin, ListView):
     template_name = "labels/list.html"
     paginate_by = LABELS_PER_PAGE
 
-    _no_permissions_message = "У вас нет прав для просмотра меток"
+    _no_permissions_message = _("LabelListNoPermission")
 
     def get_queryset(self) -> QuerySet:
         return super().get_queryset().values("id", "name", "created_at")
@@ -38,18 +39,18 @@ class LabelUpdateView(MessageSendingLoginRequiredMixin, SuccessMessageMixin, Upd
     form_class = LabelUpdateForm
     template_name = "labels/update.html"
     success_url = reverse_lazy("labels:list")
-    success_message = "Метка успешно изменена"
+    success_message = _("LabelUpdatedSuccess")
 
-    _no_permissions_message = "У вас нет прав для обновления метки"
+    _no_permissions_message = _("LabelUpdateNoPermission")
 
 
 class LabelDeleteView(MessageSendingLoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, DeleteView):
     model = Label
     template_name = "labels/delete.html"
     success_url = reverse_lazy("labels:list")
-    success_message = "Метка успешно удалена"
+    success_message = _("LabelDeletedSuccess")
 
-    _no_permissions_message = "У вас нет прав для удаления метки"
+    _no_permissions_message = _("LabelDeleteNoPermission")
 
     def test_func(self) -> bool:
         status_object: Label = self.get_object()

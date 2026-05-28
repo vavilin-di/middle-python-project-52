@@ -4,6 +4,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import F, QuerySet, Value
 from django.db.models.functions import Concat
 from django.urls import reverse_lazy
+from django.utils.translation import gettext_lazy as _
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
 from task_manager.utilities.views_mixins import MessageSendingLoginRequiredMixin
@@ -18,7 +19,7 @@ class UserCreateView(SuccessMessageMixin, CreateView):
     form_class = CustomUserCreateForm
     template_name = "users/create.html"
     success_url = reverse_lazy("login")
-    success_message = "Пользователь успешно зарегистрирован"
+    success_message = _("UserCreatedSuccess")
 
 
 class UserListView(ListView):
@@ -42,8 +43,8 @@ class UserUpdateView(MessageSendingLoginRequiredMixin, UserPassesTestMixin, Succ
     form_class = CustomUserUpdateForm
     template_name = "users/update.html"
     success_url = reverse_lazy("users:list")
-    success_message = "Пользователь успешно изменен"
-    _no_permissions_message = "У вас нет прав для изменения"
+    success_message = _("UserUpdatedSuccess")
+    _no_permissions_message = _("UserUpdateNoPermission")
 
     def test_func(self) -> bool:
         user: User = self.get_object()
@@ -54,8 +55,8 @@ class UserDeleteView(MessageSendingLoginRequiredMixin, UserPassesTestMixin, Succ
     model = User
     template_name = "users/delete.html"
     success_url = reverse_lazy("users:list")
-    success_message = "Пользователь успешно удален"
-    _no_permissions_message = "У вас нет прав для удаления"
+    success_message = _("UserDeletedSuccess")
+    _no_permissions_message = _("UserDeleteNoPermission")
 
     def test_func(self) -> bool:
         user: User = self.get_object()

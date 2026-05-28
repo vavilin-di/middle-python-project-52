@@ -1,10 +1,12 @@
 {% extends '../common/common_template.html' %}
 {% load django_bootstrap5 %}
+{% load i18n %}
 {% block content %}
-    <h1>Удаление статуса</h1>
+    <h1>{% trans 'StatusDeleteTitle' %}</h1>
     <form action="{% url 'statuses:delete' status.id %}" method="post">
         {% csrf_token %}
-        <p>Вы уверены, что хотите удалить статус {{ status.name }}?</p>
-        {% bootstrap_button "Да, удалить" button_type="submit" button_class="btn-primary" %}
+        <p>{% blocktrans %}Вы уверены, что хотите удалить статус{% endblocktrans %} {{ status.name }}?</p>
+        {% trans 'ConfirmDeleteButtonText' as confirm_delete_button_text %}
+        {% bootstrap_button confirm_delete_button_text button_type="submit" button_class="btn-primary" %}
     </form>
 {% endblock %}

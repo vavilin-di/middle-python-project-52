@@ -1,16 +1,20 @@
 {% extends '../common/list_template.html' %}
 {% load django_bootstrap5 %}
-{% block page_title %}<h1>Статусы</h1>{% endblock %}
+{% load i18n %}
+{% block page_title %}
+    <h1>{% trans 'StatusesListTitle' %}</h1>
+{% endblock %}
 {% block create_button %}
     {% url 'statuses:create' as create_link %}
-    {% bootstrap_button "Создать статус" href=create_link button_class="btn-primary" %}
+    {% trans 'StatusCreateButtonText' as status_create_button_text %}
+    {% bootstrap_button status_create_button_text href=create_link button_class="btn-primary" %}
 {% endblock %}
 {% if statuses %}
     {% block table_headers_row %}
         <tr>
             <th>ID</th>
-            <th>Имя</th>
-            <th>Дата создания</th>
+            <th>{% trans 'StatusName' %}</th>
+            <th>{% trans 'StatusCreatedAt' %}</th>
             <th></th>
         </tr>
     {% endblock %}
@@ -21,8 +25,8 @@
                 <td>{{ status.name }}</td>
                 <td>{{ status.created_at | date:"d.m.Y H:i" }}</td>
                 <td class="vstack gap-1">
-                    <a href="{% url 'statuses:update' status.id %}">Изменить</a>
-                    <a href="{% url 'statuses:delete' status.id %}">Удалить</a>
+                    <a href="{% url 'statuses:update' status.id %}">{% trans 'StatusUpdateLink' %}</a>
+                    <a href="{% url 'statuses:delete' status.id %}">{% trans 'StatusDeleteLink' %}</a>
                 </td>
             </tr>
         {% endfor %}

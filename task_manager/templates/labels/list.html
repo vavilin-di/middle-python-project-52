@@ -1,16 +1,20 @@
 {% extends '../common/list_template.html' %}
 {% load django_bootstrap5 %}
-{% block page_title %}<h1>Метки</h1>{% endblock %}
+{% load i18n %}
+{% block page_title %}
+    <h1>{% trans 'LabelsListTitle' %}</h1>
+{% endblock %}
 {% block create_button %}
     {% url 'labels:create' as create_link %}
-    {% bootstrap_button "Создать метку" href=create_link button_class="btn-primary" %}
+    {% trans 'LabelCreateButtonText' as label_create_button_text %}
+    {% bootstrap_button label_create_button_text href=create_link button_class="btn-primary" %}
 {% endblock %}
 {% if labels %}
     {% block table_headers %}
         <tr>
             <th>ID</th>
-            <th>Имя</th>
-            <th>Дата создания</th>
+            <th>{% trans 'LabelName' %}</th>
+            <th>{% trans 'LabelCreatedAt' %}</th>
             <th></th>
         </tr>
     {% endblock %}
@@ -21,8 +25,8 @@
                 <td>{{ label.name }}</td>
                 <td>{{ label.created_at | date:"d.m.Y H:i" }}</td>
                 <td class="vstack gap-1">
-                    <a href="{% url 'labels:update' label.id %}">Изменить</a>
-                    <a href="{% url 'labels:delete' label.id %}">Удалить</a>
+                    <a href="{% url 'labels:update' label.id %}">{% trans 'LabelUpdateLink' %}</a>
+                    <a href="{% url 'labels:delete' label.id %}">{% trans 'LabelDeleteLink' %}</a>
                 </td>
             </tr>
         {% endfor %}

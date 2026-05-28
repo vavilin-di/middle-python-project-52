@@ -4,6 +4,7 @@ from django.http.request import HttpRequest
 from django.http.response import HttpResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
+from django.utils.translation import gettext_lazy as _
 
 
 def index(request: HttpRequest) -> HttpResponse:
@@ -13,10 +14,10 @@ def index(request: HttpRequest) -> HttpResponse:
 class CustomLoginView(SuccessMessageMixin, LoginView):
     template_name = "login.html"
     success_url = reverse_lazy("index")
-    success_message = "Вы залогинены"
+    success_message = _("LoginSuccess")
 
 
 class CustomLogoutView(SuccessMessageMixin, LogoutView):
     template_name = None
     success_url = reverse_lazy("index")
-    success_message = "Вы разлогинены"
+    success_message = _("LogoutSuccess")

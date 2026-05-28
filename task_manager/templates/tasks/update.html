@@ -1,10 +1,12 @@
 {% extends '../common/common_template.html' %}
 {% load django_bootstrap5 %}
+{% load i18n %}
 {% block content %}
-    <h1>Изменение задачи</h1>
+    <h1>{% trans 'TaskUpdateTitle' %}</h1>
     <form action="{% url 'tasks:update' task.id %}" method="post">
         {% csrf_token %}
         {% bootstrap_form form %}
-        {% bootstrap_button "Изменить" button_type="submit" button_class="btn-primary" %}
+        {% trans 'TaskUpdateButtonText' as task_update_button_text %}
+        {% bootstrap_button task_update_button_text button_type="submit" button_class="btn-primary" %}
     </form>
 {% endblock %}

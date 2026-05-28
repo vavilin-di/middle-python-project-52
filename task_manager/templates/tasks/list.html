@@ -1,9 +1,13 @@
 {% extends '../common/list_template.html' %}
 {% load django_bootstrap5 %}
-{% block page_title %}<h1>Задачи</h1>{% endblock %}
+{% load i18n %}
+{% block page_title %}
+    <h1>{% trans 'TasksListTitle' %}</h1>
+{% endblock %}
 {% block create_button %}
     {% url "tasks:create" as create_link %}
-    {% bootstrap_button "Создать задачу" href=create_link button_class="btn-primary" %}
+    {% trans 'TaskCreateButtonText' as task_create_button_text %}
+    {% bootstrap_button task_create_button_text href=create_link button_class="btn-primary" %}
 {% endblock %}
 {% block page_filters %}
     {# Из-за ошибки в django-bootstrap5, которая не позволяет не устанавливать класс `is_valid` #}
@@ -13,7 +17,7 @@
         <div class="card-body bg-light">
             <form action="{% url 'tasks:list' %}" method="get" novalidate>
                 <div class="mb-3">
-                    <label class="form-label" for="id_status">Статус</label>
+                    <label class="form-label" for="id_status">{% trans 'TaskFilterStatus' %}</label>
                     <select name="status" class="form-select" id="id_status">
                         {% for value, label in filter_form.status.field.choices %}
                             <option value="{{ value }}"
@@ -24,7 +28,7 @@
                     </select>
                 </div>
                 <div class="mb-3">
-                    <label class="form-label" for="id_executor">Исполнитель</label>
+                    <label class="form-label" for="id_executor">{% trans 'TaskFilterExecutor' %}</label>
                     <select name="executor" class="form-select" id="id_executor">
                         {% for value, label in filter_form.executor.field.choices %}
                             <option value="{{ value }}"
@@ -35,7 +39,7 @@
                     </select>
                 </div>
                 <div class="mb-3">
-                    <label class="form-label" for="id_labels">Метки</label>
+                    <label class="form-label" for="id_labels">{% trans 'TaskFilterLabels' %}</label>
                     <select name="labels" class="form-select" id="id_labels" multiple size="3">
                         {% for value, label in filter_form.labels.field.choices %}
                             <option value="{{ value }}"
@@ -51,12 +55,14 @@
                                name="own_tasks"
                                class="form-check-input"
                                id="id_own_tasks">
-                        <label class="form-check-label" for="id_own_tasks">Только свои задачи</label>
+                        <label class="form-check-label" for="id_own_tasks">{% trans 'TaskFilterOwnTasks' %}</label>
                     </div>
                 </div>
                 <div class="d-flex justify-content-between mt-3">
-                    {% bootstrap_button "Показать" button_type="submit" button_class="btn-primary" %}
-                    {% bootstrap_button "Сбросить" button_type="reset" button_class="btn-secondary" %}
+                    {% trans 'TaskFilterShowButton' as filter_show_button_text %}
+                    {% bootstrap_button filter_show_button_text button_type="submit" button_class="btn-primary" %}
+                    {% trans 'TaskFilterResetButton' as filter_reset_button_text %}
+                    {% bootstrap_button filter_reset_button_text button_type="reset" button_class="btn-secondary" %}
                 </div>
             </form>
         </div>
@@ -66,11 +72,11 @@
     {% block table_headers_row %}
         <tr>
             <th>ID</th>
-            <th>Имя</th>
-            <th>Статус</th>
-            <th>Автор</th>
-            <th>Исполнитель</th>
-            <th>Дата создания</th>
+            <th>{% trans 'TaskTableName' %}</th>
+            <th>{% trans 'TaskTableStatus' %}</th>
+            <th>{% trans 'TaskTableAuthor' %}</th>
+            <th>{% trans 'TaskTableExecutor' %}</th>
+            <th>{% trans 'TaskTableCreatedAt' %}</th>
             <th></th>
         </tr>
     {% endblock %}
@@ -86,8 +92,8 @@
                 <td>{{ task.executor_name }}</td>
                 <td>{{ task.created_at | date:"d.m.Y H:i" }}</td>
                 <td class="vstack gap-1">
-                    <a href="{% url 'tasks:update' task.id %}">Изменить</a>
-                    <a href="{% url 'tasks:delete' task.id %}">Удалить</a>
+                    <a href="{% url 'tasks:update' task.id %}">{% trans 'TaskUpdateLink' %}</a>
+                    <a href="{% url 'tasks:delete' task.id %}">{% trans 'TaskDeleteLink' %}</a>
                 </td>
             </tr>
         {% endfor %}

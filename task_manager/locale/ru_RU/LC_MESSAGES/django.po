@@ -1,0 +1,355 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-29 01:22+0700\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+# Модели
+msgid "LabelVerboseName"
+msgstr "Метка"
+
+msgid "LabelVerboseNamePlural"
+msgstr "Метки"
+
+msgid "LabelID"
+msgstr "ID"
+
+msgid "StatusVerboseName"
+msgstr "Статус"
+
+msgid "StatusVerboseNamePlural"
+msgstr "Статусы"
+
+msgid "StatusID"
+msgstr "ID"
+
+msgid "TaskVerboseName"
+msgstr "Задача"
+
+msgid "TaskVerboseNamePlural"
+msgstr "Задачи"
+
+msgid "TaskID"
+msgstr "ID"
+
+msgid "TaskDescription"
+msgstr "Описание"
+
+msgid "TaskName"
+msgstr "Имя"
+
+msgid "TaskCreatedAt"
+msgstr "Дата создания"
+
+msgid "Status"
+msgstr "Статус"
+
+msgid "Author"
+msgstr "Автор"
+
+msgid "Executor"
+msgstr "Исполнитель"
+
+msgid "Labels"
+msgstr "Метки"
+
+# Шапка и навигация
+msgid "SiteTitle"
+msgstr "Менеджер задач"
+
+msgid "UsersListTitle"
+msgstr "Пользователи"
+
+msgid "StatusesListTitle"
+msgstr "Статусы"
+
+msgid "LabelsListTitle"
+msgstr "Метки"
+
+msgid "TasksListTitle"
+msgstr "Задачи"
+
+msgid "LogoutTitle"
+msgstr "Выход"
+
+msgid "LoginTitle"
+msgstr "Вход"
+
+msgid "SignUpTitle"
+msgstr "Регистрация"
+
+# Главная страница
+msgid "IndexGreeting"
+msgstr "Привет от Хекслета!"
+
+msgid "IndexSubtitle"
+msgstr "Практические курсы по программированию"
+
+msgid "LearnMore"
+msgstr "Узнать больше"
+
+# Вход
+msgid "LoginButtonText"
+msgstr "Войти"
+
+# Пользователи
+msgid "RegisterButtonText"
+msgstr "Зарегистрировать"
+
+msgid "UserName"
+msgstr "Имя пользователя"
+
+msgid "UserFullName"
+msgstr "Полное имя"
+
+msgid "UserCreatedAt"
+msgstr "Дата создания"
+
+msgid "UserUpdateLink"
+msgstr "Изменить"
+
+msgid "UserDeleteLink"
+msgstr "Удалить"
+
+msgid "UserUpdateTitle"
+msgstr "Изменение пользователя"
+
+msgid "UserUpdateButtonText"
+msgstr "Изменить"
+
+msgid "UserDeleteTitle"
+msgstr "Удаление пользователя"
+
+msgid "ConfirmDeleteButtonText"
+msgstr "Да, удалить"
+
+# Статусы
+msgid "StatusCreateTitle"
+msgstr "Создать статус"
+
+msgid "StatusCreateButtonText"
+msgstr "Создать статус"
+
+msgid "StatusName"
+msgstr "Имя"
+
+msgid "StatusCreatedAt"
+msgstr "Дата создания"
+
+msgid "StatusUpdateLink"
+msgstr "Изменить"
+
+msgid "StatusDeleteLink"
+msgstr "Удалить"
+
+msgid "StatusUpdateTitle"
+msgstr "Изменение статуса"
+
+msgid "StatusUpdateButtonText"
+msgstr "Изменить"
+
+msgid "StatusDeleteTitle"
+msgstr "Удаление статуса"
+
+# Метки
+msgid "LabelCreateTitle"
+msgstr "Создать метку"
+
+msgid "LabelCreateButtonText"
+msgstr "Создать метку"
+
+msgid "LabelName"
+msgstr "Имя"
+
+msgid "LabelCreatedAt"
+msgstr "Дата создания"
+
+msgid "LabelUpdateLink"
+msgstr "Изменить"
+
+msgid "LabelDeleteLink"
+msgstr "Удалить"
+
+msgid "LabelUpdateTitle"
+msgstr "Изменение метки"
+
+msgid "LabelUpdateButtonText"
+msgstr "Изменить"
+
+msgid "LabelDeleteTitle"
+msgstr "Удаление метки"
+
+# Задачи
+msgid "TaskCreateTitle"
+msgstr "Создать задачу"
+
+msgid "TaskCreateButtonText"
+msgstr "Создать задачу"
+
+msgid "TaskFilterStatus"
+msgstr "Статус"
+
+msgid "TaskFilterExecutor"
+msgstr "Исполнитель"
+
+msgid "TaskFilterLabels"
+msgstr "Метки"
+
+msgid "TaskFilterOwnTasks"
+msgstr "Только свои задачи"
+
+msgid "TaskFilterShowButton"
+msgstr "Показать"
+
+msgid "TaskFilterResetButton"
+msgstr "Сбросить"
+
+msgid "TaskTableName"
+msgstr "Имя"
+
+msgid "TaskTableStatus"
+msgstr "Статус"
+
+msgid "TaskTableAuthor"
+msgstr "Автор"
+
+msgid "TaskTableExecutor"
+msgstr "Исполнитель"
+
+msgid "TaskTableCreatedAt"
+msgstr "Дата создания"
+
+msgid "TaskUpdateLink"
+msgstr "Изменить"
+
+msgid "TaskDeleteLink"
+msgstr "Удалить"
+
+msgid "TaskDetailTitle"
+msgstr "Просмотр задачи"
+
+msgid "TaskDetailAuthor"
+msgstr "Автор"
+
+msgid "TaskDetailExecutor"
+msgstr "Исполнитель"
+
+msgid "TaskDetailStatus"
+msgstr "Статус"
+
+msgid "TaskDetailCreatedAt"
+msgstr "Дата создания"
+
+msgid "TaskDetailLabels"
+msgstr "Метки:"
+
+msgid "TaskUpdateTitle"
+msgstr "Изменение задачи"
+
+msgid "TaskUpdateButtonText"
+msgstr "Изменить"
+
+msgid "TaskDeleteTitle"
+msgstr "Удаление задачи"
+
+# Сообщения об успехе (success_message)
+msgid "UserCreatedSuccess"
+msgstr "Пользователь успешно зарегистрирован"
+
+msgid "UserUpdatedSuccess"
+msgstr "Пользователь успешно изменен"
+
+msgid "UserDeletedSuccess"
+msgstr "Пользователь успешно удален"
+
+msgid "StatusCreatedSuccess"
+msgstr "Статус успешно создан"
+
+msgid "StatusUpdatedSuccess"
+msgstr "Статус успешно изменен"
+
+msgid "StatusDeletedSuccess"
+msgstr "Статус успешно удален"
+
+msgid "LabelCreatedSuccess"
+msgstr "Метка успешно создана"
+
+msgid "LabelUpdatedSuccess"
+msgstr "Метка успешно изменена"
+
+msgid "LabelDeletedSuccess"
+msgstr "Метка успешно удалена"
+
+msgid "TaskCreatedSuccess"
+msgstr "Задача успешно создана"
+
+msgid "TaskUpdatedSuccess"
+msgstr "Задача успешно изменена"
+
+msgid "TaskDeletedSuccess"
+msgstr "Задача успешно удалена"
+
+msgid "LoginSuccess"
+msgstr "Вы залогинены"
+
+msgid "LogoutSuccess"
+msgstr "Вы разлогинены"
+
+# Сообщения об отсутствии прав (_no_permissions_message)
+msgid "UserUpdateNoPermission"
+msgstr "У вас нет прав для изменения"
+
+msgid "UserDeleteNoPermission"
+msgstr "У вас нет прав для удаления"
+
+msgid "StatusCreateNoPermission"
+msgstr "У вас нет прав для создания статуса"
+
+msgid "StatusListNoPermission"
+msgstr "У вас нет прав для просмотра статусов"
+
+msgid "StatusUpdateNoPermission"
+msgstr "У вас нет прав для обновления статуса"
+
+msgid "StatusDeleteNoPermission"
+msgstr "У вас нет прав для удаления статуса"
+
+msgid "LabelCreateNoPermission"
+msgstr "У вас нет прав для создания метки"
+
+msgid "LabelListNoPermission"
+msgstr "У вас нет прав для просмотра меток"
+
+msgid "LabelUpdateNoPermission"
+msgstr "У вас нет прав для обновления метки"
+
+msgid "LabelDeleteNoPermission"
+msgstr "У вас нет прав для удаления метки"
+
+msgid "TaskCreateNoPermission"
+msgstr "У вас нет прав для создания задачи"
+
+msgid "TaskUpdateNoPermission"
+msgstr "У вас нет прав для обновления задачи"
+
+msgid "TaskDeleteNoPermission"
+msgstr "Задачу может удалить только ее автор"
+
+msgid "TaskListNoPermission"
+msgstr "У вас нет прав для просмотра задач"
+
+msgid "TaskDetailNoPermission"
+msgstr "У вас нет прав для просмотра задачи"

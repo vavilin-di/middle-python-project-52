@@ -1,13 +1,16 @@
 {% extends '../common/list_template.html' %}
 {% load django_bootstrap5 %}
-{% block page_title %}<h1>Пользователи</h1>{% endblock %}
+{% load i18n %}
+{% block page_title %}
+    <h1>{% trans 'UsersListTitle' %}</h1>
+{% endblock %}
 {% if users %}
     {% block table_headers_row %}
         <tr>
             <th>ID</th>
-            <th>Имя пользователя</th>
-            <th>Полное имя</th>
-            <th>Дата создания</th>
+            <th>{% trans 'UserName' %}</th>
+            <th>{% trans 'UserFullName' %}</th>
+            <th>{% trans 'UserCreatedAt' %}</th>
             <th></th>
         </tr>
     {% endblock %}
@@ -19,8 +22,8 @@
                 <td>{{ user.full_name }}</td>
                 <td>{{ user.date_joined | date:"d.m.Y H:i" }}</td>
                 <td class="vstack gap-1">
-                    <a href="{% url 'users:update' user.id %}">Изменить</a>
-                    <a href="{% url 'users:delete' user.id %}">Удалить</a>
+                    <a href="{% url 'users:update' user.id %}">{% trans 'UserUpdateLink' %}</a>
+                    <a href="{% url 'users:delete' user.id %}">{% trans 'UserDeleteLink' %}</a>
                 </td>
             </tr>
         {% endfor %}

@@ -1,6 +1,7 @@
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
+from django.utils.translation import gettext_lazy as _
 from django.views.generic import DeleteView
 
 from task_manager.utilities.views_mixins import MessageSendingLoginRequiredMixin
@@ -12,9 +13,9 @@ class TaskDeleteView(MessageSendingLoginRequiredMixin, UserPassesTestMixin, Succ
     model = Task
     template_name = "tasks/delete.html"
     success_url = reverse_lazy("tasks:list")
-    success_message = "Задача успешно удалена"
+    success_message = _("TaskDeletedSuccess")
 
-    _no_permissions_message = "Задачу может удалить только ее автор"
+    _no_permissions_message = _("TaskDeleteNoPermission")
 
     def test_func(self) -> bool:
         task_object: Task = self.get_object()

@@ -4,6 +4,7 @@ from django.contrib.postgres.aggregates import ArrayAgg
 from django.db.models import F, QuerySet, Value
 from django.db.models.functions import Concat
 from django.forms.widgets import CheckboxInput
+from django.utils.translation import gettext_lazy as _
 from django.views.generic import DetailView, ListView
 from django_filters import FilterSet
 from django_filters.filters import BooleanFilter
@@ -19,7 +20,7 @@ TASKS_PER_PAGE = 10
 
 class TaskListFilter(FilterSet):
     own_tasks = BooleanFilter(
-        field_name="author", label="Только свои задачи", method="_filter_own_tasks", widget=CheckboxInput
+        field_name="author", label=_("TaskFilterOwnTasks"), method="_filter_own_tasks", widget=CheckboxInput
     )
 
     class Meta:
@@ -36,7 +37,7 @@ class TaskListView(MessageSendingLoginRequiredMixin, ListView):
     template_name = "tasks/list.html"
     paginate_by = TASKS_PER_PAGE
 
-    _no_permissions_message = "У вас нет прав для просмотра задач"
+    _no_permissions_message = _("TaskListNoPermission")
 
     def get_queryset(self) -> QuerySet:
         self.filterset = TaskListFilter(self.request.GET, queryset=super().get_queryset(), request=self.request)
@@ -57,7 +58,7 @@ class TaskDetailView(MessageSendingLoginRequiredMixin, DetailView):
     context_object_name = "task"
     template_name = "tasks/detail.html"
 
-    _no_permissions_message = "У вас нет прав для просмотра задачи"
+    _no_permissions_message = _("TaskDetailNoPermission")
 
     def get_queryset(self) -> QuerySet:
         return (
