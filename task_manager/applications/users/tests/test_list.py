@@ -22,8 +22,7 @@ class TestUserListView:
         user_dict = users[0]
         assert "id" in user_dict
         assert "username" in user_dict
-        assert "first_name" in user_dict
-        assert "last_name" in user_dict
+        assert "full_name" in user_dict
         assert "date_joined" in user_dict
 
     def test_user_list_unauthenticated(self, client):
