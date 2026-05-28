@@ -8,6 +8,7 @@ dependencies = [
     "dj-database-url>=3.1.2",
     "django==5.2.14",
     "django-bootstrap5>=26.2",
+    "django-filter>=25.2",
     "psycopg2>=2.9.12",
     "python-dotenv>=1.2.2",
     "uvicorn>=0.47.0",
