@@ -53,4 +53,4 @@ class LabelDeleteView(MessageSendingLoginRequiredMixin, UserPassesTestMixin, Suc
 
     def test_func(self) -> bool:
         status_object: Label = self.get_object()
-        return not status_object.tasks.exists()
+        return not status_object.tasks.exists()  # type: ignore
