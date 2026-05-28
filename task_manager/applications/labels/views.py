@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import UserPassesTestMixin
+from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import QuerySet
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
@@ -9,7 +10,7 @@ from .forms import LabelCreateForm, LabelUpdateForm
 from .models import Label
 
 
-class LabelCreateView(MessageSendingLoginRequiredMixin, CreateView):
+class LabelCreateView(MessageSendingLoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = Label
     form_class = LabelCreateForm
     template_name = "labels/create.html"
@@ -29,7 +30,7 @@ class LabelListView(MessageSendingLoginRequiredMixin, ListView):
         return super().get_queryset().values("id", "name", "created_at").order_by("id")
 
 
-class LabelUpdateView(MessageSendingLoginRequiredMixin, UpdateView):
+class LabelUpdateView(MessageSendingLoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = Label
     form_class = LabelUpdateForm
     template_name = "labels/update.html"
@@ -39,7 +40,7 @@ class LabelUpdateView(MessageSendingLoginRequiredMixin, UpdateView):
     _no_permissions_message = "У вас нет прав для обновления метки"
 
 
-class LabelDeleteView(MessageSendingLoginRequiredMixin, UserPassesTestMixin, DeleteView):
+class LabelDeleteView(MessageSendingLoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, DeleteView):
     model = Label
     template_name = "labels/delete.html"
     success_url = reverse_lazy("labels:list")
