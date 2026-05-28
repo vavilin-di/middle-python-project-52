@@ -1,29 +1,30 @@
 from typing import Any
 
-from django.contrib.auth.mixins import UserPassesTestMixin
 from django.contrib.postgres.aggregates import ArrayAgg
 from django.db.models import F, QuerySet, Value
 from django.db.models.functions import Concat
-from django.urls import reverse_lazy
-from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
+from django.forms.widgets import CheckboxInput
+from django.views.generic import DetailView, ListView
+from django_filters import FilterSet
+from django_filters.filters import BooleanFilter
+from django_filters.views import FilterView
 
 from task_manager.utilities.views_mixins import MessageSendingLoginRequiredMixin
 
-from .forms import TaskCreateForm, TaskUpdateForm
-from .models import Task
+from ..models import Task
 
 
-class TaskCreateView(MessageSendingLoginRequiredMixin, CreateView):
-    model = Task
-    form_class = TaskCreateForm
-    template_name = "tasks/create.html"
-    success_url = reverse_lazy("tasks:list")
-    success_message = "Задача успешно создана"
-    _no_permissions_message = "У вас нет прав для создания задачи"
+class TaskListFilter(FilterSet):
+    own_tasks = BooleanFilter(
+        field_name="author", label="Только свои задачи", method="_filter_own_tasks", widget=CheckboxInput
+    )
 
-    def form_valid(self, form: TaskCreateForm) -> Any:
-        form.instance.author_id = self.request.user.id  # type: ignore
-        return super().form_valid(form)
+    class Meta:
+        model = Task
+        fields = ["status", "executor", "labels"]
+
+    def _filter_own_tasks(self, queryset: QuerySet, name: str, value: Any) -> QuerySet:
+        return queryset.filter(author=self.request.user)
 
 
 class TaskListView(MessageSendingLoginRequiredMixin, ListView):
@@ -34,10 +35,9 @@ class TaskListView(MessageSendingLoginRequiredMixin, ListView):
     _no_permissions_message = "У вас нет прав для просмотра задач"
 
     def get_queryset(self) -> QuerySet:
+        self.filterset = TaskListFilter(self.request.GET, queryset=super().get_queryset(), request=self.request)
         return (
-            super()
-            .get_queryset()
-            .annotate(
+            self.filterset.qs.annotate(
                 status_name=F("status__name"),
                 author_name=Concat(F("author__first_name"), Value(" "), F("author__last_name")),
                 executor_name=Concat(F("executor__first_name"), Value(" "), F("executor__last_name")),
@@ -45,6 +45,11 @@ class TaskListView(MessageSendingLoginRequiredMixin, ListView):
             .values("id", "name", "status_name", "author_name", "executor_name", "created_at")
             .order_by("id")
         )
+
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context_data = super().get_context_data(**kwargs)
+        context_data["filter_form"] = self.filterset.form
+        return context_data
 
 
 class TaskDetailView(MessageSendingLoginRequiredMixin, DetailView):
@@ -69,26 +74,3 @@ class TaskDetailView(MessageSendingLoginRequiredMixin, DetailView):
             )
             .order_by("id")
         )
-
-
-class TaskUpdateView(MessageSendingLoginRequiredMixin, UpdateView):
-    model = Task
-    form_class = TaskUpdateForm
-    template_name = "tasks/update.html"
-    success_url = reverse_lazy("tasks:list")
-    success_message = "Задача успешно изменена"
-
-    _no_permissions_message = "У вас нет прав для обновления задачи"
-
-
-class TaskDeleteView(MessageSendingLoginRequiredMixin, UserPassesTestMixin, DeleteView):
-    model = Task
-    template_name = "tasks/delete.html"
-    success_url = reverse_lazy("tasks:list")
-    success_message = "Задача успешно удалена"
-
-    _no_permissions_message = "Задачу может удалить только ее автор"
-
-    def test_func(self) -> bool:
-        task_object: Task = self.get_object()
-        return task_object.author.id == self.request.user.id  # type: ignore
