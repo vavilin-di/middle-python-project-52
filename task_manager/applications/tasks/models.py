@@ -1,6 +1,5 @@
-from datetime import datetime
-
 from django.db import models
+from django.utils import timezone
 
 
 class Task(models.Model):
@@ -46,7 +45,7 @@ class Task(models.Model):
         related_name="tasks",
         related_query_name="tasks",
     )
-    created_at = models.DateTimeField(verbose_name="Дата создания", default=datetime.now)
+    created_at = models.DateTimeField(verbose_name="Дата создания", default=timezone.now)
 
     def __str__(self) -> str:
         return self.name
