@@ -1,3 +1,5 @@
+__all__ = ["IndexConfig"]
+
 from django.apps import AppConfig
 
 

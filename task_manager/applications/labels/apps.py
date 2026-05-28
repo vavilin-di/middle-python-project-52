@@ -1,3 +1,5 @@
+__all__ = ["LabelsConfig"]
+
 from django.apps import AppConfig
 
 

@@ -1,3 +1,5 @@
+__all__ = ["CustomUserCreateForm", "CustomUserUpdateForm"]
+
 from django.contrib.auth.forms import UserCreationForm
 
 

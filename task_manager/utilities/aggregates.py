@@ -1,3 +1,5 @@
+__all__ = ["ArrayAggregation"]
+
 from django.contrib.postgres.aggregates import ArrayAgg
 from django.db import connection
 from django.db.models import Aggregate, JSONField

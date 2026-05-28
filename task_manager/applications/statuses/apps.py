@@ -1,3 +1,5 @@
+__all__ = ["StatusesConfig"]
+
 from django.apps import AppConfig
 
 

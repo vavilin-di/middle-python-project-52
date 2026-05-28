@@ -1,3 +1,5 @@
+__all__ = ["UsersConfig"]
+
 from django.apps import AppConfig
 
 

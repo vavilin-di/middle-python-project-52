@@ -1,3 +1,5 @@
+__all__ = ["LabelCreateForm", "LabelUpdateForm"]
+
 from django.forms import ModelForm
 
 from .models import Label

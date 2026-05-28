@@ -1,3 +1,5 @@
+__all__ = ["TaskCreateForm", "TaskUpdateForm"]
+
 from django.forms import ModelForm
 
 from .models import Task

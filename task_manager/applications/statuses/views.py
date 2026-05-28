@@ -1,3 +1,5 @@
+__all__ = ["StatusCreateView", "StatusListView", "StatusUpdateView", "StatusDeleteView"]
+
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import QuerySet
@@ -14,6 +16,21 @@ STATUSES_PER_PAGE = 10
 
 
 class StatusCreateView(MessageSendingLoginRequiredMixin, SuccessMessageMixin, CreateView):
+    """Представление для создания нового статуса.
+
+    Требует аутентификации пользователя.
+    После успешного создания перенаправляет на список статусов
+    и выводит сообщение об успехе.
+
+    Attributes:
+        model: Модель Status.
+        form_class: Форма создания статуса.
+        template_name: Шаблон страницы создания.
+        success_url: URL перенаправления после успешного создания.
+        success_message: Сообщение об успешном создании статуса.
+        _no_permissions_message: Сообщение при отсутствии прав.
+    """
+
     model = Status
     form_class = StatusCreateForm
     template_name = "statuses/create.html"
@@ -23,6 +40,19 @@ class StatusCreateView(MessageSendingLoginRequiredMixin, SuccessMessageMixin, Cr
 
 
 class StatusListView(MessageSendingLoginRequiredMixin, ListView):
+    """Представление для отображения списка статусов.
+
+    Требует аутентификации пользователя.
+    Поддерживает постраничную навигацию.
+
+    Attributes:
+        model: Модель Status.
+        context_object_name: Имя переменной контекста для списка статусов.
+        template_name: Шаблон страницы списка.
+        paginate_by: Количество статусов на одной странице.
+        _no_permissions_message: Сообщение при отсутствии прав.
+    """
+
     model = Status
     context_object_name = "statuses"
     template_name = "statuses/list.html"
@@ -32,6 +62,21 @@ class StatusListView(MessageSendingLoginRequiredMixin, ListView):
 
 
 class StatusUpdateView(MessageSendingLoginRequiredMixin, SuccessMessageMixin, UpdateView):
+    """Представление для редактирования существующего статуса.
+
+    Требует аутентификации пользователя.
+    После успешного обновления перенаправляет на список статусов
+    и выводит сообщение об успехе.
+
+    Attributes:
+        model: Модель Status.
+        form_class: Форма обновления статуса.
+        template_name: Шаблон страницы редактирования.
+        success_url: URL перенаправления после успешного обновления.
+        success_message: Сообщение об успешном обновлении статуса.
+        _no_permissions_message: Сообщение при отсутствии прав.
+    """
+
     model = Status
     form_class = StatusUpdateForm
     template_name = "statuses/update.html"
@@ -42,6 +87,21 @@ class StatusUpdateView(MessageSendingLoginRequiredMixin, SuccessMessageMixin, Up
 
 
 class StatusDeleteView(MessageSendingLoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, DeleteView):
+    """Представление для удаления статуса.
+
+    Требует аутентификации пользователя.
+    Перед удалением проверяет, что статус не привязан ни к одной задаче.
+    После успешного удаления перенаправляет на список статусов
+    и выводит сообщение об успехе.
+
+    Attributes:
+        model: Модель Status.
+        template_name: Шаблон страницы удаления.
+        success_url: URL перенаправления после успешного удаления.
+        success_message: Сообщение об успешном удалении статуса.
+        _no_permissions_message: Сообщение при отсутствии прав.
+    """
+
     model = Status
     template_name = "statuses/delete.html"
     success_url = reverse_lazy("statuses:list")
@@ -50,5 +110,14 @@ class StatusDeleteView(MessageSendingLoginRequiredMixin, UserPassesTestMixin, Su
     _no_permissions_message = _("StatusDeleteNoPermission")
 
     def test_func(self) -> bool:
+        """Проверяет возможность удаления статуса.
+
+        Статус можно удалить только в том случае,
+        если он не связан ни с одной задачей.
+
+        Returns:
+            True, если статус можно удалить (нет связанных задач),
+            иначе False.
+        """
         status_object: Status = self.get_object()
         return not status_object.tasks.exists()  # type: ignore

@@ -1,3 +1,5 @@
+__all__ = ["UserCreateView", "UserListView", "UserUpdateView", "UserDeleteView"]
+
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.contrib.auth.models import User
 from django.contrib.messages.views import SuccessMessageMixin
@@ -15,6 +17,12 @@ USERS_PER_PAGE = 10
 
 
 class UserCreateView(SuccessMessageMixin, CreateView):
+    """Представление для регистрации нового пользователя.
+
+    При успешной регистрации перенаправляет на страницу входа
+    и выводит всплывающее сообщение об успехе.
+    """
+
     model = User
     form_class = CustomUserCreateForm
     template_name = "users/create.html"
@@ -23,12 +31,25 @@ class UserCreateView(SuccessMessageMixin, CreateView):
 
 
 class UserListView(ListView):
+    """Представление для отображения списка пользователей.
+
+    Поддерживает пагинацию (USERS_PER_PAGE записей на страницу).
+    В queryset добавляется вычисляемое поле full_name,
+    сформированное из first_name и last_name через пробел.
+    """
+
     model = User
     context_object_name = "users"
     template_name = "users/list.html"
     paginate_by = USERS_PER_PAGE
 
     def get_queryset(self) -> QuerySet:
+        """Возвращает список пользователей с аннотированным полем full_name.
+
+        Returns:
+            QuerySet: набор записей с полями id, username, full_name, date_joined,
+                      отсортированный по id.
+        """
         return (
             super()
             .get_queryset()
@@ -39,6 +60,13 @@ class UserListView(ListView):
 
 
 class UserUpdateView(MessageSendingLoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, UpdateView):
+    """Представление для редактирования профиля пользователя.
+
+    Доступно только авторизованному пользователю для его собственной учётной записи.
+    При успешном обновлении перенаправляет на список пользователей
+    и выводит всплывающее сообщение об успехе.
+    """
+
     model = User
     form_class = CustomUserUpdateForm
     template_name = "users/update.html"
@@ -47,11 +75,24 @@ class UserUpdateView(MessageSendingLoginRequiredMixin, UserPassesTestMixin, Succ
     _no_permissions_message = _("UserUpdateNoPermission")
 
     def test_func(self) -> bool:
+        """Проверяет, что текущий пользователь редактирует свой собственный профиль.
+
+        Returns:
+            bool: True, если ID пользователя из URL совпадает с ID текущего
+                  авторизованного пользователя, иначе False.
+        """
         user: User = self.get_object()
         return user.id == self.request.user.id  # type: ignore
 
 
 class UserDeleteView(MessageSendingLoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, DeleteView):
+    """Представление для удаления учётной записи пользователя.
+
+    Доступно только авторизованному пользователю для его собственной учётной записи.
+    При успешном удалении перенаправляет на список пользователей
+    и выводит всплывающее сообщение об успехе.
+    """
+
     model = User
     template_name = "users/delete.html"
     success_url = reverse_lazy("users:list")
@@ -59,5 +100,11 @@ class UserDeleteView(MessageSendingLoginRequiredMixin, UserPassesTestMixin, Succ
     _no_permissions_message = _("UserDeleteNoPermission")
 
     def test_func(self) -> bool:
+        """Проверяет, что текущий пользователь удаляет свой собственный профиль.
+
+        Returns:
+            bool: True, если ID пользователя из URL совпадает с ID текущего
+                  авторизованного пользователя, иначе False.
+        """
         user: User = self.get_object()
         return user.id == self.request.user.id  # type: ignore

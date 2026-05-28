@@ -1,3 +1,5 @@
+__all__ = ["TasksConfig"]
+
 from django.apps import AppConfig
 
 
