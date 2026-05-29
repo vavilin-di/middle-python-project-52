@@ -5,7 +5,11 @@
         {% block page_title %}{% endblock %}
     </div>
     <div class="mb-4">
-        {% block create_button %}{% endblock %}
+        {% block create_button %}
+            {% if create_link and create_button_text %}
+                <a href="{{ create_link }}" class="btn btn-primary" role="link">{{create_button_text}}</a>
+            {% endif %}
+        {% endblock %}
     </div>
     <div class="mb-4">
         {% block page_filters %}{% endblock %}

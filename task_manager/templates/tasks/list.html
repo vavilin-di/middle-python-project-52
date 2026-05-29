@@ -6,8 +6,8 @@
 {% endblock %}
 {% block create_button %}
     {% url "tasks:create" as create_link %}
-    {% trans 'TaskCreateButtonText' as task_create_button_text %}
-    {% bootstrap_button task_create_button_text href=create_link button_class="btn-primary" %}
+    {% trans 'TaskCreateButtonText' as create_button_text %}
+    {{ block.super }}
 {% endblock %}
 {% block page_filters %}
     {# Из-за ошибки в django-bootstrap5, которая не позволяет не устанавливать класс `is_valid` #}

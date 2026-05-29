@@ -6,8 +6,8 @@
 {% endblock %}
 {% block create_button %}
     {% url 'labels:create' as create_link %}
-    {% trans 'LabelCreateButtonText' as label_create_button_text %}
-    {% bootstrap_button label_create_button_text href=create_link button_class="btn-primary" %}
+    {% trans 'LabelCreateButtonText' as create_button_text %}
+    {{ block.super }}
 {% endblock %}
 {% if labels %}
     {% block table_headers %}

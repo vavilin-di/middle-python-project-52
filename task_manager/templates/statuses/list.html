@@ -6,8 +6,8 @@
 {% endblock %}
 {% block create_button %}
     {% url 'statuses:create' as create_link %}
-    {% trans 'StatusCreateButtonText' as status_create_button_text %}
-    {% bootstrap_button status_create_button_text href=create_link button_class="btn-primary" %}
+    {% trans 'StatusCreateButtonText' as create_button_text %}
+    {{ block.super }}
 {% endblock %}
 {% if statuses %}
     {% block table_headers_row %}
