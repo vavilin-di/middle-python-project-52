@@ -102,9 +102,9 @@ else:
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
-    },
+    # {
+    #     "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
+    # },
     {
         "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
     },
@@ -120,8 +120,8 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
-LANGUAGE_CODE = "ru-ru"
-LANGUAGES = (("en-us", _("English")), ("ru-ru", _("Russian")))
+LANGUAGE_CODE = "ru"
+LANGUAGES = ("ru-ru", _("Russian")), ("en-us", _("English"))
 LOCALE_PATHS = [BASE_DIR / "task_manager" / "locale"]
 
 TIME_ZONE = "UTC"
