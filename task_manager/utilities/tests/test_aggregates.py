@@ -58,8 +58,6 @@ class TestArrayAggregationSQLite:
         что агрегация возвращает корректный JSON-массив.
         """
         from django.contrib.auth.models import User
-        from django.db.models import F, Value
-        from django.db.models.functions import Concat
 
         from task_manager.applications.labels.models import Label
         from task_manager.applications.statuses.models import Status
