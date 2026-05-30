@@ -13,7 +13,7 @@ class Task(models.Model):
         ordering = ["id"]
 
     id = models.AutoField(verbose_name=_("TaskID"), primary_key=True)
-    name = models.CharField(verbose_name=_("TaskName"), max_length=255, null=False)
+    name = models.CharField(verbose_name=_("TaskName"), max_length=255, null=False, unique=True)
     description = models.TextField(verbose_name=_("TaskDescription"), null=False)
     status = models.ForeignKey(
         verbose_name=_("Status"),
@@ -37,7 +37,7 @@ class Task(models.Model):
         verbose_name=_("Executor"),
         to="auth.User",
         on_delete=models.CASCADE,
-        null=False,
+        null=True,
         related_name="tasks_by_executor",
         related_query_name="tasks_by_executor",
         default=None,

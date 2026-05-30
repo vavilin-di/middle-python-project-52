@@ -4,13 +4,13 @@ from django.contrib.auth import logout
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.contrib.auth.models import User
 from django.contrib.messages.views import SuccessMessageMixin
-from django.db.models import F, QuerySet, Value
-from django.db.models.functions import Concat
+from django.db.models import QuerySet
 from django.http.response import HttpResponse
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
+from task_manager.utilities.annotations import get_user_full_name_annotation
 from task_manager.utilities.views_mixins import MessageSendingLoginRequiredMixin
 
 from .forms import CustomUserCreateForm, CustomUserUpdateForm
@@ -73,7 +73,7 @@ class UserListView(ListView):
         return (
             super()
             .get_queryset()
-            .annotate(full_name=Concat(F("first_name"), Value(" "), F("last_name")))
+            .annotate(**get_user_full_name_annotation())
             .values("id", "username", "full_name", "date_joined")
             .order_by("id")
         )
