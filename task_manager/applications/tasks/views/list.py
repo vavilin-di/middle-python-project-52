@@ -17,6 +17,26 @@ from ..models import Task
 
 TASKS_PER_PAGE = 10
 
+TASK_LIST_FIELDS: list[str] = [
+    "id",
+    "name",
+    "status_name",
+    "author_name",
+    "executor_name",
+    "created_at",
+]
+
+TASK_DETAIL_FIELDS: list[str] = [
+    "id",
+    "name",
+    "description",
+    "status_name",
+    "author_name",
+    "executor_name",
+    "label_names",
+    "created_at",
+]
+
 
 class TaskListFilter(FilterSet):
     """Набор фильтров для списка задач.
@@ -42,8 +62,10 @@ class TaskListFilter(FilterSet):
             value: Значение фильтра (True/False).
 
         Returns:
-            QuerySet задач, отфильтрованный по автору
+            QuerySet задач, отфильтрованный по автору.
         """
+        if self.request is None:
+            return queryset
         return queryset.filter(author=self.request.user)
 
 
@@ -75,15 +97,15 @@ class TaskListView(MessageSendingLoginRequiredMixin, ListView):
         и полным именем исполнителя.
 
         Returns:
-            QuerySet задач с полями: id, name, status_name,
-            author_name, executor_name, created_at.
+            QuerySet задач.
         """
-        self.filterset = TaskListFilter(self.request.GET, queryset=super().get_queryset(), request=self.request)
-        return self.filterset.qs.annotate(
-            status_name=F("status__name"),
-            author_name=Concat(F("author__first_name"), Value(" "), F("author__last_name")),
-            executor_name=Concat(F("executor__first_name"), Value(" "), F("executor__last_name")),
-        ).values("id", "name", "status_name", "author_name", "executor_name", "created_at")
+        filterset = TaskListFilter(
+            self.request.GET,
+            queryset=_get_common_queryset_annotations(super().get_queryset()),
+            request=self.request,
+        )
+        self._filterset = filterset
+        return filterset.qs.values(*TASK_LIST_FIELDS)
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         """Добавляет форму фильтрации в контекст шаблона.
@@ -96,7 +118,7 @@ class TaskListView(MessageSendingLoginRequiredMixin, ListView):
             содержащим форму фильтрации.
         """
         context_data = super().get_context_data(**kwargs)
-        context_data["filter_form"] = self.filterset.form
+        context_data["filter_form"] = self._filterset.form
         return context_data
 
 
@@ -125,20 +147,29 @@ class TaskDetailView(MessageSendingLoginRequiredMixin, DetailView):
         полным именем исполнителя и списком названий меток.
 
         Returns:
-            QuerySet с одной задачей, содержащей поля: id, name,
-            description, status_name, author_name, executor_name,
-            label_names, created_at.
+            QuerySet с одной задачей.
         """
         return (
-            super()
-            .get_queryset()
-            .annotate(
-                status_name=F("status__name"),
-                author_name=Concat(F("author__first_name"), Value(" "), F("author__last_name")),
-                executor_name=Concat(F("executor__first_name"), Value(" "), F("executor__last_name")),
-                label_names=ArrayAggregation("labels__name"),
-            )
-            .values(
-                "id", "name", "description", "status_name", "author_name", "executor_name", "label_names", "created_at"
-            )
+            _get_common_queryset_annotations(super().get_queryset())
+            .annotate(label_names=ArrayAggregation("labels__name"))
+            .values(*TASK_DETAIL_FIELDS)
         )
+
+
+def _get_common_queryset_annotations(queryset: QuerySet[Task]) -> QuerySet[Task]:
+    """Аннотирует queryset задач названием статуса и полными именами автора/исполнителя.
+
+    Использует select_related для оптимизации JOIN-запросов к связанным моделям.
+    Вынесена в отдельную функцию для переиспользования в TaskListView и TaskDetailView.
+
+    Args:
+        queryset: Исходный QuerySet модели Task.
+
+    Returns:
+        QuerySet с аннотированными полями status_name, author_name, executor_name.
+    """
+    return queryset.select_related("status", "author", "executor").annotate(
+        status_name=F("status__name"),
+        author_name=Concat(F("author__first_name"), Value(" "), F("author__last_name")),
+        executor_name=Concat(F("executor__first_name"), Value(" "), F("executor__last_name")),
+    )

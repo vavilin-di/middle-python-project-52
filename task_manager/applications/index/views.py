@@ -10,21 +10,13 @@ from django.utils.translation import gettext_lazy as _
 
 
 def index(request: HttpRequest) -> HttpResponse:
-    """Рендерит главную страницу приложения.
-
-    Args:
-        request (HttpRequest): Входящий HTTP-запрос.
-
-    Returns:
-        HttpResponse: Ответ с отрендеренным шаблоном index.html.
-    """
+    """Главная страница приложения"""
     return render(request, "index.html")
 
 
 class CustomLoginView(SuccessMessageMixin, LoginView):
     """Кастомное представление для входа с сообщением об успехе.
 
-    Наследуется от SuccessMessageMixin и LoginView.
     При успешном входе перенаправляет на главную страницу
     и отображает локализованное сообщение об успешном входе.
     """
@@ -37,7 +29,6 @@ class CustomLoginView(SuccessMessageMixin, LoginView):
 class CustomLogoutView(SuccessMessageMixin, LogoutView):
     """Кастомное представление для выхода с сообщением об успехе.
 
-    Наследуется от SuccessMessageMixin и LogoutView.
     При успешном выходе перенаправляет на главную страницу
     и отображает локализованное сообщение об успешном выходе.
     """

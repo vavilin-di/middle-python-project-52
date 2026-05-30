@@ -13,23 +13,11 @@ from .forms import LabelCreateForm, LabelUpdateForm
 from .models import Label
 
 LABELS_PER_PAGE = 10
+LABELS_LIST_FIELDS = ["id", "name", "created_at"]
 
 
 class LabelCreateView(MessageSendingLoginRequiredMixin, SuccessMessageMixin, CreateView):
-    """Представление для создания новой метки.
-
-    Требует аутентификации пользователя.
-    После успешного создания перенаправляет на список меток
-    и выводит сообщение об успехе.
-
-    Attributes:
-        model: Модель Label.
-        form_class: Форма создания метки LabelCreateForm.
-        template_name: Шаблон для отображения формы.
-        success_url: URL для перенаправления после успешного создания.
-        success_message: Сообщение об успешном создании метки.
-        _no_permissions_message: Сообщение при отсутствии прав доступа.
-    """
+    """Создание новой метки."""
 
     model = Label
     form_class = LabelCreateForm
@@ -40,95 +28,46 @@ class LabelCreateView(MessageSendingLoginRequiredMixin, SuccessMessageMixin, Cre
 
 
 class LabelListView(MessageSendingLoginRequiredMixin, ListView):
-    """Представление для отображения списка меток.
-
-    Требует аутентификации пользователя.
-    Поддерживает пагинацию (LABELS_PER_PAGE записей на страницу).
-
-    Attributes:
-        model: Модель Label.
-        context_object_name: Имя переменной контекста для шаблона.
-        template_name: Шаблон для отображения списка.
-        paginate_by: Количество меток на странице.
-        _no_permissions_message: Сообщение при отсутствии прав доступа.
-    """
+    """Список меток с постраничным просмотром (LABELS_PER_PAGE записей на страницу)."""
 
     model = Label
     context_object_name = "labels"
     template_name = "labels/list.html"
     paginate_by = LABELS_PER_PAGE
-
     _no_permissions_message = _("LabelListNoPermission")
 
     def get_queryset(self) -> QuerySet:
-        """Возвращает набор запросов для списка меток.
-
-        Ограничивает выборку полями id, name и created_at
-        для оптимизации загрузки данных.
-
+        """Возвращает список записей меток.
         Returns:
-            QuerySet: Набор запросов со значениями id, name, created_at.
-        """
-        return super().get_queryset().values("id", "name", "created_at")
+            QuerySet: Набор запросов со значениями из списка LABELS_LIST_FIELDS."""
+
+        return super().get_queryset().only(*LABELS_LIST_FIELDS)
 
 
 class LabelUpdateView(MessageSendingLoginRequiredMixin, SuccessMessageMixin, UpdateView):
-    """Представление для редактирования существующей метки.
-
-    Требует аутентификации пользователя.
-    После успешного обновления перенаправляет на список меток
-    и выводит сообщение об успехе.
-
-    Attributes:
-        model: Модель Label.
-        form_class: Форма обновления метки LabelUpdateForm.
-        template_name: Шаблон для отображения формы.
-        success_url: URL для перенаправления после успешного обновления.
-        success_message: Сообщение об успешном обновлении метки.
-        _no_permissions_message: Сообщение при отсутствии прав доступа.
-    """
+    """Редактирование существующей метки."""
 
     model = Label
     form_class = LabelUpdateForm
     template_name = "labels/update.html"
     success_url = reverse_lazy("labels:list")
     success_message = _("LabelUpdatedSuccess")
-
     _no_permissions_message = _("LabelUpdateNoPermission")
 
 
 class LabelDeleteView(MessageSendingLoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, DeleteView):
-    """Представление для удаления метки.
+    """Удаление метки.
 
-    Требует аутентификации пользователя.
     Удаление разрешено только если метка не привязана ни к одной задаче.
-    После успешного удаления перенаправляет на список меток
-    и выводит сообщение об успехе.
-
-    Attributes:
-        model: Модель Label.
-        template_name: Шаблон для отображения подтверждения удаления.
-        success_url: URL для перенаправления после успешного удаления.
-        success_message: Сообщение об успешном удалении метки.
-        _no_permissions_message: Сообщение при отсутствии прав доступа.
     """
 
     model = Label
     template_name = "labels/delete.html"
     success_url = reverse_lazy("labels:list")
     success_message = _("LabelDeletedSuccess")
-
     _no_permissions_message = _("LabelDeleteNoPermission")
 
-    def test_func(self) -> bool:
-        """Проверяет, можно ли удалить метку.
-
-        Метка может быть удалена только в том случае,
-        если она не связана ни с одной задачей.
-
-        Returns:
-            bool: True, если метку можно удалить (нет связанных задач),
-                  иначе False.
-        """
-        status_object: Label = self.get_object()
-        return not status_object.tasks.exists()  # type: ignore
+    def test_func(self):
+        """Проверяет, можно ли удалить метку (не должна быть связана с задачами)."""
+        label = self.get_object()
+        return not label.tasks.exists()

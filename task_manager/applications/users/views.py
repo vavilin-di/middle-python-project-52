@@ -53,7 +53,7 @@ class UserCreateView(SuccessMessageMixin, CreateView):
 class UserListView(ListView):
     """Представление для отображения списка пользователей.
 
-    Доступно без аутентификации (см. тест test_user_list_unauthenticated).
+    Доступно без аутентификации.
     Поддерживает пагинацию (USERS_PER_PAGE записей на страницу).
     В queryset добавляется вычисляемое поле full_name,
     сформированное из first_name и last_name через пробел.
@@ -68,8 +68,7 @@ class UserListView(ListView):
         """Возвращает список пользователей с аннотированным полем full_name.
 
         Returns:
-            QuerySet: набор записей с полями id, username, full_name, date_joined,
-                      отсортированный по id.
+            QuerySet: набор записей с полями id, username, full_name, date_joined, отсортированный по id.
         """
         return (
             super()

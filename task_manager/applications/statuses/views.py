@@ -13,6 +13,7 @@ from .forms import StatusCreateForm, StatusUpdateForm
 from .models import Status
 
 STATUSES_PER_PAGE = 10
+STATUS_LIST_FIELDS = ["id", "name", "created_at"]
 
 
 class StatusCreateView(MessageSendingLoginRequiredMixin, SuccessMessageMixin, CreateView):
@@ -59,6 +60,15 @@ class StatusListView(MessageSendingLoginRequiredMixin, ListView):
     paginate_by = STATUSES_PER_PAGE
 
     _no_permissions_message = _("StatusListNoPermission")
+
+    def get_queryset(self) -> QuerySet:
+        """Возвращает список записей статусов.
+
+        Returns:
+            QuerySet: Набор запросов со значениями из списка STATUS_LIST_FIELDS.
+        """
+
+        return super().get_queryset().only(*STATUS_LIST_FIELDS)
 
 
 class StatusUpdateView(MessageSendingLoginRequiredMixin, SuccessMessageMixin, UpdateView):
@@ -120,4 +130,4 @@ class StatusDeleteView(MessageSendingLoginRequiredMixin, UserPassesTestMixin, Su
             иначе False.
         """
         status_object: Status = self.get_object()
-        return not status_object.tasks.exists()  # type: ignore
+        return not status_object.tasks.exists()  # type: ignore[attr-defined]

@@ -119,10 +119,10 @@ class TestLabelListView:
 
         labels = response.context["labels"]
         assert len(labels) >= 1
-        label_dict = labels[0]
-        assert "id" in label_dict
-        assert "name" in label_dict
-        assert "created_at" in label_dict
+        label_object = labels[0]
+        assert hasattr(label_object, "id")
+        assert hasattr(label_object, "name")
+        assert hasattr(label_object, "created_at")
 
     def test_list_labels_empty(self, authenticated_client):
         """Список меток пуст, если метки не созданы."""
