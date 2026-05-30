@@ -2,8 +2,8 @@ __all__ = ["TaskListView", "TaskDetailView"]
 
 from typing import Any
 
-from django.db.models import F, QuerySet, Value
-from django.db.models.functions import Concat
+from django.db.models import F, Q, QuerySet, Value
+from django.db.models.functions import Coalesce, Concat
 from django.forms.widgets import CheckboxInput
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import DetailView, ListView
@@ -151,7 +151,9 @@ class TaskDetailView(MessageSendingLoginRequiredMixin, DetailView):
         """
         return (
             _get_common_queryset_annotations(super().get_queryset())
-            .annotate(label_names=ArrayAggregation("labels__name"))
+            .annotate(
+                label_names=Coalesce(ArrayAggregation("labels__name", filter=Q(labels__name__isnull=False)), Value([]))
+            )
             .values(*TASK_DETAIL_FIELDS)
         )
 

@@ -27,14 +27,16 @@
                     <div class="col-6 fw-semibold">{% trans 'TaskDetailCreatedAt' %}</div>
                     <div class="col-6">{{ task.created_at | date:"d.m.Y H:i" }}</div>
                 </div>
-                <div class="row">
-                    <div class="col-6">
-                        <p class="fw-semibold">{% trans 'TaskDetailLabels' %}</p>
-                        <ul>
-                            {% for label_name in task.label_names %}<li>{{ label_name }}</li>{% endfor %}
-                        </ul>
+                {% if task.label_names %}
+                    <div class="row">
+                        <div class="col-6">
+                            <p class="fw-semibold">{% trans 'TaskDetailLabels' %}</p>
+                            <ul>
+                                {% for label_name in task.label_names %}<li>{{ label_name }}</li>{% endfor %}
+                            </ul>
+                        </div>
                     </div>
-                </div>
+                {% endif %}
             </div>
         </div>
         <div class="card-footer">
