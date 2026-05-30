@@ -31,6 +31,7 @@ dev = [
 line-length = 120
 
 [tool.ruff]
+line-length = 120
 lint.select = [
     "PLR", # refactoring
     "PLW", # warning
@@ -44,11 +45,18 @@ lint.select = [
     "UP", # pyupgrade
     "YTT", # flake8-2020
     "ASYNC", # async
-    "NPY",  # numpy
+    "E501",   # line too long
+    "B012",   # bugbear: break inside finally
+    "B024",   # bugbear: abstract method without abstract base class
+    "C901",   # too complex
+    "F401",   # imported but unused
+    "F403",   # star import
+    "F405",   # star import may be undefined
+    "E402",   # module level import not at top
+    "PLR0913",# too many arguments
+    "I001",   # isort: import sort order
 ]
-
-lint.ignore = ["E501", "B012", "B024", "C901", "F401", "F403", "F405", "E402", "PLR0913", "I001"]
-
+extend-exclude = ["**/migrations/"]
 target-version = "py314"
 
 [tool.pytest.ini_options]
