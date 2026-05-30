@@ -11,6 +11,7 @@ dependencies = [
     "django-bootstrap5>=26.2",
     "django-filter>=25.2",
     "psycopg2>=2.9.12",
+    "psycopg2-binary>=2.9.12",
     "python-dotenv>=1.2.2",
     "uvicorn>=0.47.0",
 ]
@@ -25,6 +26,7 @@ dev = [
     "pytest-django>=4.8.0",
     "pytest-xdist>=3.8.0",
     "ruff>=0.15.8",
+    "types-django-filter>=25.2.0.20260508",
 ]
 
 [tool.black]
