@@ -31,7 +31,7 @@ SECRET_KEY = environ.get("SECRET_KEY", "")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["localhost", "webserver"]
+ALLOWED_HOSTS = ["localhost", "webserver", "middle-python-project-52-o4sv.onrender.com"]
 
 
 # Application definition
