@@ -327,6 +327,9 @@ msgstr "You do not have permission to update a status"
 msgid "StatusDeleteNoPermission"
 msgstr "You do not have permission to delete a status"
 
+msgid "StatusDeleteLinkedTask"
+msgstr "Unable to delete status: related tasks exist"
+
 msgid "LabelCreateNoPermission"
 msgstr "You do not have permission to create a label"
 
@@ -339,6 +342,9 @@ msgstr "You do not have permission to update a label"
 msgid "LabelDeleteNoPermission"
 msgstr "You do not have permission to delete a label"
 
+msgid "LabelDeleteLinkedTask"
+msgstr "Unable to delete label: related tasks exist"
+
 msgid "TaskCreateNoPermission"
 msgstr "You do not have permission to create a task"
 
@@ -346,6 +352,9 @@ msgid "TaskUpdateNoPermission"
 msgstr "You do not have permission to update a task"
 
 msgid "TaskDeleteNoPermission"
+msgstr "You do not have permission to delete a task"
+
+msgid "TaskDeleteAuthorOnly"
 msgstr "Only the author can delete a task"
 
 msgid "TaskListNoPermission"

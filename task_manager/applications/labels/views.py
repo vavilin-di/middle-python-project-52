@@ -1,13 +1,12 @@
 __all__ = ["LabelCreateView", "LabelListView", "LabelUpdateView", "LabelDeleteView"]
 
-from django.contrib.auth.mixins import UserPassesTestMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import QuerySet
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
-from task_manager.utilities.views_mixins import MessageSendingLoginRequiredMixin
+from task_manager.utilities.views_mixins import MessageSendingLoginRequiredMixin, MessageSendingUserPassesTestMixin
 
 from .forms import LabelCreateForm, LabelUpdateForm
 from .models import Label
@@ -55,10 +54,12 @@ class LabelUpdateView(MessageSendingLoginRequiredMixin, SuccessMessageMixin, Upd
     _no_permissions_message = _("LabelUpdateNoPermission")
 
 
-class LabelDeleteView(MessageSendingLoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, DeleteView):
-    """Удаление метки.
+class LabelDeleteView(
+    MessageSendingLoginRequiredMixin, MessageSendingUserPassesTestMixin, SuccessMessageMixin, DeleteView
+):
+    """Проверяет возможность удаления метки.
 
-    Удаление разрешено только если метка не привязана ни к одной задаче.
+    Метку можно удалить только в том случае, если она не связана ни с одной задачей.
     """
 
     model = Label
@@ -66,8 +67,9 @@ class LabelDeleteView(MessageSendingLoginRequiredMixin, UserPassesTestMixin, Suc
     success_url = reverse_lazy("labels:list")
     success_message = _("LabelDeletedSuccess")
     _no_permissions_message = _("LabelDeleteNoPermission")
+    _test_failure_message = _("LabelDeleteLinkedTask")
 
-    def test_func(self):
+    def test_func(self) -> bool:
         """Проверяет, можно ли удалить метку (не должна быть связана с задачами)."""
         label = self.get_object()
         return not label.tasks.exists()

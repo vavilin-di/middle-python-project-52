@@ -1,13 +1,12 @@
 __all__ = ["StatusCreateView", "StatusListView", "StatusUpdateView", "StatusDeleteView"]
 
-from django.contrib.auth.mixins import UserPassesTestMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import QuerySet
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
-from task_manager.utilities.views_mixins import MessageSendingLoginRequiredMixin
+from task_manager.utilities.views_mixins import MessageSendingLoginRequiredMixin, MessageSendingUserPassesTestMixin
 
 from .forms import StatusCreateForm, StatusUpdateForm
 from .models import Status
@@ -96,7 +95,9 @@ class StatusUpdateView(MessageSendingLoginRequiredMixin, SuccessMessageMixin, Up
     _no_permissions_message = _("StatusUpdateNoPermission")
 
 
-class StatusDeleteView(MessageSendingLoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, DeleteView):
+class StatusDeleteView(
+    MessageSendingLoginRequiredMixin, MessageSendingUserPassesTestMixin, SuccessMessageMixin, DeleteView
+):
     """Представление для удаления статуса.
 
     Требует аутентификации пользователя.
@@ -118,16 +119,13 @@ class StatusDeleteView(MessageSendingLoginRequiredMixin, UserPassesTestMixin, Su
     success_message = _("StatusDeletedSuccess")
 
     _no_permissions_message = _("StatusDeleteNoPermission")
+    _test_failure_message = _("StatusDeleteLinkedTask")
 
     def test_func(self) -> bool:
         """Проверяет возможность удаления статуса.
 
-        Статус можно удалить только в том случае,
-        если он не связан ни с одной задачей.
-
-        Returns:
-            True, если статус можно удалить (нет связанных задач),
-            иначе False.
+        Статус можно удалить только в том случае, если он не связан ни с одной задачей.
         """
+
         status_object: Status = self.get_object()
         return not status_object.tasks.exists()  # type: ignore[attr-defined]

@@ -1,7 +1,10 @@
 __all__ = ["index", "CustomLoginView", "CustomLogoutView"]
 
+from django.contrib import messages
+from django.contrib.auth.signals import user_logged_out
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.messages.views import SuccessMessageMixin
+from django.dispatch import receiver
 from django.http.request import HttpRequest
 from django.http.response import HttpResponse
 from django.shortcuts import render
@@ -36,3 +39,8 @@ class CustomLogoutView(SuccessMessageMixin, LogoutView):
     template_name = None
     success_url = reverse_lazy("index")
     success_message = _("LogoutSuccess")
+
+
+@receiver(user_logged_out)
+def show_logout_message(request, **kwargs):
+    messages.success(request, _("LogoutSuccess"))

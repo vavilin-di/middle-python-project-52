@@ -327,6 +327,9 @@ msgstr "У вас нет прав для обновления статуса"
 msgid "StatusDeleteNoPermission"
 msgstr "У вас нет прав для удаления статуса"
 
+msgid "StatusDeleteLinkedTask"
+msgstr "Невозможно удалить статус: существуют связанные задачи"
+
 msgid "LabelCreateNoPermission"
 msgstr "У вас нет прав для создания метки"
 
@@ -339,6 +342,9 @@ msgstr "У вас нет прав для обновления метки"
 msgid "LabelDeleteNoPermission"
 msgstr "У вас нет прав для удаления метки"
 
+msgid "LabelDeleteLinkedTask"
+msgstr "Невозможно удалить метку: существуют связанные задачи"
+
 msgid "TaskCreateNoPermission"
 msgstr "У вас нет прав для создания задачи"
 
@@ -346,6 +352,9 @@ msgid "TaskUpdateNoPermission"
 msgstr "У вас нет прав для обновления задачи"
 
 msgid "TaskDeleteNoPermission"
+msgstr "У вас нет прав для удаления задачи"
+
+msgid "TaskDeleteAuthorOnly"
 msgstr "Задачу может удалить только ее автор"
 
 msgid "TaskListNoPermission"
