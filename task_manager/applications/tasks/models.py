@@ -47,6 +47,7 @@ class Task(models.Model):
         to="labels.Label",
         related_name="tasks",
         related_query_name="tasks",
+        blank=True,
     )
     created_at = models.DateTimeField(verbose_name=_("TaskCreatedAt"), default=timezone.now)
 
