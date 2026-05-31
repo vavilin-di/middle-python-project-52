@@ -95,7 +95,12 @@ if environ.get("DJANGO_ENV") == "test" or environ.get("USE_SQLITE_FOR_TESTS"):
         }
     }
 else:
-    DATABASES = {"default": dj_database_url.parse(environ.get("DATABASE_URL", ""))}
+    DATABASES = {
+        "default": {
+            **dj_database_url.parse(environ.get("DATABASE_URL", "")),
+            "CONN_MAX_AGE": 600,
+        }
+    }
 
 
 # Password validation
