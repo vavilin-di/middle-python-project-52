@@ -12,7 +12,7 @@ from task_manager.utilities.views_mixins import MessageSendingLoginRequiredMixin
 from .forms import StatusCreateForm, StatusUpdateForm
 from .models import Status
 
-STATUSES_PER_PAGE = 10
+STATUSES_PER_PAGE = 30
 STATUS_LIST_FIELDS = ["id", "name", "created_at"]
 
 

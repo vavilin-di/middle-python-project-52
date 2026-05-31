@@ -15,7 +15,7 @@ from task_manager.utilities.views_mixins import MessageSendingLoginRequiredMixin
 
 from .forms import CustomUserCreateForm, CustomUserUpdateForm
 
-USERS_PER_PAGE = 10
+USERS_PER_PAGE = 30
 
 
 class _OwnProfilePermissionMixin(UserPassesTestMixin):

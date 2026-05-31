@@ -15,7 +15,7 @@ from task_manager.utilities.views_mixins import MessageSendingLoginRequiredMixin
 
 from ..models import Task
 
-TASKS_PER_PAGE = 10
+TASKS_PER_PAGE = 30
 
 TASK_LIST_FIELDS: list[str] = [
     "id",

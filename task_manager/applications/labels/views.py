@@ -12,7 +12,7 @@ from task_manager.utilities.views_mixins import MessageSendingLoginRequiredMixin
 from .forms import LabelCreateForm, LabelUpdateForm
 from .models import Label
 
-LABELS_PER_PAGE = 10
+LABELS_PER_PAGE = 30
 LABELS_LIST_FIELDS = ["id", "name", "created_at"]
 
 
