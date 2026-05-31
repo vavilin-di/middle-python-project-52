@@ -62,7 +62,6 @@ extend-exclude = ["**/migrations/"]
 target-version = "py314"
 
 [tool.pytest.ini_options]
-django_settings = "task_manager.settings"
 python_files = "tests.py test_*.py *_tests.py"
 addopts = [
     "--strict-markers",
