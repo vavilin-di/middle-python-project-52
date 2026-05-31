@@ -32,7 +32,7 @@ class TestTaskDetailView:
         assert task["status_name"] == create_task.status.name
         assert task["author_name"] is not None
         assert task["executor_name"] is not None
-        assert task["label_names"] == [None]
+        assert task["label_names"] == []
         assert "created_at" in task
 
     def test_detail_task_not_found(self, authenticated_client):

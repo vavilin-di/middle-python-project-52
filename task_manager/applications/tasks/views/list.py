@@ -150,7 +150,7 @@ class TaskDetailView(MessageSendingLoginRequiredMixin, DetailView):
         return (
             _get_common_queryset_annotations(super().get_queryset())
             .annotate(
-                label_names=Coalesce(ArrayAggregation("labels__name", filter=Q(labels__name__isnull=False)), Value([]))
+                label_names=ArrayAggregation("labels__name", filter=Q(labels__name__isnull=False), default=Value([]))
             )
             .values(*TASK_DETAIL_FIELDS)
         )
