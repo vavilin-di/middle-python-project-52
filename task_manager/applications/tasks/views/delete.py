@@ -1,18 +1,20 @@
 __all__ = ["TaskDeleteView"]
 
+from typing import Any
+
 from django.contrib.messages.views import SuccessMessageMixin
+from django.http.request import HttpRequest
+from django.http.response import HttpResponseBase
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import DeleteView
 
-from task_manager.utilities.views_mixins import MessageSendingLoginRequiredMixin, MessageSendingUserPassesTestMixin
+from task_manager.utilities.views_mixins import MessageSendingLoginRequiredMixin
 
 from ..models import Task
 
 
-class TaskDeleteView(
-    MessageSendingLoginRequiredMixin, MessageSendingUserPassesTestMixin, SuccessMessageMixin, DeleteView
-):
+class TaskDeleteView(MessageSendingLoginRequiredMixin, SuccessMessageMixin, DeleteView):
     """
     Представление для удаления задачи.
 
@@ -36,7 +38,7 @@ class TaskDeleteView(
     _no_permissions_message = _("TaskDeleteNoPermission")
     _test_failure_message = _("TaskDeleteAuthorOnly")
 
-    def test_func(self) -> bool:
+    def _is_author_deleting_task(self) -> bool:
         """
         Проверяет, является ли текущий пользователь автором задачи.
 
@@ -46,3 +48,8 @@ class TaskDeleteView(
 
         task_object: Task = self.get_object()
         return task_object.author.id == self.request.user.id  # type: ignore
+
+    def dispatch(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponseBase:
+        if not self._is_author_deleting_task():
+            return self.handle_no_permission()
+        return super().dispatch(request, *args, **kwargs)
