@@ -15,7 +15,7 @@
     {# принято решение добавить отрисовку полей вручную #}
     <div class="card">
         <div class="card-body bg-light">
-            <form action="{% url 'tasks:list' %}" method="get" novalidate>
+            <form action="{% url 'tasks:list' %}" method="get">
                 <div class="mb-3">
                     <label class="form-label" for="id_status">{% trans 'TaskFilterStatus' %}</label>
                     <select name="status" class="form-select" id="id_status">
@@ -55,7 +55,7 @@
                                name="own_tasks"
                                class="form-check-input"
                                id="id_own_tasks"
-                               checked="{{ filter_form.own_tasks.value }}">
+                               {% if filter_form.own_tasks.value %}checked{% endif %}>
                         <label class="form-check-label" for="id_own_tasks">{% trans 'TaskFilterOwnTasks' %}</label>
                     </div>
                 </div>
@@ -69,8 +69,8 @@
         </div>
     </div>
 {% endblock %}
-{% if tasks %}
-    {% block table_headers_row %}
+{% block table_headers_row %}
+    {% if tasks %}
         <tr>
             <th>ID</th>
             <th>{% trans 'TaskTableName' %}</th>
@@ -80,8 +80,10 @@
             <th>{% trans 'TaskTableCreatedAt' %}</th>
             <th></th>
         </tr>
-    {% endblock %}
-    {% block table_rows %}
+    {% endif %}
+{% endblock %}
+{% block table_rows %}
+    {% if tasks %}
         {% for task in tasks %}
             <tr>
                 <td>{{ task.id }}</td>
@@ -98,5 +100,5 @@
                 </td>
             </tr>
         {% endfor %}
-    {% endblock %}
-{% endif %}
+    {% endif %}
+{% endblock %}

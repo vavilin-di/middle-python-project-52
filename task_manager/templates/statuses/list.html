@@ -9,16 +9,18 @@
     {% trans 'StatusCreateButtonText' as create_button_text %}
     {{ block.super }}
 {% endblock %}
-{% if statuses %}
-    {% block table_headers_row %}
+{% block table_headers_row %}
+    {% if statuses %}
         <tr>
             <th>ID</th>
             <th>{% trans 'StatusName' %}</th>
             <th>{% trans 'StatusCreatedAt' %}</th>
             <th></th>
         </tr>
-    {% endblock %}
-    {% block table_rows %}
+    {% endif %}
+{% endblock %}
+{% block table_rows %}
+    {% if statuses %}
         {% for status in statuses %}
             <tr>
                 <td>{{ status.id }}</td>
@@ -30,5 +32,5 @@
                 </td>
             </tr>
         {% endfor %}
-    {% endblock %}
-{% endif %}
+    {% endif %}
+{% endblock %}

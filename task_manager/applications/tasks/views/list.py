@@ -45,15 +45,13 @@ class TaskListFilter(FilterSet):
     а также отображать только задачи, созданные текущим пользователем.
     """
 
-    own_tasks = BooleanFilter(
-        field_name="author", label=_("TaskFilterOwnTasks"), method="_filter_own_tasks", widget=CheckboxInput
-    )
+    own_tasks = BooleanFilter(label=_("TaskFilterOwnTasks"), method="_filter_own_tasks", widget=CheckboxInput)
 
     class Meta:
         model = Task
         fields = ["status", "executor", "labels"]
 
-    def _filter_own_tasks(self, queryset: QuerySet, name: str, value: Any) -> QuerySet:
+    def _filter_own_tasks(self, queryset: QuerySet, name: str, value: bool) -> QuerySet:
         """Фильтрует queryset, оставляя только задачи текущего пользователя.
 
         Args:
@@ -64,7 +62,7 @@ class TaskListFilter(FilterSet):
         Returns:
             QuerySet задач, отфильтрованный по автору.
         """
-        if self.request is None:
+        if self.request is None or not value:
             return queryset
         return queryset.filter(author=self.request.user)
 
