@@ -19,7 +19,7 @@ test:
 	uv run manage.py test
 
 start:
-	uv run uvicorn task_manager.asgi:application
+	uv run uvicorn --host 0.0.0.0 --port $(PORT) task_manager.asgi:application
 
 render-start:
-	uvicorn task_manager.asgi:application
+	uvicorn --host 0.0.0.0 --port $(PORT) task_manager.asgi:application
