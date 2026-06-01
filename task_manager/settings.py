@@ -31,7 +31,7 @@ SECRET_KEY = environ.get("SECRET_KEY", "")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["localhost", "webserver", "middle-python-project-52-o4sv.onrender.com"]
+ALLOWED_HOSTS = ["localhost", "webserver", "middle-python-project-52-o4sv.onrender.com", "127.0.0.1"]
 
 
 # Application definition
@@ -125,7 +125,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
-LANGUAGE_CODE = "ru"
+LANGUAGE_CODE = "en"
 LANGUAGES = ("ru", _("Russian")), ("en", _("English"))
 LOCALE_PATHS = [BASE_DIR / "task_manager" / "locale"]
 
