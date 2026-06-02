@@ -21,7 +21,7 @@ def _get_executor_field() -> _UserFullNameModelChoiceField:
     return _UserFullNameModelChoiceField(
         User.objects.annotate(**get_user_full_name_annotation()),
         required=False,
-        label=Task._meta.get_field("executor").verbose_name,
+        label=Task._meta.get_field("executor").verbose_name, # type: ignore[union-attr]
     )
 
 

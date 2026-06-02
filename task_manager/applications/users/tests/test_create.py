@@ -32,7 +32,7 @@ class TestUserCreateView:
         response = client.post(url, data=user_data, follow=True)
 
         assert response.status_code == HTTPStatus.OK
-        assert response.redirect_chain == [(reverse("login"), HTTPStatus.FOUND)]  # type: ignore
+        assert response.redirect_chain == [(reverse("login"), HTTPStatus.FOUND)]
 
         messages = list(get_messages(response.wsgi_request))
         assert len(messages) == 1

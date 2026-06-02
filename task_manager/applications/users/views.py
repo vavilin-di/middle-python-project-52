@@ -36,7 +36,7 @@ class _OwnProfilePermissionMixin(UserPassesTestMixin):
             True, если пользователь редактирует/удаляет свой профиль, иначе False.
         """
         user: User = self.get_object()  # type: ignore[attr-defined]
-        return user.pk == self.request.user.pk  # type: ignore[attr-defined]
+        return user.pk == self.request.user.pk  # type: ignore[attr-defined, no-any-return]
 
 
 class UserCreateView(SuccessMessageMixin, CreateView):

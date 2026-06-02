@@ -53,10 +53,10 @@ class TaskDeleteView(MessageSendingLoginRequiredMixin, SuccessMessageMixin, Dele
         """
 
         task_object: Task = self.get_object()
-        return task_object.author.id == self.request.user.id  # type: ignore
+        return task_object.author.id == self.request.user.id # type: ignore[attr-defined, no-any-return, union-attr]
 
     def dispatch(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponseBase:
         if not self._is_author_deleting_task():
-            messages.add_message(self.request, messages.ERROR, self._test_failure_message)  # type: ignore
+            messages.add_message(self.request, messages.ERROR, self._test_failure_message)
             return redirect(self.success_url)
         return super().dispatch(request, *args, **kwargs)

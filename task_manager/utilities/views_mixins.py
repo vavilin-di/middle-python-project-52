@@ -14,6 +14,7 @@ if TYPE_CHECKING:
     from collections.abc import Callable
 
     from django.http.response import HttpResponseRedirect
+    from django.utils.functional import _StrOrPromise
 
 
 class MessageSendingLoginRequiredMixin(LoginRequiredMixin):
@@ -32,7 +33,7 @@ class MessageSendingLoginRequiredMixin(LoginRequiredMixin):
             messages.ERROR.
     """
 
-    _no_permissions_message = ""
+    _no_permissions_message: _StrOrPromise = ""
     _message_level = messages.ERROR
 
     def handle_no_permission(self) -> HttpResponseRedirect:
@@ -40,7 +41,7 @@ class MessageSendingLoginRequiredMixin(LoginRequiredMixin):
             return super().handle_no_permission()
         except PermissionDenied:
             messages.add_message(self.request, self._message_level, self._no_permissions_message)  # type: ignore
-            return redirect(self.success_url)
+            return redirect(self.success_url) # type:ignore[attr-defined]
 
 
 class MessageSendingUserPassesTestMixin(UserPassesTestMixin):
@@ -58,11 +59,11 @@ class MessageSendingUserPassesTestMixin(UserPassesTestMixin):
             messages.ERROR.
     """
 
-    _test_failure_message = ""
+    _test_failure_message: _StrOrPromise = ""
     _message_level = messages.ERROR
 
     def get_test_func(self) -> Callable[[], bool]:
-        if self.request.method == HTTPMethod.GET:
+        if self.request.method == HTTPMethod.GET: # type: ignore[attr-defined]
             return lambda: True
         return super().get_test_func()
 
@@ -70,5 +71,5 @@ class MessageSendingUserPassesTestMixin(UserPassesTestMixin):
         try:
             return super().handle_no_permission()
         except PermissionDenied:
-            messages.add_message(self.request, self._message_level, self._test_failure_message)  # type: ignore
-            return redirect(self.success_url)
+            messages.add_message(self.request, self._message_level, self._test_failure_message) # type: ignore[attr-defined]
+            return redirect(self.success_url) # type: ignore[attr-defined]
