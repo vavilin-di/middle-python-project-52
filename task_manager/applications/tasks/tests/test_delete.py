@@ -12,12 +12,12 @@ class TestTaskDeleteView:
     """Тесты для удаления задачи."""
 
     def test_delete_task_get_unauthenticated(self, client, create_task):
-        """Неаутентифицированный пользователь перенаправляется на страницу входа."""
+        """Неаутентифицированный пользователь перенаправляется обратно на страницу со списком задач."""
         url = reverse("tasks:delete", kwargs={"pk": create_task.pk})
         response = client.get(url)
 
         assert response.status_code == HTTPStatus.FOUND
-        assert response.url.startswith(reverse("login"))
+        assert response.url.startswith(reverse("tasks:list"))
 
     def test_delete_task_get_authenticated_author(self, authenticated_client, create_task):
         """Автор задачи может получить форму подтверждения удаления."""
