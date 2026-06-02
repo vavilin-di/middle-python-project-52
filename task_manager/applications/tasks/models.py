@@ -49,7 +49,7 @@ class Task(models.Model):
         db_table = "tasks"
         verbose_name = _("Задача")
         verbose_name_plural = _("Задачи")
-        ordering = ["id"]
+        ordering = ("id",)
 
     def __str__(self) -> str:
         return self.name

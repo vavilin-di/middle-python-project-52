@@ -14,7 +14,7 @@ class Label(models.Model):
         db_table = "labels"
         verbose_name = _("Метка")
         verbose_name_plural = _("Метки")
-        ordering = ["id"]
+        ordering = ("id",)
 
     def __str__(self) -> str:
         return self.name

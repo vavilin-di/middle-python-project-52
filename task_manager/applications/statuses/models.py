@@ -14,7 +14,7 @@ class Status(models.Model):
         db_table = "statuses"
         verbose_name = _("Статус")
         verbose_name_plural = _("Статусы")
-        ordering = ["id"]
+        ordering = ("id",)
 
     def __str__(self) -> str:
         return self.name

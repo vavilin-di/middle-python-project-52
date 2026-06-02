@@ -49,7 +49,7 @@ class TaskListFilter(FilterSet):
 
     class Meta:
         model = Task
-        fields = ["status", "executor", "labels"]
+        fields = ("status", "executor", "labels")
 
     def _filter_own_tasks(self, queryset: QuerySet, name: str, value: bool) -> QuerySet:
         """Фильтрует queryset, оставляя только задачи текущего пользователя.
