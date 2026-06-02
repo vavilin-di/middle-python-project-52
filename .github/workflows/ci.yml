@@ -14,7 +14,9 @@ jobs:
   unit-tests:
     needs: code-quality
     uses: ./.github/workflows/unit-testing.yml
+    secrets: inherit
 
   sonarcloud:
     needs: unit-tests
     uses: ./.github/workflows/sonarcloud.yml
+    secrets: inherit

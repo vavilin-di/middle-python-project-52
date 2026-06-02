@@ -29,7 +29,7 @@ jobs:
         run: uv run coverage run manage.py test
         env:
           USE_SQLITE_FOR_TESTS: 1
-          SECRET_KEY: "django-insecure-test-key-for-testing"
+          SECRET_KEY: ${{ secrets.SECRET_KEY_FOR_TESTS }}
 
       - name: Generate coverage XML report
         run: uv run coverage xml
