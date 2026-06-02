@@ -32,14 +32,13 @@ def create_second_status(db) -> Status:
 @pytest.fixture
 def create_task_with_status(db, create_status, create_user) -> Task:
     """Создаёт задачу, привязанную к статусу."""
-    task = Task.objects.create(
+    return Task.objects.create(
         name="Test Task",
         description="Test Description",
         status=create_status,
         author=create_user,
         executor=create_user,
     )
-    return task
 
 
 @pytest.mark.django_db
