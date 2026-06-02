@@ -1,7 +1,9 @@
 from http import HTTPStatus
 
 import pytest
+from django.contrib.messages import get_messages
 from django.urls import reverse
+from django.utils.translation import gettext_lazy as _
 
 from task_manager.applications.tasks.models import Task
 
@@ -43,10 +45,14 @@ class TestTaskCreateView:
             "executor": create_user.pk,
             "labels": [create_label.pk],
         }
-        response = authenticated_client.post(url, data=task_data)
+        response = authenticated_client.post(url, data=task_data, follow=True)
 
-        assert response.status_code == HTTPStatus.FOUND
-        assert response.url == reverse("tasks:list")
+        assert response.status_code == HTTPStatus.OK
+        assert response.redirect_chain == [(reverse("tasks:list"), HTTPStatus.FOUND)]
+
+        messages = list(get_messages(response.wsgi_request))
+        assert len(messages) == 1
+        assert str(messages[0]) == str(_("Задача успешно создана"))
 
         task = Task.objects.filter(name=task_data["name"]).first()
         assert task is not None

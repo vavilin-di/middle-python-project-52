@@ -1,7 +1,9 @@
 from http import HTTPStatus
 
 import pytest
+from django.contrib.messages import get_messages
 from django.urls import reverse
+from django.utils.translation import gettext_lazy as _
 
 from task_manager.applications.statuses.models import Status
 from task_manager.applications.tasks.models import Task
@@ -64,10 +66,14 @@ class TestStatusCreateView:
     def test_create_status_post_valid(self, authenticated_client, status_data):
         """POST-запрос с валидными данными создаёт статус и редиректит на список."""
         url = reverse("statuses:create")
-        response = authenticated_client.post(url, data=status_data)
+        response = authenticated_client.post(url, data=status_data, follow=True)
 
-        assert response.status_code == HTTPStatus.FOUND
-        assert response.url == reverse("statuses:list")
+        assert response.status_code == HTTPStatus.OK
+        assert response.redirect_chain == [(reverse("statuses:list"), HTTPStatus.FOUND)]
+
+        messages = list(get_messages(response.wsgi_request))
+        assert len(messages) == 1
+        assert str(messages[0]) == str(_("Статус успешно создан"))
 
         status = Status.objects.filter(name=status_data["name"]).first()
         assert status is not None
@@ -157,10 +163,14 @@ class TestStatusUpdateView:
         """POST-запрос с валидными данными обновляет статус и редиректит на список."""
         url = reverse("statuses:update", kwargs={"pk": create_status.pk})
         update_data = {"name": "Updated Status"}
-        response = authenticated_client.post(url, data=update_data)
+        response = authenticated_client.post(url, data=update_data, follow=True)
 
-        assert response.status_code == HTTPStatus.FOUND
-        assert response.url == reverse("statuses:list")
+        assert response.status_code == HTTPStatus.OK
+        assert response.redirect_chain == [(reverse("statuses:list"), HTTPStatus.FOUND)]
+
+        messages = list(get_messages(response.wsgi_request))
+        assert len(messages) == 1
+        assert str(messages[0]) == str(_("Статус успешно изменен"))
 
         create_status.refresh_from_db()
         assert create_status.name == "Updated Status"
@@ -210,10 +220,14 @@ class TestStatusDeleteView:
     def test_delete_status_post_success(self, authenticated_client, create_status):
         """POST-запрос удаляет статус без задач и редиректит на список."""
         url = reverse("statuses:delete", kwargs={"pk": create_status.pk})
-        response = authenticated_client.post(url)
+        response = authenticated_client.post(url, follow=True)
 
-        assert response.status_code == HTTPStatus.FOUND
-        assert response.url == reverse("statuses:list")
+        assert response.status_code == HTTPStatus.OK
+        assert response.redirect_chain == [(reverse("statuses:list"), HTTPStatus.FOUND)]
+
+        messages = list(get_messages(response.wsgi_request))
+        assert len(messages) == 1
+        assert str(messages[0]) == str(_("Статус успешно удален"))
 
         with pytest.raises(Status.DoesNotExist):
             Status.objects.get(pk=create_status.pk)
@@ -226,9 +240,13 @@ class TestStatusDeleteView:
     ):
         """POST-запрос не удаляет статус, если к нему привязаны задачи."""
         url = reverse("statuses:delete", kwargs={"pk": create_status.pk})
-        response = authenticated_client.post(url)
+        response = authenticated_client.post(url, follow=True)
 
-        assert response.status_code == HTTPStatus.FOUND
-        assert response.url == reverse("statuses:list")
+        assert response.status_code == HTTPStatus.OK
+        assert response.redirect_chain == [(reverse("statuses:list"), HTTPStatus.FOUND)]
+
+        messages = list(get_messages(response.wsgi_request))
+        assert len(messages) == 1
+        assert str(messages[0]) == str(_("Невозможно удалить статус: существуют связанные задачи"))
 
         assert Status.objects.filter(pk=create_status.pk).exists()

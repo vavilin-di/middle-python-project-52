@@ -6,8 +6,10 @@ from http import HTTPStatus
 
 import pytest
 from django.contrib.auth.models import User
+from django.contrib.messages import get_messages
 from django.test import Client
 from django.urls import reverse
+from django.utils.translation import gettext_lazy as _
 
 
 @pytest.mark.django_db
@@ -26,10 +28,14 @@ class TestUserCreateView:
     def test_create_user_post_valid(self, client: Client, user_data: dict):
         """POST-запрос с валидными данными создает пользователя и редиректит на login."""
         url = reverse("users:create")
-        response = client.post(url, data=user_data)
+        response = client.post(url, data=user_data, follow=True)
 
-        assert response.status_code == HTTPStatus.FOUND
-        assert response.url == reverse("login")  # type: ignore
+        assert response.status_code == HTTPStatus.OK
+        assert response.redirect_chain == [(reverse("login"), HTTPStatus.FOUND)]  # type: ignore
+
+        messages = list(get_messages(response.wsgi_request))
+        assert len(messages) == 1
+        assert str(messages[0]) == str(_("Пользователь успешно зарегистрирован"))
 
         user = User.objects.filter(username=user_data["username"]).first()
         assert user is not None

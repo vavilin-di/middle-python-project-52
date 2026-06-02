@@ -1,7 +1,9 @@
 from http import HTTPStatus
 
 import pytest
+from django.contrib.messages import get_messages
 from django.urls import reverse
+from django.utils.translation import gettext_lazy as _
 
 from task_manager.applications.labels.models import Label
 from task_manager.applications.statuses.models import Status
@@ -66,10 +68,14 @@ class TestLabelCreateView:
     def test_create_label_post_valid(self, authenticated_client, label_data):
         """POST-запрос с валидными данными создаёт метку и редиректит на список."""
         url = reverse("labels:create")
-        response = authenticated_client.post(url, data=label_data)
+        response = authenticated_client.post(url, data=label_data, follow=True)
 
-        assert response.status_code == HTTPStatus.FOUND
-        assert response.url == reverse("labels:list")
+        assert response.status_code == HTTPStatus.OK
+        assert response.redirect_chain == [(reverse("labels:list"), HTTPStatus.FOUND)]
+
+        messages = list(get_messages(response.wsgi_request))
+        assert len(messages) == 1
+        assert str(messages[0]) == str(_("Метка успешно создана"))
 
         label = Label.objects.filter(name=label_data["name"]).first()
         assert label is not None
@@ -159,10 +165,14 @@ class TestLabelUpdateView:
         """POST-запрос с валидными данными обновляет метку и редиректит на список."""
         url = reverse("labels:update", kwargs={"pk": create_label.pk})
         update_data = {"name": "Updated Label"}
-        response = authenticated_client.post(url, data=update_data)
+        response = authenticated_client.post(url, data=update_data, follow=True)
 
-        assert response.status_code == HTTPStatus.FOUND
-        assert response.url == reverse("labels:list")
+        assert response.status_code == HTTPStatus.OK
+        assert response.redirect_chain == [(reverse("labels:list"), HTTPStatus.FOUND)]
+
+        messages = list(get_messages(response.wsgi_request))
+        assert len(messages) == 1
+        assert str(messages[0]) == str(_("Метка успешно изменена"))
 
         create_label.refresh_from_db()
         assert create_label.name == "Updated Label"
@@ -213,10 +223,14 @@ class TestLabelDeleteView:
     def test_delete_label_post_success(self, authenticated_client, create_label):
         """POST-запрос удаляет метку без задач и редиректит на список."""
         url = reverse("labels:delete", kwargs={"pk": create_label.pk})
-        response = authenticated_client.post(url)
+        response = authenticated_client.post(url, follow=True)
 
-        assert response.status_code == HTTPStatus.FOUND
-        assert response.url == reverse("labels:list")
+        assert response.status_code == HTTPStatus.OK
+        assert response.redirect_chain == [(reverse("labels:list"), HTTPStatus.FOUND)]
+
+        messages = list(get_messages(response.wsgi_request))
+        assert len(messages) == 1
+        assert str(messages[0]) == str(_("Метка успешно удалена"))
 
         with pytest.raises(Label.DoesNotExist):
             Label.objects.get(pk=create_label.pk)
@@ -229,9 +243,13 @@ class TestLabelDeleteView:
     ):
         """POST-запрос не удаляет метку, если к ней привязаны задачи."""
         url = reverse("labels:delete", kwargs={"pk": create_label.pk})
-        response = authenticated_client.post(url)
+        response = authenticated_client.post(url, follow=True)
 
-        assert response.status_code == HTTPStatus.FOUND
-        assert response.url == reverse("labels:list")
+        assert response.status_code == HTTPStatus.OK
+        assert response.redirect_chain == [(reverse("labels:list"), HTTPStatus.FOUND)]
+
+        messages = list(get_messages(response.wsgi_request))
+        assert len(messages) == 1
+        assert str(messages[0]) == str(_("Невозможно удалить метку: существуют связанные задачи"))
 
         assert Label.objects.filter(pk=create_label.pk).exists()

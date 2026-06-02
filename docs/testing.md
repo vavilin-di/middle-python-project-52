@@ -124,3 +124,31 @@ if environ.get("DJANGO_ENV") == "test" or environ.get("USE_SQLITE_FOR_TESTS"):
 Локальные фикстуры для каждого приложения определены в соответствующих `conftest.py` или в самом файле тестов.
 
 Тесты помечены декоратором `@pytest.mark.django_db` для доступа к базе данных.
+
+### Проверка flash-сообщений
+
+Во всех тестах, где представление отправляет flash-сообщение (через `SuccessMessageMixin`, `MessageSendingLoginRequiredMixin` или `MessageSendingUserPassesTestMixin`), выполняется проверка наличия и содержимого сообщения.
+
+Для этого используется `follow=True` в запросах, чтобы перейти по редиректу, и `django.contrib.messages.get_messages()` для получения списка сообщений:
+
+```python
+from django.contrib.messages import get_messages
+from django.utils.translation import gettext_lazy as _
+
+response = authenticated_client.post(url, data=data, follow=True)
+
+assert response.status_code == HTTPStatus.OK
+assert response.redirect_chain == [(reverse("statuses:list"), HTTPStatus.FOUND)]
+
+messages = list(get_messages(response.wsgi_request))
+assert len(messages) == 1
+assert str(messages[0]) == str(_("Статус успешно создан"))
+```
+
+**Правила проверки flash-сообщений:**
+
+1. Для запросов, завершающихся редиректом, используется `follow=True`, чтобы получить финальный ответ после редиректа.
+2. Проверяется `response.redirect_chain` — список кортежей `(url, status_code)`, где `status_code` указывается через константу `HTTPStatus.FOUND`.
+3. Сообщения извлекаются через `get_messages(response.wsgi_request)` и преобразуются в список.
+4. Сравнение текста сообщения выполняется через `str(messages[0]) == str(_("..."))`, где `_` — `gettext_lazy`, что гарантирует корректное сравнение с учётом локализации.
+5. Проверяется точное количество сообщений (`len(messages) == 1`), чтобы убедиться, что не отправляются лишние сообщения.

@@ -2,7 +2,9 @@ from http import HTTPStatus
 
 import pytest
 from django.contrib.auth.models import User
+from django.contrib.messages import get_messages
 from django.urls import reverse
+from django.utils.translation import gettext_lazy as _
 
 
 @pytest.mark.django_db
@@ -25,18 +27,26 @@ class TestUserDeleteView:
             password="otherpass123",
         )
         url = reverse("users:delete", kwargs={"pk": other_user.pk})
-        response = authenticated_client.get(url)
+        response = authenticated_client.get(url, follow=True)
 
-        assert response.status_code == HTTPStatus.FOUND
-        assert response.url == reverse("users:list")
+        assert response.status_code == HTTPStatus.OK
+        assert response.redirect_chain == [(reverse("users:list"), HTTPStatus.FOUND)]
+
+        messages = list(get_messages(response.wsgi_request))
+        assert len(messages) == 1
+        assert str(messages[0]) == str(_("У вас нет прав для удаления"))
 
     def test_delete_user_post_own(self, authenticated_client, create_user):
         """POST-запрос удаляет пользователя и редиректит на список пользователей."""
         url = reverse("users:delete", kwargs={"pk": create_user.pk})
-        response = authenticated_client.post(url)
+        response = authenticated_client.post(url, follow=True)
 
-        assert response.status_code == HTTPStatus.FOUND
-        assert response.url == reverse("users:list")
+        assert response.status_code == HTTPStatus.OK
+        assert response.redirect_chain == [(reverse("users:list"), HTTPStatus.FOUND)]
+
+        messages = list(get_messages(response.wsgi_request))
+        assert len(messages) == 1
+        assert str(messages[0]) == str(_("Пользователь успешно удален"))
 
         with pytest.raises(User.DoesNotExist):
             User.objects.get(pk=create_user.pk)
@@ -48,9 +58,13 @@ class TestUserDeleteView:
             password="otherpass123",
         )
         url = reverse("users:delete", kwargs={"pk": other_user.pk})
-        response = authenticated_client.post(url)
+        response = authenticated_client.post(url, follow=True)
 
-        assert response.status_code == HTTPStatus.FOUND
-        assert response.url == reverse("users:list")
+        assert response.status_code == HTTPStatus.OK
+        assert response.redirect_chain == [(reverse("users:list"), HTTPStatus.FOUND)]
+
+        messages = list(get_messages(response.wsgi_request))
+        assert len(messages) == 1
+        assert str(messages[0]) == str(_("У вас нет прав для удаления"))
 
         assert User.objects.filter(pk=other_user.pk).exists()

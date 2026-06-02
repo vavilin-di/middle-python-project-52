@@ -2,7 +2,9 @@ from http import HTTPStatus
 
 import pytest
 from django.contrib.auth.models import User
+from django.contrib.messages import get_messages
 from django.urls import reverse
+from django.utils.translation import gettext_lazy as _
 
 from task_manager.applications.tasks.models import Task
 
@@ -47,10 +49,14 @@ class TestTaskDeleteView:
     def test_delete_task_post_author(self, authenticated_client, create_task):
         """POST-запрос автора удаляет задачу и редиректит на список."""
         url = reverse("tasks:delete", kwargs={"pk": create_task.pk})
-        response = authenticated_client.post(url)
+        response = authenticated_client.post(url, follow=True)
 
-        assert response.status_code == HTTPStatus.FOUND
-        assert response.url == reverse("tasks:list")
+        assert response.status_code == HTTPStatus.OK
+        assert response.redirect_chain == [(reverse("tasks:list"), HTTPStatus.FOUND)]
+
+        messages = list(get_messages(response.wsgi_request))
+        assert len(messages) == 1
+        assert str(messages[0]) == str(_("Задача успешно удалена"))
 
         with pytest.raises(Task.DoesNotExist):
             Task.objects.get(pk=create_task.pk)
@@ -65,9 +71,13 @@ class TestTaskDeleteView:
         create_task.save()
 
         url = reverse("tasks:delete", kwargs={"pk": create_task.pk})
-        response = authenticated_client.post(url)
+        response = authenticated_client.post(url, follow=True)
 
-        assert response.status_code == HTTPStatus.FOUND
-        assert response.url == reverse("tasks:list")
+        assert response.status_code == HTTPStatus.OK
+        assert response.redirect_chain == [(reverse("tasks:list"), HTTPStatus.FOUND)]
+
+        messages = list(get_messages(response.wsgi_request))
+        assert len(messages) == 1
+        assert str(messages[0]) == str(_("Задачу может удалить только ее автор"))
 
         assert Task.objects.filter(pk=create_task.pk).exists()

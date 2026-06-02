@@ -5,7 +5,9 @@
 from http import HTTPStatus
 
 import pytest
+from django.contrib.messages import get_messages
 from django.urls import reverse
+from django.utils.translation import gettext_lazy as _
 
 
 @pytest.mark.django_db
@@ -45,10 +47,14 @@ class TestTaskUpdateView:
             "executor": create_task.executor.pk,
             "labels": [create_label.pk],
         }
-        response = authenticated_client.post(url, data=update_data)
+        response = authenticated_client.post(url, data=update_data, follow=True)
 
-        assert response.status_code == HTTPStatus.FOUND
-        assert response.url == reverse("tasks:list")
+        assert response.status_code == HTTPStatus.OK
+        assert response.redirect_chain == [(reverse("tasks:list"), HTTPStatus.FOUND)]
+
+        messages = list(get_messages(response.wsgi_request))
+        assert len(messages) == 1
+        assert str(messages[0]) == str(_("Задача успешно изменена"))
 
         create_task.refresh_from_db()
         assert create_task.name == "Updated Task"

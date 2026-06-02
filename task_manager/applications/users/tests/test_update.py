@@ -2,7 +2,9 @@ from http import HTTPStatus
 
 import pytest
 from django.contrib.auth.models import User
+from django.contrib.messages import get_messages
 from django.urls import reverse
+from django.utils.translation import gettext_lazy as _
 
 
 @pytest.mark.django_db
@@ -25,10 +27,14 @@ class TestUserUpdateView:
             password="otherpass123",
         )
         url = reverse("users:update", kwargs={"pk": other_user.pk})
-        response = authenticated_client.get(url)
+        response = authenticated_client.get(url, follow=True)
 
-        assert response.status_code == HTTPStatus.FOUND
-        assert response.url == reverse("users:list")
+        assert response.status_code == HTTPStatus.OK
+        assert response.redirect_chain == [(reverse("users:list"), HTTPStatus.FOUND)]
+
+        messages = list(get_messages(response.wsgi_request))
+        assert len(messages) == 1
+        assert str(messages[0]) == str(_("У вас нет прав для изменения"))
 
     def test_update_user_post_valid(self, authenticated_client, create_user):
         """POST-запрос с валидными данными обновляет пользователя."""
@@ -40,10 +46,14 @@ class TestUserUpdateView:
             "password1": "NewPassword123",
             "password2": "NewPassword123",
         }
-        response = authenticated_client.post(url, data=update_data)
+        response = authenticated_client.post(url, data=update_data, follow=True)
 
-        assert response.status_code == HTTPStatus.FOUND
-        assert response.url == reverse("users:list")
+        assert response.status_code == HTTPStatus.OK
+        assert response.redirect_chain == [(reverse("users:list"), HTTPStatus.FOUND)]
+
+        messages = list(get_messages(response.wsgi_request))
+        assert len(messages) == 1
+        assert str(messages[0]) == str(_("Пользователь успешно изменен"))
 
         create_user.refresh_from_db()
         assert create_user.username == "updateduser"
