@@ -35,31 +35,36 @@ line-length = 120
 [tool.ruff]
 line-length = 120
 lint.select = [
-    "PLR", # refactoring
-    "PLW", # warning
-    "UP", # pyupgrade
-    "E",  # pycodestyle errors
-    "F",  # pyflakes
-    "W",  # pycodestyle warnings
-    "I",  # isort
-    "B",  # flake8-bugbear
-    "C",  # flake8-comprehensions
-    "UP", # pyupgrade
-    "YTT", # flake8-2020
-    "ASYNC", # async
-    "E501",   # line too long
-    "B012",   # bugbear: break inside finally
-    "B024",   # bugbear: abstract method without abstract base class
-    "C901",   # too complex
-    "F401",   # imported but unused
-    "F403",   # star import
-    "F405",   # star import may be undefined
-    "E402",   # module level import not at top
-    "PLR0913",# too many arguments
-    "I001",   # isort: import sort order
+    "PLR",   # pylint refactoring
+    "PLW",   # pylint warning
+    "UP",    # pyupgrade
+    "E",     # pycodestyle errors
+    "F",     # pyflakes
+    "W",     # pycodestyle warnings
+    "I",     # isort
+    "B",     # flake8-bugbear
+    "C",     # flake8-comprehensions
+    "YTT",   # flake8-2020
+    "DJ",    # flake8-django — Django-specific checks
+    "RUF",   # Ruff-specific rules
+    "SIM",   # flake8-simplify
+    "RET",   # flake8-return
+    "TCH",   # flake8-type-checking
+    "PERF",  # Perflint
+    "PTH",   # flake8-use-pathlib
+    "DTZ",   # flake8-datetimez
+    "EM",    # flake8-errmsg
 ]
 extend-exclude = ["**/migrations/"]
 target-version = "py314"
+
+lint.ignore = [
+    "RUF001",
+    "RUF002",
+    "RUF003",
+    "RUF022",
+]
+
 
 [tool.pytest.ini_options]
 python_files = "tests.py test_*.py *_tests.py"
