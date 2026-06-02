@@ -1,0 +1,32 @@
+name: code-quality-check
+
+on:
+  push:
+    branches:
+      - '**'
+    tags:
+      - '**'
+  workflow_call:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: Install dependencies
+        run: uv sync
+
+      - name: Check formatting with Black
+        run: uv run black --check --diff .
+
+      - name: Lint with Ruff
+        run: uv run ruff check .
+
+      - name: Lint templates with djlint
+        run: uv run djlint --check task_manager/templates/
