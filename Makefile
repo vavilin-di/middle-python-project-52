@@ -2,6 +2,9 @@ PORT ?= 8000
 
 install:
 	uv sync
+	make collectstatic
+	make migrate
+	make compilemessages
 
 build:
 	./build.sh
