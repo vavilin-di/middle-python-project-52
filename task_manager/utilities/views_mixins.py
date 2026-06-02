@@ -1,13 +1,19 @@
+from __future__ import annotations
+
 __all__ = ["MessageSendingLoginRequiredMixin"]
 
-from collections.abc import Callable
 from http import HTTPMethod
+from typing import TYPE_CHECKING
 
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.exceptions import PermissionDenied
-from django.http.response import HttpResponseRedirect
 from django.shortcuts import redirect
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
+
+    from django.http.response import HttpResponseRedirect
 
 
 class MessageSendingLoginRequiredMixin(LoginRequiredMixin):

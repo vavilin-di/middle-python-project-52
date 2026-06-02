@@ -1,15 +1,21 @@
+from __future__ import annotations
+
 __all__ = ["index", "CustomLoginView", "CustomLogoutView"]
+
+from typing import TYPE_CHECKING
 
 from django.contrib import messages
 from django.contrib.auth.signals import user_logged_out
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.dispatch import receiver
-from django.http.request import HttpRequest
-from django.http.response import HttpResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
+
+if TYPE_CHECKING:
+    from django.http.request import HttpRequest
+    from django.http.response import HttpResponse
 
 
 def index(request: HttpRequest) -> HttpResponse:

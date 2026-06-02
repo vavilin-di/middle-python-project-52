@@ -1,10 +1,12 @@
+from __future__ import annotations
+
 __all__ = ["UserCreateView", "UserListView", "UserUpdateView", "UserDeleteView"]
+
+from typing import TYPE_CHECKING
 
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.contrib.auth.models import User
 from django.contrib.messages.views import SuccessMessageMixin
-from django.db.models import QuerySet
-from django.http.response import HttpResponse
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
@@ -13,6 +15,9 @@ from task_manager.utilities.annotations import get_user_full_name_annotation
 from task_manager.utilities.views_mixins import MessageSendingLoginRequiredMixin
 
 from .forms import CustomUserCreateForm, CustomUserUpdateForm
+
+if TYPE_CHECKING:
+    from django.db.models import QuerySet
 
 USERS_PER_PAGE = 30
 

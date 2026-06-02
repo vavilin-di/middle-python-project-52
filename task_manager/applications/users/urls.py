@@ -1,9 +1,15 @@
+from __future__ import annotations
+
 __all__ = ["urlpatterns"]
 
+from typing import TYPE_CHECKING
+
 from django.urls import path
-from django.urls.resolvers import URLPattern
 
 from .views import UserCreateView, UserDeleteView, UserListView, UserUpdateView
+
+if TYPE_CHECKING:
+    from django.urls.resolvers import URLPattern
 
 urlpatterns: list[URLPattern] = [
     path("create/", UserCreateView.as_view(), name="create"),

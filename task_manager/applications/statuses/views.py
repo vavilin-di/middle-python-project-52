@@ -1,7 +1,10 @@
+from __future__ import annotations
+
 __all__ = ["StatusCreateView", "StatusListView", "StatusUpdateView", "StatusDeleteView"]
 
+from typing import TYPE_CHECKING
+
 from django.contrib.messages.views import SuccessMessageMixin
-from django.db.models import QuerySet
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
@@ -10,6 +13,9 @@ from task_manager.utilities.views_mixins import MessageSendingLoginRequiredMixin
 
 from .forms import StatusCreateForm, StatusUpdateForm
 from .models import Status
+
+if TYPE_CHECKING:
+    from django.db.models import QuerySet
 
 STATUSES_PER_PAGE = 30
 STATUS_LIST_FIELDS = ["id", "name", "created_at"]

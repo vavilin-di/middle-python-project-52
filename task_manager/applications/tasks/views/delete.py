@@ -1,11 +1,11 @@
+from __future__ import annotations
+
 __all__ = ["TaskDeleteView"]
 
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
-from django.http.request import HttpRequest
-from django.http.response import HttpResponseBase
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
@@ -14,6 +14,10 @@ from django.views.generic import DeleteView
 from task_manager.utilities.views_mixins import MessageSendingLoginRequiredMixin
 
 from ..models import Task
+
+if TYPE_CHECKING:
+    from django.http.request import HttpRequest
+    from django.http.response import HttpResponseBase
 
 
 class TaskDeleteView(MessageSendingLoginRequiredMixin, SuccessMessageMixin, DeleteView):

@@ -1,14 +1,20 @@
+from __future__ import annotations
+
 __all__ = ["urlpatterns"]
+
+from typing import TYPE_CHECKING
 
 from django.contrib import admin
 from django.urls import include, path
-from django.urls.resolvers import URLPattern, URLResolver
 
 from .applications.index.views import CustomLoginView, CustomLogoutView, index
 from .applications.labels.urls import urlpatterns as labels_urls
 from .applications.statuses.urls import urlpatterns as statuses_urls
 from .applications.tasks.urls import urlpatterns as tasks_urls
 from .applications.users.urls import urlpatterns as users_urls
+
+if TYPE_CHECKING:
+    from django.urls.resolvers import URLPattern, URLResolver
 
 urlpatterns: list[URLResolver | URLPattern] = [
     path("admin/", admin.site.urls),

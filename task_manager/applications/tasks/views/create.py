@@ -1,7 +1,10 @@
+from __future__ import annotations
+
 __all__ = ["TaskCreateView"]
 
+from typing import TYPE_CHECKING
+
 from django.contrib.messages.views import SuccessMessageMixin
-from django.http.response import HttpResponse
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import CreateView
@@ -10,6 +13,9 @@ from task_manager.utilities.views_mixins import MessageSendingLoginRequiredMixin
 
 from ..forms import TaskCreateForm
 from ..models import Task
+
+if TYPE_CHECKING:
+    from django.http.response import HttpResponse
 
 
 class TaskCreateView(MessageSendingLoginRequiredMixin, SuccessMessageMixin, CreateView):

@@ -1,15 +1,16 @@
-"""
-Тесты для CRUD-операций пользователей.
-"""
+from __future__ import annotations
 
 from http import HTTPStatus
+from typing import TYPE_CHECKING
 
 import pytest
 from django.contrib.auth.models import User
 from django.contrib.messages import get_messages
-from django.test import Client
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
+
+if TYPE_CHECKING:
+    from django.test import Client
 
 
 @pytest.mark.django_db
