@@ -9,7 +9,7 @@ match connection.vendor:
         ArrayAggregation = ArrayAgg
     case "sqlite":
 
-        class ArrayAggregation(Aggregate): # type: ignore[no-redef]
+        class ArrayAggregation(Aggregate):  # type: ignore[no-redef]
             function = "JSON_GROUP_ARRAY"
             output_field = JSONField()
             template = "%(function)s(%(distinct)s%(expressions)s)"

@@ -41,7 +41,7 @@ class MessageSendingLoginRequiredMixin(LoginRequiredMixin):
             return super().handle_no_permission()
         except PermissionDenied:
             messages.add_message(self.request, self._message_level, self._no_permissions_message)  # type: ignore
-            return redirect(self.success_url) # type:ignore[attr-defined]
+            return redirect(self.success_url)  # type: ignore[attr-defined]
 
 
 class MessageSendingUserPassesTestMixin(UserPassesTestMixin):
@@ -63,7 +63,7 @@ class MessageSendingUserPassesTestMixin(UserPassesTestMixin):
     _message_level = messages.ERROR
 
     def get_test_func(self) -> Callable[[], bool]:
-        if self.request.method == HTTPMethod.GET: # type: ignore[attr-defined]
+        if self.request.method == HTTPMethod.GET:  # type: ignore[attr-defined]
             return lambda: True
         return super().get_test_func()
 
@@ -71,5 +71,5 @@ class MessageSendingUserPassesTestMixin(UserPassesTestMixin):
         try:
             return super().handle_no_permission()
         except PermissionDenied:
-            messages.add_message(self.request, self._message_level, self._test_failure_message) # type: ignore[attr-defined]
-            return redirect(self.success_url) # type: ignore[attr-defined]
+            messages.add_message(self.request, self._message_level, self._test_failure_message)  # type: ignore[attr-defined]
+            return redirect(self.success_url)  # type: ignore[attr-defined]
