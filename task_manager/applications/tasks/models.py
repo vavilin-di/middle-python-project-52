@@ -6,12 +6,6 @@ from django.utils.translation import gettext_lazy as _
 
 
 class Task(models.Model):
-    class Meta:
-        db_table = "tasks"
-        verbose_name = _("Задача")
-        verbose_name_plural = _("Задачи")
-        ordering = ["id"]
-
     id = models.AutoField(verbose_name=_("ID"), primary_key=True)
     name = models.CharField(verbose_name=_("Имя"), max_length=255, null=False, unique=True)
     description = models.TextField(verbose_name=_("Описание"), null=False)
@@ -50,6 +44,12 @@ class Task(models.Model):
         blank=True,
     )
     created_at = models.DateTimeField(verbose_name=_("Дата создания"), default=timezone.now)
+
+    class Meta:
+        db_table = "tasks"
+        verbose_name = _("Задача")
+        verbose_name_plural = _("Задачи")
+        ordering = ["id"]
 
     def __str__(self) -> str:
         return self.name
