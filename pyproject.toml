@@ -5,6 +5,7 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = "==3.14.*"
 dependencies = [
+    "coverage>=7.14.1",
     "dj-database-url>=3.1.2",
     "django==5.2.14",
     "django-bootstrap-icons>=0.9.0",

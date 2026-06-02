@@ -3,6 +3,10 @@
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/vavilin-di/middle-python-project-52/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/vavilin-di/middle-python-project-52/actions)
 
+### SonarQuality:
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=vavilin-di_middle-python-project-52&metric=coverage)](https://sonarcloud.io/summary/new_code?id=vavilin-di_middle-python-project-52)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=vavilin-di_middle-python-project-52&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=vavilin-di_middle-python-project-52)
+
 Ссылка на результат деплоя на render.com:
 
 https://middle-python-project-52-o4sv.onrender.com
