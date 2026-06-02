@@ -20,4 +20,5 @@ match connection.vendor:
                 return super().resolve_expression(query, allow_joins, reuse, summarize, for_save)
 
     case _:
-        raise AssertionError(f"Unsupported database vendor {connection.vendor}")
+        msg = f"Unsupported database vendor {connection.vendor}"
+        raise AssertionError(msg)
