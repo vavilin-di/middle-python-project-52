@@ -2,11 +2,11 @@
 {% load django_bootstrap5 %}
 {% load i18n %}
 {% block content %}
-    <h1>{% trans 'LabelDeleteTitle' %}</h1>
+    <h1>{% trans "Удаление метки" %}</h1>
     <form action="{% url 'labels:delete' label.id %}" method="post">
         {% csrf_token %}
         <p>{% blocktrans %}Вы уверены, что хотите удалить метку{% endblocktrans %} {{ label.name }}?</p>
-        {% trans 'ConfirmDeleteButtonText' as confirm_delete_button_text %}
+        {% trans "Да, удалить" as confirm_delete_button_text %}
         {% bootstrap_button confirm_delete_button_text button_type="submit" button_class="btn-primary" %}
     </form>
 {% endblock %}

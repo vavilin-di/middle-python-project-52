@@ -22,8 +22,8 @@ class LabelCreateView(MessageSendingLoginRequiredMixin, SuccessMessageMixin, Cre
     form_class = LabelCreateForm
     template_name = "labels/create.html"
     success_url = reverse_lazy("labels:list")
-    success_message = _("LabelCreatedSuccess")
-    _no_permissions_message = _("LabelCreateNoPermission")
+    success_message = _("Метка успешно создана")
+    _no_permissions_message = _("У вас нет прав для создания метки")
 
 
 class LabelListView(MessageSendingLoginRequiredMixin, ListView):
@@ -33,7 +33,7 @@ class LabelListView(MessageSendingLoginRequiredMixin, ListView):
     context_object_name = "labels"
     template_name = "labels/list.html"
     paginate_by = LABELS_PER_PAGE
-    _no_permissions_message = _("LabelListNoPermission")
+    _no_permissions_message = _("У вас нет прав для просмотра меток")
 
     def get_queryset(self) -> QuerySet:
         """Возвращает список записей меток.
@@ -50,8 +50,8 @@ class LabelUpdateView(MessageSendingLoginRequiredMixin, SuccessMessageMixin, Upd
     form_class = LabelUpdateForm
     template_name = "labels/update.html"
     success_url = reverse_lazy("labels:list")
-    success_message = _("LabelUpdatedSuccess")
-    _no_permissions_message = _("LabelUpdateNoPermission")
+    success_message = _("Метка успешно изменена")
+    _no_permissions_message = _("У вас нет прав для обновления метки")
 
 
 class LabelDeleteView(
@@ -65,9 +65,9 @@ class LabelDeleteView(
     model = Label
     template_name = "labels/delete.html"
     success_url = reverse_lazy("labels:list")
-    success_message = _("LabelDeletedSuccess")
-    _no_permissions_message = _("LabelDeleteNoPermission")
-    _test_failure_message = _("LabelDeleteLinkedTask")
+    success_message = _("Метка успешно удалена")
+    _no_permissions_message = _("У вас нет прав для удаления метки")
+    _test_failure_message = _("Невозможно удалить метку: существуют связанные задачи")
 
     def test_func(self) -> bool:
         """Проверяет, можно ли удалить метку (не должна быть связана с задачами)."""

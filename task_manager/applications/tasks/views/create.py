@@ -28,8 +28,8 @@ class TaskCreateView(MessageSendingLoginRequiredMixin, SuccessMessageMixin, Crea
     form_class = TaskCreateForm
     template_name = "tasks/create.html"
     success_url = reverse_lazy("tasks:list")
-    success_message = _("TaskCreatedSuccess")
-    _no_permissions_message = _("TaskCreateNoPermission")
+    success_message = _("Задача успешно создана")
+    _no_permissions_message = _("У вас нет прав для создания задачи")
 
     def form_valid(self, form: TaskCreateForm) -> HttpResponse:
         """Устанавливает автора задачи и сохраняет форму.

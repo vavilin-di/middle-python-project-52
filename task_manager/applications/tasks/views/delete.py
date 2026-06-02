@@ -33,10 +33,10 @@ class TaskDeleteView(MessageSendingLoginRequiredMixin, SuccessMessageMixin, Dele
     model = Task
     template_name = "tasks/delete.html"
     success_url = reverse_lazy("tasks:list")
-    success_message = _("TaskDeletedSuccess")
+    success_message = _("Задача успешно удалена")
 
-    _no_permissions_message = _("TaskDeleteNoPermission")
-    _test_failure_message = _("TaskDeleteAuthorOnly")
+    _no_permissions_message = _("У вас нет прав для удаления задачи")
+    _test_failure_message = _("Задачу может удалить только ее автор")
 
     def _is_author_deleting_task(self) -> bool:
         """

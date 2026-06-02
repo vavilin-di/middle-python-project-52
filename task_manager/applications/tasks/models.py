@@ -8,15 +8,15 @@ from django.utils.translation import gettext_lazy as _
 class Task(models.Model):
     class Meta:
         db_table = "tasks"
-        verbose_name = _("TaskVerboseName")
-        verbose_name_plural = _("TaskVerboseNamePlural")
+        verbose_name = _("Задача")
+        verbose_name_plural = _("Задачи")
         ordering = ["id"]
 
-    id = models.AutoField(verbose_name=_("TaskID"), primary_key=True)
-    name = models.CharField(verbose_name=_("TaskName"), max_length=255, null=False, unique=True)
-    description = models.TextField(verbose_name=_("TaskDescription"), null=False)
+    id = models.AutoField(verbose_name=_("ID"), primary_key=True)
+    name = models.CharField(verbose_name=_("Имя"), max_length=255, null=False, unique=True)
+    description = models.TextField(verbose_name=_("Описание"), null=False)
     status = models.ForeignKey(
-        verbose_name=_("Status"),
+        verbose_name=_("Статус"),
         to="statuses.Status",
         on_delete=models.CASCADE,
         null=False,
@@ -25,7 +25,7 @@ class Task(models.Model):
         default=None,
     )
     author = models.ForeignKey(
-        verbose_name=_("Author"),
+        verbose_name=_("Автор"),
         to="auth.User",
         on_delete=models.CASCADE,
         null=False,
@@ -34,7 +34,7 @@ class Task(models.Model):
         default=None,
     )
     executor = models.ForeignKey(
-        verbose_name=_("Executor"),
+        verbose_name=_("Исполнитель"),
         to="auth.User",
         on_delete=models.CASCADE,
         null=True,
@@ -43,13 +43,13 @@ class Task(models.Model):
         default=None,
     )
     labels = models.ManyToManyField(
-        verbose_name=_("Labels"),
+        verbose_name=_("Метки"),
         to="labels.Label",
         related_name="tasks",
         related_query_name="tasks",
         blank=True,
     )
-    created_at = models.DateTimeField(verbose_name=_("TaskCreatedAt"), default=timezone.now)
+    created_at = models.DateTimeField(verbose_name=_("Дата создания"), default=timezone.now)
 
     def __str__(self) -> str:
         return self.name

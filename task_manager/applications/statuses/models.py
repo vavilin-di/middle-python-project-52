@@ -8,13 +8,13 @@ from django.utils.translation import gettext_lazy as _
 class Status(models.Model):
     class Meta:
         db_table = "statuses"
-        verbose_name = _("StatusVerboseName")
-        verbose_name_plural = _("StatusVerboseNamePlural")
+        verbose_name = _("Статус")
+        verbose_name_plural = _("Статусы")
         ordering = ["id"]
 
-    id = models.AutoField(verbose_name=_("StatusID"), primary_key=True)
-    name = models.CharField(verbose_name=_("StatusName"), max_length=255, unique=True, null=False)
-    created_at = models.DateTimeField(verbose_name=_("StatusCreatedAt"), default=timezone.now)
+    id = models.AutoField(verbose_name=_("ID"), primary_key=True)
+    name = models.CharField(verbose_name=_("Имя"), max_length=255, unique=True, null=False)
+    created_at = models.DateTimeField(verbose_name=_("Дата создания"), default=timezone.now)
 
     def __str__(self) -> str:
         return self.name

@@ -2,11 +2,11 @@
 {% load django_bootstrap5 %}
 {% load i18n %}
 {% block content %}
-    <h1>{% trans 'SignUpTitle' %}</h1>
+    <h1>{% trans "Регистрация" %}</h1>
     <form action="{% url 'users:create' %}" method="post">
         {% csrf_token %}
         {% bootstrap_form form %}
-        {% trans 'RegisterButtonText' as register_button_text %}
+        {% trans "Зарегистрировать" as register_button_text %}
         {% bootstrap_button register_button_text button_type="submit" button_class="btn-primary" %}
     </form>
 {% endblock %}

@@ -2,11 +2,11 @@
 {% load django_bootstrap5 %}
 {% load i18n %}
 {% block content %}
-    <h1>{% trans 'StatusUpdateTitle' %}</h1>
+    <h1>{% trans "Изменение статуса" %}</h1>
     <form action="{% url 'statuses:update' status.id %}" method="post">
         {% csrf_token %}
         {% bootstrap_form form %}
-        {% trans 'StatusUpdateButtonText' as status_update_button_text %}
+        {% trans "Изменить" as status_update_button_text %}
         {% bootstrap_button status_update_button_text button_type="submit" button_class="btn-primary" %}
     </form>
 {% endblock %}

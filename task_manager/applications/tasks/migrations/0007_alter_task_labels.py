@@ -15,7 +15,7 @@ class Migration(migrations.Migration):
             model_name="task",
             name="labels",
             field=models.ManyToManyField(
-                blank=True, related_name="tasks", related_query_name="tasks", to="labels.label", verbose_name="Labels"
+                blank=True, related_name="tasks", related_query_name="tasks", to="labels.label", verbose_name="Метки"
             ),
         ),
     ]

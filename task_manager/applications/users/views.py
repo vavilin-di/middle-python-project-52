@@ -47,7 +47,7 @@ class UserCreateView(SuccessMessageMixin, CreateView):
     form_class = CustomUserCreateForm
     template_name = "users/create.html"
     success_url = reverse_lazy("login")
-    success_message = _("UserCreatedSuccess")
+    success_message = _("Пользователь успешно зарегистрирован")
 
 
 class UserListView(ListView):
@@ -91,8 +91,8 @@ class UserUpdateView(MessageSendingLoginRequiredMixin, _OwnProfilePermissionMixi
     form_class = CustomUserUpdateForm
     template_name = "users/update.html"
     success_url = reverse_lazy("users:list")
-    success_message = _("UserUpdatedSuccess")
-    _no_permissions_message = _("UserUpdateNoPermission")
+    success_message = _("Пользователь успешно изменен")
+    _no_permissions_message = _("У вас нет прав для изменения")
 
 
 class UserDeleteView(MessageSendingLoginRequiredMixin, _OwnProfilePermissionMixin, SuccessMessageMixin, DeleteView):
@@ -106,8 +106,8 @@ class UserDeleteView(MessageSendingLoginRequiredMixin, _OwnProfilePermissionMixi
     model = User
     template_name = "users/delete.html"
     success_url = reverse_lazy("users:list")
-    success_message = _("UserDeletedSuccess")
-    _no_permissions_message = _("UserDeleteNoPermission")
+    success_message = _("Пользователь успешно удален")
+    _no_permissions_message = _("У вас нет прав для удаления")
 
     def post(self, request, *args, **kwargs) -> HttpResponse:
         """Завершает сессию перед удалением пользователя.

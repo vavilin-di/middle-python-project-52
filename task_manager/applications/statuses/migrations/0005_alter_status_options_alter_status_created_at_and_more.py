@@ -15,23 +15,23 @@ class Migration(migrations.Migration):
             name="status",
             options={
                 "ordering": ["id"],
-                "verbose_name": "StatusVerboseName",
-                "verbose_name_plural": "StatusVerboseNamePlural",
+                "verbose_name": "Статус",
+                "verbose_name_plural": "Статусы",
             },
         ),
         migrations.AlterField(
             model_name="status",
             name="created_at",
-            field=models.DateTimeField(default=django.utils.timezone.now, verbose_name="StatusCreatedAt"),
+            field=models.DateTimeField(default=django.utils.timezone.now, verbose_name="Дата создания"),
         ),
         migrations.AlterField(
             model_name="status",
             name="id",
-            field=models.AutoField(primary_key=True, serialize=False, verbose_name="StatusID"),
+            field=models.AutoField(primary_key=True, serialize=False, verbose_name="ID"),
         ),
         migrations.AlterField(
             model_name="status",
             name="name",
-            field=models.CharField(max_length=255, unique=True, verbose_name="StatusName"),
+            field=models.CharField(max_length=255, unique=True, verbose_name="Имя"),
         ),
     ]

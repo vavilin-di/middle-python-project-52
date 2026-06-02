@@ -2,11 +2,11 @@
 {% load django_bootstrap5 %}
 {% load i18n %}
 {% block content %}
-    <h1>{% trans 'LabelCreateTitle' %}</h1>
+    <h1>{% trans "Создать метку" %}</h1>
     <form action="{% url 'labels:create' %}" method="post">
         {% csrf_token %}
         {% bootstrap_form form %}
-        {% trans 'LabelCreateButtonText' as label_create_button_text %}
+        {% trans "Создать метку" as label_create_button_text %}
         {% bootstrap_button label_create_button_text button_type="submit" button_class="btn-primary" %}
     </form>
 {% endblock %}

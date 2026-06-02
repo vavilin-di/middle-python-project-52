@@ -15,23 +15,23 @@ class Migration(migrations.Migration):
             name="label",
             options={
                 "ordering": ["id"],
-                "verbose_name": "LabelVerboseName",
-                "verbose_name_plural": "LabelVerboseNamePlural",
+                "verbose_name": "Метка",
+                "verbose_name_plural": "Метки",
             },
         ),
         migrations.AlterField(
             model_name="label",
             name="created_at",
-            field=models.DateTimeField(default=django.utils.timezone.now, verbose_name="LabelCreatedAt"),
+            field=models.DateTimeField(default=django.utils.timezone.now, verbose_name="Дата создания"),
         ),
         migrations.AlterField(
             model_name="label",
             name="id",
-            field=models.AutoField(primary_key=True, serialize=False, verbose_name="LabelID"),
+            field=models.AutoField(primary_key=True, serialize=False, verbose_name="ID"),
         ),
         migrations.AlterField(
             model_name="label",
             name="name",
-            field=models.CharField(max_length=255, unique=True, verbose_name="LabelName"),
+            field=models.CharField(max_length=255, unique=True, verbose_name="Имя"),
         ),
     ]

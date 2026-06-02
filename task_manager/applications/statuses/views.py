@@ -35,8 +35,8 @@ class StatusCreateView(MessageSendingLoginRequiredMixin, SuccessMessageMixin, Cr
     form_class = StatusCreateForm
     template_name = "statuses/create.html"
     success_url = reverse_lazy("statuses:list")
-    success_message = _("StatusCreatedSuccess")
-    _no_permissions_message = _("StatusCreateNoPermission")
+    success_message = _("Статус успешно создан")
+    _no_permissions_message = _("У вас нет прав для создания статуса")
 
 
 class StatusListView(MessageSendingLoginRequiredMixin, ListView):
@@ -58,7 +58,7 @@ class StatusListView(MessageSendingLoginRequiredMixin, ListView):
     template_name = "statuses/list.html"
     paginate_by = STATUSES_PER_PAGE
 
-    _no_permissions_message = _("StatusListNoPermission")
+    _no_permissions_message = _("У вас нет прав для просмотра статусов")
 
     def get_queryset(self) -> QuerySet:
         """Возвращает список записей статусов.
@@ -90,9 +90,9 @@ class StatusUpdateView(MessageSendingLoginRequiredMixin, SuccessMessageMixin, Up
     form_class = StatusUpdateForm
     template_name = "statuses/update.html"
     success_url = reverse_lazy("statuses:list")
-    success_message = _("StatusUpdatedSuccess")
+    success_message = _("Статус успешно изменен")
 
-    _no_permissions_message = _("StatusUpdateNoPermission")
+    _no_permissions_message = _("У вас нет прав для обновления статуса")
 
 
 class StatusDeleteView(
@@ -116,10 +116,10 @@ class StatusDeleteView(
     model = Status
     template_name = "statuses/delete.html"
     success_url = reverse_lazy("statuses:list")
-    success_message = _("StatusDeletedSuccess")
+    success_message = _("Статус успешно удален")
 
-    _no_permissions_message = _("StatusDeleteNoPermission")
-    _test_failure_message = _("StatusDeleteLinkedTask")
+    _no_permissions_message = _("У вас нет прав для удаления статуса")
+    _test_failure_message = _("Невозможно удалить статус: существуют связанные задачи")
 
     def test_func(self) -> bool:
         """Проверяет возможность удаления статуса.

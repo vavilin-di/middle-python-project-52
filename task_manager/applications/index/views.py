@@ -26,7 +26,7 @@ class CustomLoginView(SuccessMessageMixin, LoginView):
 
     template_name = "login.html"
     success_url = reverse_lazy("index")
-    success_message = _("LoginSuccess")
+    success_message = _("Вы залогинены")
 
 
 class CustomLogoutView(SuccessMessageMixin, LogoutView):
@@ -38,9 +38,8 @@ class CustomLogoutView(SuccessMessageMixin, LogoutView):
 
     template_name = None
     success_url = reverse_lazy("index")
-    success_message = _("LogoutSuccess")
 
 
 @receiver(user_logged_out)
 def show_logout_message(request, **kwargs):
-    messages.success(request, _("LogoutSuccess"))
+    messages.success(request, _("Вы разлогинены"))

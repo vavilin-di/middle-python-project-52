@@ -2,7 +2,7 @@
 {% load django_bootstrap5 %}
 {% load i18n %}
 {% block content %}
-    <h1 class="pb-4">{% trans 'TaskDetailTitle' %}</h1>
+    <h1 class="pb-4">{% trans "Просмотр задачи" %}</h1>
     <div class="card">
         <div class="card-header bg-secondary text-light">
             <h4>{{ task.name }}</h4>
@@ -12,25 +12,25 @@
             <hr>
             <div class="container text-left d-grid row-gap-2">
                 <div class="row">
-                    <div class="col-6 fw-semibold">{% trans 'TaskDetailAuthor' %}</div>
+                    <div class="col-6 fw-semibold">{% trans "Автор" %}</div>
                     <div class="col-6">{{ task.author_name }}</div>
                 </div>
                 <div class="row">
-                    <div class="col-6 fw-semibold">{% trans 'TaskDetailExecutor' %}</div>
+                    <div class="col-6 fw-semibold">{% trans "Исполнитель" %}</div>
                     <div class="col-6">{{ task.executor_name }}</div>
                 </div>
                 <div class="row">
-                    <div class="col-6 fw-semibold">{% trans 'TaskDetailStatus' %}</div>
+                    <div class="col-6 fw-semibold">{% trans "Статус" %}</div>
                     <div class="col-6">{{ task.status_name }}</div>
                 </div>
                 <div class="row">
-                    <div class="col-6 fw-semibold">{% trans 'TaskDetailCreatedAt' %}</div>
+                    <div class="col-6 fw-semibold">{% trans "Дата создания" %}</div>
                     <div class="col-6">{{ task.created_at | date:"d.m.Y H:i" }}</div>
                 </div>
                 {% if task.label_names %}
                     <div class="row">
                         <div class="col-6">
-                            <p class="fw-semibold">{% trans 'TaskDetailLabels' %}</p>
+                            <p class="fw-semibold">{% trans "Метки" %}:</p>
                             <ul>
                                 {% for label_name in task.label_names %}<li>{{ label_name }}</li>{% endfor %}
                             </ul>
@@ -41,8 +41,8 @@
         </div>
         <div class="card-footer">
             <div class="vstack gap-1">
-                <a href="{% url 'tasks:update' task.id %}">{% trans 'TaskUpdateLink' %}</a>
-                <a href="{% url 'tasks:delete' task.id %}">{% trans 'TaskDeleteLink' %}</a>
+                <a href="{% url 'tasks:update' task.id %}">{% trans "Изменить" %}</a>
+                <a href="{% url 'tasks:delete' task.id %}">{% trans "Удалить" %}</a>
             </div>
         </div>
     </div>

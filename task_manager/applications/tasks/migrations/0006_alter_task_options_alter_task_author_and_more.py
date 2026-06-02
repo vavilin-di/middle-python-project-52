@@ -20,8 +20,8 @@ class Migration(migrations.Migration):
             name="task",
             options={
                 "ordering": ["id"],
-                "verbose_name": "TaskVerboseName",
-                "verbose_name_plural": "TaskVerboseNamePlural",
+                "verbose_name": "Задача",
+                "verbose_name_plural": "Задачи",
             },
         ),
         migrations.AlterField(
@@ -33,18 +33,18 @@ class Migration(migrations.Migration):
                 related_name="tasks_by_author",
                 related_query_name="tasks_by_author",
                 to=settings.AUTH_USER_MODEL,
-                verbose_name="Author",
+                verbose_name="Автор",
             ),
         ),
         migrations.AlterField(
             model_name="task",
             name="created_at",
-            field=models.DateTimeField(default=django.utils.timezone.now, verbose_name="TaskCreatedAt"),
+            field=models.DateTimeField(default=django.utils.timezone.now, verbose_name="Дата создания"),
         ),
         migrations.AlterField(
             model_name="task",
             name="description",
-            field=models.TextField(verbose_name="TaskDescription"),
+            field=models.TextField(verbose_name="Описание"),
         ),
         migrations.AlterField(
             model_name="task",
@@ -56,25 +56,25 @@ class Migration(migrations.Migration):
                 related_name="tasks_by_executor",
                 related_query_name="tasks_by_executor",
                 to=settings.AUTH_USER_MODEL,
-                verbose_name="Executor",
+                verbose_name="Исполнитель",
             ),
         ),
         migrations.AlterField(
             model_name="task",
             name="id",
-            field=models.AutoField(primary_key=True, serialize=False, verbose_name="TaskID"),
+            field=models.AutoField(primary_key=True, serialize=False, verbose_name="ID"),
         ),
         migrations.AlterField(
             model_name="task",
             name="labels",
             field=models.ManyToManyField(
-                related_name="tasks", related_query_name="tasks", to="labels.label", verbose_name="Labels"
+                related_name="tasks", related_query_name="tasks", to="labels.label", verbose_name="Метки"
             ),
         ),
         migrations.AlterField(
             model_name="task",
             name="name",
-            field=models.CharField(max_length=255, unique=True, verbose_name="TaskName"),
+            field=models.CharField(max_length=255, unique=True, verbose_name="Имя"),
         ),
         migrations.AlterField(
             model_name="task",
@@ -85,7 +85,7 @@ class Migration(migrations.Migration):
                 related_name="tasks",
                 related_query_name="tasks",
                 to="statuses.status",
-                verbose_name="Status",
+                verbose_name="Статус",
             ),
         ),
     ]

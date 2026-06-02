@@ -45,7 +45,7 @@ class TaskListFilter(FilterSet):
     а также отображать только задачи, созданные текущим пользователем.
     """
 
-    own_tasks = BooleanFilter(label=_("TaskFilterOwnTasks"), method="_filter_own_tasks", widget=CheckboxInput)
+    own_tasks = BooleanFilter(label=_("Только свои задачи"), method="_filter_own_tasks", widget=CheckboxInput)
 
     class Meta:
         model = Task
@@ -85,7 +85,7 @@ class TaskListView(MessageSendingLoginRequiredMixin, ListView):
     template_name = "tasks/list.html"
     paginate_by = TASKS_PER_PAGE
 
-    _no_permissions_message = _("TaskListNoPermission")
+    _no_permissions_message = _("У вас нет прав для просмотра задач")
 
     def get_queryset(self) -> QuerySet:
         """Формирует queryset задач с аннотациями связанных полей.
@@ -136,7 +136,7 @@ class TaskDetailView(MessageSendingLoginRequiredMixin, DetailView):
     context_object_name = "task"
     template_name = "tasks/detail.html"
 
-    _no_permissions_message = _("TaskDetailNoPermission")
+    _no_permissions_message = _("У вас нет прав для просмотра задачи")
 
     def get_queryset(self) -> QuerySet:
         """Формирует queryset задачи с аннотациями связанных полей.

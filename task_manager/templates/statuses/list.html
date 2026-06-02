@@ -2,19 +2,19 @@
 {% load django_bootstrap5 %}
 {% load i18n %}
 {% block page_title %}
-    <h1>{% trans 'StatusesListTitle' %}</h1>
+    <h1>{% trans "Статусы" %}</h1>
 {% endblock %}
 {% block create_button %}
     {% url 'statuses:create' as create_link %}
-    {% trans 'StatusCreateButtonText' as create_button_text %}
+    {% trans "Создать статус" as create_button_text %}
     {{ block.super }}
 {% endblock %}
 {% block table_headers_row %}
     {% if statuses %}
         <tr>
             <th>ID</th>
-            <th>{% trans 'StatusName' %}</th>
-            <th>{% trans 'StatusCreatedAt' %}</th>
+            <th>{% trans "Имя" %}</th>
+            <th>{% trans "Дата создания" %}</th>
             <th></th>
         </tr>
     {% endif %}
@@ -27,8 +27,8 @@
                 <td>{{ status.name }}</td>
                 <td>{{ status.created_at | date:"d.m.Y H:i" }}</td>
                 <td class="vstack gap-1">
-                    <a href="{% url 'statuses:update' status.id %}">{% trans 'StatusUpdateLink' %}</a>
-                    <a href="{% url 'statuses:delete' status.id %}">{% trans 'StatusDeleteLink' %}</a>
+                    <a href="{% url 'statuses:update' status.id %}">{% trans "Изменить" %}</a>
+                    <a href="{% url 'statuses:delete' status.id %}">{% trans "Удалить" %}</a>
                 </td>
             </tr>
         {% endfor %}

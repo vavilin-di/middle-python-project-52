@@ -27,6 +27,6 @@ class TaskUpdateView(MessageSendingLoginRequiredMixin, SuccessMessageMixin, Upda
     form_class = TaskUpdateForm
     template_name = "tasks/update.html"
     success_url = reverse_lazy("tasks:list")
-    success_message = _("TaskUpdatedSuccess")
+    success_message = _("Задача успешно изменена")
 
-    _no_permissions_message = _("TaskUpdateNoPermission")
+    _no_permissions_message = _("У вас нет прав для обновления задачи")
