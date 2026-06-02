@@ -2,9 +2,11 @@ __all__ = ["TaskDeleteView"]
 
 from typing import Any
 
+from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.http.request import HttpRequest
 from django.http.response import HttpResponseBase
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import DeleteView
@@ -14,9 +16,7 @@ from task_manager.utilities.views_mixins import MessageSendingLoginRequiredMixin
 from ..models import Task
 
 
-class TaskDeleteView(
-    MessageSendingLoginRequiredMixin, MessageSendingUserPassesTestMixin, SuccessMessageMixin, DeleteView
-):
+class TaskDeleteView(MessageSendingLoginRequiredMixin, SuccessMessageMixin, DeleteView):
     """
     Представление для удаления задачи.
 
@@ -53,5 +53,6 @@ class TaskDeleteView(
 
     def dispatch(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponseBase:
         if not self._is_author_deleting_task():
-            return self.handle_no_permission()
+            messages.add_message(self.request, messages.ERROR, self._test_failure_message)  # type: ignore
+            return redirect(self.success_url)
         return super().dispatch(request, *args, **kwargs)
