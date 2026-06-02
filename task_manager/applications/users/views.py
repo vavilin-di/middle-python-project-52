@@ -1,6 +1,5 @@
 __all__ = ["UserCreateView", "UserListView", "UserUpdateView", "UserDeleteView"]
 
-from django.contrib.auth import logout
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.contrib.auth.models import User
 from django.contrib.messages.views import SuccessMessageMixin

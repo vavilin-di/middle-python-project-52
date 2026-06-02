@@ -11,7 +11,7 @@ from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import DeleteView
 
-from task_manager.utilities.views_mixins import MessageSendingLoginRequiredMixin, MessageSendingUserPassesTestMixin
+from task_manager.utilities.views_mixins import MessageSendingLoginRequiredMixin
 
 from ..models import Task
 
