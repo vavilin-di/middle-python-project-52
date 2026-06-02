@@ -9,12 +9,14 @@ from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import DeleteView
 
-from task_manager.utilities.views_mixins import MessageSendingLoginRequiredMixin
+from task_manager.utilities.views_mixins import MessageSendingLoginRequiredMixin, MessageSendingUserPassesTestMixin
 
 from ..models import Task
 
 
-class TaskDeleteView(MessageSendingLoginRequiredMixin, SuccessMessageMixin, DeleteView):
+class TaskDeleteView(
+    MessageSendingLoginRequiredMixin, MessageSendingUserPassesTestMixin, SuccessMessageMixin, DeleteView
+):
     """
     Представление для удаления задачи.
 
