@@ -27,6 +27,8 @@ jobs:
 
       - name: Run tests with coverage
         run: uv run coverage run manage.py test
+        env:
+          USE_SQLITE_FOR_TESTS: 1
 
       - name: Generate coverage XML report
         run: uv run coverage xml
