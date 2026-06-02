@@ -33,8 +33,8 @@ task_manager/
 │           ├── update.py
 │           └── delete.py
 ├── locale/
-│   ├── en_US/              # Английский перевод (django.po)
-│   └── ru_RU/              # Русский перевод (django.po)
+│   ├── en/              # Английский перевод (django.po)
+│   └── ru/              # Русский перевод (django.po)
 ├── templates/
 │   ├── common/             # Базовые шаблоны (header, footer, head)
 │   ├── index.html
