@@ -124,16 +124,20 @@ class TestArrayAggregationPostgreSQL:
 
     def test_raises_on_unsupported_vendor(self):
         """При неподдерживаемом vendor должно подниматься AssertionError."""
-        with patch("django.db.connection.vendor", "mysql"):
-            with pytest.raises(AssertionError, match="Unsupported database vendor mysql"):
-                import task_manager.utilities.aggregates as agg
+        with (
+            patch("django.db.connection.vendor", "mysql"),
+            pytest.raises(AssertionError, match="Unsupported database vendor mysql"),
+        ):
+            import task_manager.utilities.aggregates as agg
 
-                importlib.reload(agg)
+            importlib.reload(agg)
 
     def test_raises_on_oracle(self):
         """Проверка ещё одного неподдерживаемого vendor."""
-        with patch("django.db.connection.vendor", "oracle"):
-            with pytest.raises(AssertionError, match="Unsupported database vendor oracle"):
-                import task_manager.utilities.aggregates as agg
+        with (
+            patch("django.db.connection.vendor", "oracle"),
+            pytest.raises(AssertionError, match="Unsupported database vendor oracle"),
+        ):
+            import task_manager.utilities.aggregates as agg
 
-                importlib.reload(agg)
+            importlib.reload(agg)
