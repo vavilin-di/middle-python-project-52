@@ -62,6 +62,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "rollbar.contrib.django.middleware.RollbarNotifierMiddleware",
 ]
 
 ROOT_URLCONF = "task_manager.urls"
@@ -162,3 +163,13 @@ BOOTSTRAPS = {
 LOGIN_URL = "login"
 LOGIN_REDIRECT_URL = "index"
 LOGOUT_REDIRECT_URL = "index"
+
+ROLLBAR_ACCESS_TOKEN = environ.get("ROLLBAR_ACCESS_TOKEN")
+ROLLBAR_ENVIRONMENT = environ.get("ROLLBAR_ENVIRONMENT", "development")
+ROLLBAR = {
+    "access_token": ROLLBAR_ACCESS_TOKEN,
+    "environment": "development" if DEBUG else "production",
+    "code_version": environ.get("GIT_SHA", "1.0.0"),
+    "root": BASE_DIR,
+    "branch": environ.get("GIT_BRANCH", "main"),
+}
