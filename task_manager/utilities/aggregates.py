@@ -15,7 +15,7 @@ class SQLiteArrayAggregation(Aggregate):
     template = "%(function)s(%(distinct)s%(expressions)s)"
 
     def resolve_expression(self, query, allow_joins=True, reuse=None, summarize=False, for_save=False) -> Self:  # type: ignore[override]
-        if self.default is not None and isinstance(self.default, Value):  # type: ignore[has-type]``
+        if self.default is not None and isinstance(self.default, Value):  # type: ignore[has-type]
             self.default = Value("[]", output_field=JSONField())
         return super().resolve_expression(query, allow_joins, reuse, summarize, for_save)
 
