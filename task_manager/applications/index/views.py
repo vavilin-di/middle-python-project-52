@@ -2,6 +2,7 @@ from __future__ import annotations
 
 __all__ = ["index", "CustomLoginView", "CustomLogoutView"]
 
+from http import HTTPMethod
 from typing import TYPE_CHECKING
 
 from django.contrib import messages
@@ -12,12 +13,14 @@ from django.dispatch import receiver
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
+from django.views.decorators.http import require_http_methods
 
 if TYPE_CHECKING:
     from django.http.request import HttpRequest
     from django.http.response import HttpResponse
 
 
+@require_http_methods([HTTPMethod.GET])
 def index(request: HttpRequest) -> HttpResponse:
     """Главная страница приложения"""
     return render(request, "index.html")
