@@ -1,11 +1,6 @@
 name: unit-testing
 
 on:
-  push:
-    branches:
-      - '**'
-    tags:
-      - '**'
   workflow_call:
     secrets:
       SECRET_KEY_FOR_TESTS:

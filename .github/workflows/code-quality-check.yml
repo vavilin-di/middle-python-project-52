@@ -1,11 +1,6 @@
 name: code-quality-check
 
 on:
-  push:
-    branches:
-      - '**'
-    tags:
-      - '**'
   workflow_call:
 
 jobs:

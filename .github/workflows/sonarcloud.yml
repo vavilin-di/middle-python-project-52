@@ -1,11 +1,6 @@
 name: SonarCloud
 
 on:
-  push:
-    branches:
-      - '**'
-    tags:
-      - '**'
   workflow_call:
     secrets:
       SONAR_TOKEN:
