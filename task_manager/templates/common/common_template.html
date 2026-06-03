@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html class="h-100">
+{% load i18n %}
+{% get_current_language as language_code %}
+<html class="h-100" lang="{{ language_code }}">
     {% load django_bootstrap5 %}
     {% include 'common/head.html' %}
     <body class="d-flex flex-column h-100">

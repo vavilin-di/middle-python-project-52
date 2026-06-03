@@ -7,11 +7,11 @@
 {% block table_headers_row %}
     {% if users %}
         <tr>
-            <th>ID</th>
-            <th>{% trans "Имя пользователя" %}</th>
-            <th>{% trans "Полное имя" %}</th>
-            <th>{% trans "Дата создания" %}</th>
-            <th></th>
+            <th scope="col">ID</th>
+            <th scope="col">{% trans "Имя пользователя" %}</th>
+            <th scope="col">{% trans "Полное имя" %}</th>
+            <th scope="col">{% trans "Дата создания" %}</th>
+            <th scope="col"></th>
         </tr>
     {% endif %}
 {% endblock %}

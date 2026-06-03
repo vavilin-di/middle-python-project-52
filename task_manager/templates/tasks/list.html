@@ -72,13 +72,13 @@
 {% block table_headers_row %}
     {% if tasks %}
         <tr>
-            <th>ID</th>
-            <th>{% trans "Имя" %}</th>
-            <th>{% trans "Статус" %}</th>
-            <th>{% trans "Автор" %}</th>
-            <th>{% trans "Исполнитель" %}</th>
-            <th>{% trans "Дата создания" %}</th>
-            <th></th>
+            <th scope="col">ID</th>
+            <th scope="col">{% trans "Имя" %}</th>
+            <th scope="col">{% trans "Статус" %}</th>
+            <th scope="col">{% trans "Автор" %}</th>
+            <th scope="col">{% trans "Исполнитель" %}</th>
+            <th scope="col">{% trans "Дата создания" %}</th>
+            <th scope="col"></th>
         </tr>
     {% endif %}
 {% endblock %}
