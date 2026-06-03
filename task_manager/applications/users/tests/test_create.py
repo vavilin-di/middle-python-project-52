@@ -44,15 +44,15 @@ class TestUserCreateView:
         assert user.last_name == user_data["last_name"]
         assert user.check_password(user_data["password1"])
 
-    def test_create_user_post_invalid(self, client: Client):
+    def test_create_user_post_invalid(self, client: Client, invalid_password: str):
         """POST-запрос с невалидными данными возвращает форму с ошибками."""
         url = reverse("users:create")
         invalid_data = {
             "username": "",
             "first_name": "Test",
             "last_name": "User",
-            "password1": "short",
-            "password2": "short",
+            "password1": invalid_password,
+            "password2": invalid_password,
         }
         response = client.post(url, data=invalid_data)
 

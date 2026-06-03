@@ -21,25 +21,31 @@ def client() -> Client:
 
 @pytest.fixture
 def existing_password() -> str:
-    """Генерирует пароль для тестов."""
+    """Генерирует пароль для тестов (основной пользователь)."""
     return secrets.token_urlsafe(16)
 
 
 @pytest.fixture
 def other_user_password() -> str:
-    """Генерирует пароль для тестов."""
+    """Генерирует пароль для тестов (второй пользователь)."""
     return secrets.token_urlsafe(16)
 
 
 @pytest.fixture
-def user_data() -> dict:
+def invalid_password() -> str:
+    """Генерирует пароль для тестов, не подходящий под условия валидации."""
+    return secrets.token_urlsafe(4)
+
+
+@pytest.fixture
+def user_data(existing_password: str) -> dict:
     """Данные для создания пользователя."""
     return {
         "username": "testuser",
         "first_name": "Test",
         "last_name": "User",
-        "password1": "TestPassword123",
-        "password2": "TestPassword123",
+        "password1": existing_password,
+        "password2": existing_password,
     }
 
 

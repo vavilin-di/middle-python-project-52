@@ -36,15 +36,15 @@ class TestUserUpdateView:
         assert len(messages) == 1
         assert str(messages[0]) == str(_("У вас нет прав для изменения"))
 
-    def test_update_user_post_valid(self, authenticated_client, create_user):
+    def test_update_user_post_valid(self, authenticated_client, create_user, other_user_password: str):
         """POST-запрос с валидными данными обновляет пользователя."""
         url = reverse("users:update", kwargs={"pk": create_user.pk})
         update_data = {
             "username": "updateduser",
             "first_name": "Updated",
             "last_name": "Name",
-            "password1": "NewPassword123",
-            "password2": "NewPassword123",
+            "password1": other_user_password,
+            "password2": other_user_password,
         }
         response = authenticated_client.post(url, data=update_data, follow=True)
 
@@ -59,17 +59,19 @@ class TestUserUpdateView:
         assert create_user.username == "updateduser"
         assert create_user.first_name == "Updated"
         assert create_user.last_name == "Name"
-        assert create_user.check_password("NewPassword123")
+        assert create_user.check_password(other_user_password)
 
-    def test_update_user_post_invalid(self, authenticated_client, create_user):
+    def test_update_user_post_invalid(
+        self, authenticated_client, create_user, invalid_password: str, other_user_password: str
+    ):
         """POST-запрос с невалидными данными возвращает форму с ошибками."""
         url = reverse("users:update", kwargs={"pk": create_user.pk})
         invalid_data = {
             "username": "",
             "first_name": "Test",
             "last_name": "User",
-            "password1": "short",
-            "password2": "mismatch",
+            "password1": invalid_password,
+            "password2": other_user_password,
         }
         response = authenticated_client.post(url, data=invalid_data)
 
