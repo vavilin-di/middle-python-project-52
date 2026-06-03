@@ -29,7 +29,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = environ.get("SECRET_KEY", "")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = bool(environ.get("DEBUG", ""))
+DEBUG_PROPAGATE_EXCEPTIONS = bool(environ.get("DEBUG", ""))
 
 ALLOWED_HOSTS = ["localhost", "webserver", "middle-python-project-52-o4sv.onrender.com", "127.0.0.1"]
 
