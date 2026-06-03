@@ -8,6 +8,7 @@ from django.utils.translation import gettext_lazy as _
 from task_manager.applications.labels.models import Label
 from task_manager.applications.statuses.models import Status
 from task_manager.applications.tasks.models import Task
+from task_manager.constants import LABELS_LIST_VIEW_NAME
 
 
 @pytest.fixture
@@ -71,7 +72,7 @@ class TestLabelCreateView:
         response = authenticated_client.post(url, data=label_data, follow=True)
 
         assert response.status_code == HTTPStatus.OK
-        assert response.redirect_chain == [(reverse("labels:list"), HTTPStatus.FOUND)]
+        assert response.redirect_chain == [(reverse(LABELS_LIST_VIEW_NAME), HTTPStatus.FOUND)]
 
         messages = list(get_messages(response.wsgi_request))
         assert len(messages) == 1
@@ -108,7 +109,7 @@ class TestLabelListView:
 
     def test_list_labels_unauthenticated(self, client):
         """Неаутентифицированный пользователь перенаправляется на страницу входа."""
-        url = reverse("labels:list")
+        url = reverse(LABELS_LIST_VIEW_NAME)
         response = client.get(url)
 
         assert response.status_code == HTTPStatus.FOUND
@@ -116,7 +117,7 @@ class TestLabelListView:
 
     def test_list_labels_authenticated(self, authenticated_client, create_label):
         """Аутентифицированный пользователь видит список меток."""
-        url = reverse("labels:list")
+        url = reverse(LABELS_LIST_VIEW_NAME)
         response = authenticated_client.get(url)
 
         assert response.status_code == HTTPStatus.OK
@@ -132,7 +133,7 @@ class TestLabelListView:
 
     def test_list_labels_empty(self, authenticated_client):
         """Список меток пуст, если метки не созданы."""
-        url = reverse("labels:list")
+        url = reverse(LABELS_LIST_VIEW_NAME)
         response = authenticated_client.get(url)
 
         assert response.status_code == HTTPStatus.OK
@@ -168,7 +169,7 @@ class TestLabelUpdateView:
         response = authenticated_client.post(url, data=update_data, follow=True)
 
         assert response.status_code == HTTPStatus.OK
-        assert response.redirect_chain == [(reverse("labels:list"), HTTPStatus.FOUND)]
+        assert response.redirect_chain == [(reverse(LABELS_LIST_VIEW_NAME), HTTPStatus.FOUND)]
 
         messages = list(get_messages(response.wsgi_request))
         assert len(messages) == 1
@@ -226,7 +227,7 @@ class TestLabelDeleteView:
         response = authenticated_client.post(url, follow=True)
 
         assert response.status_code == HTTPStatus.OK
-        assert response.redirect_chain == [(reverse("labels:list"), HTTPStatus.FOUND)]
+        assert response.redirect_chain == [(reverse(LABELS_LIST_VIEW_NAME), HTTPStatus.FOUND)]
 
         messages = list(get_messages(response.wsgi_request))
         assert len(messages) == 1
@@ -246,7 +247,7 @@ class TestLabelDeleteView:
         response = authenticated_client.post(url, follow=True)
 
         assert response.status_code == HTTPStatus.OK
-        assert response.redirect_chain == [(reverse("labels:list"), HTTPStatus.FOUND)]
+        assert response.redirect_chain == [(reverse(LABELS_LIST_VIEW_NAME), HTTPStatus.FOUND)]
 
         messages = list(get_messages(response.wsgi_request))
         assert len(messages) == 1

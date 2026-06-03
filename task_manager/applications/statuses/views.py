@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from task_manager.constants import STATUSES_LIST_VIEW_NAME
+
 __all__ = ["StatusCreateView", "StatusListView", "StatusUpdateView", "StatusDeleteView"]
 
 from typing import TYPE_CHECKING
@@ -40,7 +42,7 @@ class StatusCreateView(MessageSendingLoginRequiredMixin, SuccessMessageMixin, Cr
     model = Status
     form_class = StatusCreateForm
     template_name = "statuses/create.html"
-    success_url = reverse_lazy("statuses:list")
+    success_url = reverse_lazy(STATUSES_LIST_VIEW_NAME)
     success_message = _("Статус успешно создан")
     _no_permissions_message = _("У вас нет прав для создания статуса")
 
@@ -95,7 +97,7 @@ class StatusUpdateView(MessageSendingLoginRequiredMixin, SuccessMessageMixin, Up
     model = Status
     form_class = StatusUpdateForm
     template_name = "statuses/update.html"
-    success_url = reverse_lazy("statuses:list")
+    success_url = reverse_lazy(STATUSES_LIST_VIEW_NAME)
     success_message = _("Статус успешно изменен")
 
     _no_permissions_message = _("У вас нет прав для обновления статуса")
@@ -121,7 +123,7 @@ class StatusDeleteView(
 
     model = Status
     template_name = "statuses/delete.html"
-    success_url = reverse_lazy("statuses:list")
+    success_url = reverse_lazy(STATUSES_LIST_VIEW_NAME)
     success_message = _("Статус успешно удален")
 
     _no_permissions_message = _("У вас нет прав для удаления статуса")

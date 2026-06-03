@@ -138,7 +138,7 @@ from django.utils.translation import gettext_lazy as _
 response = authenticated_client.post(url, data=data, follow=True)
 
 assert response.status_code == HTTPStatus.OK
-assert response.redirect_chain == [(reverse("statuses:list"), HTTPStatus.FOUND)]
+assert response.redirect_chain == [(reverse(STATUSES_LIST_VIEW_NAME), HTTPStatus.FOUND)]
 
 messages = list(get_messages(response.wsgi_request))
 assert len(messages) == 1

@@ -7,6 +7,7 @@ from django.utils.translation import gettext_lazy as _
 
 from task_manager.applications.statuses.models import Status
 from task_manager.applications.tasks.models import Task
+from task_manager.constants import STATUSES_LIST_VIEW_NAME
 
 
 @pytest.fixture
@@ -68,7 +69,7 @@ class TestStatusCreateView:
         response = authenticated_client.post(url, data=status_data, follow=True)
 
         assert response.status_code == HTTPStatus.OK
-        assert response.redirect_chain == [(reverse("statuses:list"), HTTPStatus.FOUND)]
+        assert response.redirect_chain == [(reverse(STATUSES_LIST_VIEW_NAME), HTTPStatus.FOUND)]
 
         messages = list(get_messages(response.wsgi_request))
         assert len(messages) == 1
@@ -105,7 +106,7 @@ class TestStatusListView:
 
     def test_list_statuses_unauthenticated(self, client):
         """Неаутентифицированный пользователь перенаправляется на страницу входа."""
-        url = reverse("statuses:list")
+        url = reverse(STATUSES_LIST_VIEW_NAME)
         response = client.get(url)
 
         assert response.status_code == HTTPStatus.FOUND
@@ -113,7 +114,7 @@ class TestStatusListView:
 
     def test_list_statuses_authenticated(self, authenticated_client, create_status):
         """Аутентифицированный пользователь видит список статусов."""
-        url = reverse("statuses:list")
+        url = reverse(STATUSES_LIST_VIEW_NAME)
         response = authenticated_client.get(url)
 
         assert response.status_code == HTTPStatus.OK
@@ -129,7 +130,7 @@ class TestStatusListView:
 
     def test_list_statuses_empty(self, authenticated_client):
         """Список статусов пуст, если статусы не созданы."""
-        url = reverse("statuses:list")
+        url = reverse(STATUSES_LIST_VIEW_NAME)
         response = authenticated_client.get(url)
 
         assert response.status_code == HTTPStatus.OK
@@ -165,7 +166,7 @@ class TestStatusUpdateView:
         response = authenticated_client.post(url, data=update_data, follow=True)
 
         assert response.status_code == HTTPStatus.OK
-        assert response.redirect_chain == [(reverse("statuses:list"), HTTPStatus.FOUND)]
+        assert response.redirect_chain == [(reverse(STATUSES_LIST_VIEW_NAME), HTTPStatus.FOUND)]
 
         messages = list(get_messages(response.wsgi_request))
         assert len(messages) == 1
@@ -222,7 +223,7 @@ class TestStatusDeleteView:
         response = authenticated_client.post(url, follow=True)
 
         assert response.status_code == HTTPStatus.OK
-        assert response.redirect_chain == [(reverse("statuses:list"), HTTPStatus.FOUND)]
+        assert response.redirect_chain == [(reverse(STATUSES_LIST_VIEW_NAME), HTTPStatus.FOUND)]
 
         messages = list(get_messages(response.wsgi_request))
         assert len(messages) == 1
@@ -242,7 +243,7 @@ class TestStatusDeleteView:
         response = authenticated_client.post(url, follow=True)
 
         assert response.status_code == HTTPStatus.OK
-        assert response.redirect_chain == [(reverse("statuses:list"), HTTPStatus.FOUND)]
+        assert response.redirect_chain == [(reverse(STATUSES_LIST_VIEW_NAME), HTTPStatus.FOUND)]
 
         messages = list(get_messages(response.wsgi_request))
         assert len(messages) == 1

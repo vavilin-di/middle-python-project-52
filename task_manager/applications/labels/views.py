@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from task_manager.constants import LABELS_LIST_VIEW_NAME
+
 __all__ = ["LabelCreateView", "LabelListView", "LabelUpdateView", "LabelDeleteView"]
 
 from typing import TYPE_CHECKING
@@ -27,7 +29,7 @@ class LabelCreateView(MessageSendingLoginRequiredMixin, SuccessMessageMixin, Cre
     model = Label
     form_class = LabelCreateForm
     template_name = "labels/create.html"
-    success_url = reverse_lazy("labels:list")
+    success_url = reverse_lazy(LABELS_LIST_VIEW_NAME)
     success_message = _("Метка успешно создана")
     _no_permissions_message = _("У вас нет прав для создания метки")
 
@@ -55,7 +57,7 @@ class LabelUpdateView(MessageSendingLoginRequiredMixin, SuccessMessageMixin, Upd
     model = Label
     form_class = LabelUpdateForm
     template_name = "labels/update.html"
-    success_url = reverse_lazy("labels:list")
+    success_url = reverse_lazy(LABELS_LIST_VIEW_NAME)
     success_message = _("Метка успешно изменена")
     _no_permissions_message = _("У вас нет прав для обновления метки")
 
@@ -70,7 +72,7 @@ class LabelDeleteView(
 
     model = Label
     template_name = "labels/delete.html"
-    success_url = reverse_lazy("labels:list")
+    success_url = reverse_lazy(LABELS_LIST_VIEW_NAME)
     success_message = _("Метка успешно удалена")
     _no_permissions_message = _("У вас нет прав для удаления метки")
     _test_failure_message = _("Невозможно удалить метку: существуют связанные задачи")
