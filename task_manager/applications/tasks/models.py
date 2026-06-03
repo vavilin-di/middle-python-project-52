@@ -46,7 +46,7 @@ class Task(models.Model):
         related_query_name="tasks_by_executor",
         default=None,
     )
-    labels: models.ManyToManyField[Task, Label] = models.ManyToManyField(
+    labels: models.ManyToManyField[Label, Task] = models.ManyToManyField(
         verbose_name=_("Метки"),
         to="labels.Label",
         related_name="tasks",
