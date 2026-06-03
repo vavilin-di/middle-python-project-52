@@ -7,6 +7,9 @@ on:
     tags:
       - '**'
   workflow_call:
+    secrets:
+      SECRET_KEY_FOR_TESTS:
+        required: true
 
 jobs:
   build:
