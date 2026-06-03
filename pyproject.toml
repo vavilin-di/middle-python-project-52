@@ -81,6 +81,25 @@ exclude = [
     "__pycache__",
 ]
 
+[tool.coverage.run]
+source = ["task_manager"]
+omit = [
+    "*/migrations/*",
+    "*/tests/*",
+    "*/tests.py",
+    "manage.py",
+    "conftest.py",
+]
+
+[tool.coverage.report]
+omit = [
+    "*/migrations/*",
+    "*/tests/*",
+    "*/tests.py",
+    "manage.py",
+    "conftest.py",
+]
+
 [tool.pytest.ini_options]
 python_files = "tests.py test_*.py *_tests.py"
 addopts = [
