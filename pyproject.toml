@@ -95,8 +95,6 @@ omit = [
     "*/__init__.py",
     "task_manager/settings.py",
 ]
-parallel = true
-concurrency = ["multiprocessing"]
 
 [tool.coverage.report]
 omit = [

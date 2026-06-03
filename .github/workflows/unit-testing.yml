@@ -26,7 +26,7 @@ jobs:
         run: uv sync
 
       - name: Run tests with coverage
-        run: uv run coverage run --source=task_manager -m pytest
+        run: uv run coverage run --source=task_manager -m pytest -n 0
         env:
           USE_SQLITE_FOR_TESTS: 1
           SECRET_KEY: ${{ secrets.SECRET_KEY_FOR_TESTS }}
