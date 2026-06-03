@@ -18,11 +18,17 @@ migrate:
 compilemessages:
 	uv run manage.py compilemessages
 
-dev:
-	uv run manage.py runserver
-
 test:
 	uv run manage.py test
+
+code-quality:
+	uv run black --check --diff .
+	uv run ruff check .
+	uv run djlint --check task_manager/templates/
+	uv run mypy .
+
+dev:
+	uv run manage.py runserver
 
 start:
 	uv run uvicorn --host 127.0.0.1 --port $(PORT) task_manager.asgi:application
