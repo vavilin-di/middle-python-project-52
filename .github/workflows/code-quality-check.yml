@@ -30,3 +30,6 @@ jobs:
 
       - name: Lint templates with djlint
         run: uv run djlint --check task_manager/templates/
+
+      - name: Type check with mypy
+        run: uv run mypy .
