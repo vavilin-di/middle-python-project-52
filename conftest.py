@@ -3,6 +3,7 @@
 """
 
 import os
+import secrets
 
 # Устанавливаем переменную окружения для использования SQLite в тестах
 os.environ.setdefault("USE_SQLITE_FOR_TESTS", "1")
@@ -19,6 +20,18 @@ def client() -> Client:
 
 
 @pytest.fixture
+def existing_password() -> str:
+    """Генерирует пароль для тестов."""
+    return secrets.token_urlsafe(16)
+
+
+@pytest.fixture
+def other_user_password() -> str:
+    """Генерирует пароль для тестов."""
+    return secrets.token_urlsafe(16)
+
+
+@pytest.fixture
 def user_data() -> dict:
     """Данные для создания пользователя."""
     return {
@@ -31,18 +44,18 @@ def user_data() -> dict:
 
 
 @pytest.fixture
-def create_user(db) -> User:
+def create_user(db, existing_password: str) -> User:
     """Создает и возвращает пользователя в базе данных."""
     return User.objects.create_user(
         username="existinguser",
         first_name="Existing",
         last_name="User",
-        password="ExistingPassword123",
+        password=existing_password,
     )
 
 
 @pytest.fixture
-def authenticated_client(client, create_user):
+def authenticated_client(client: Client, create_user: User) -> Client:
     """Возвращает аутентифицированный клиент."""
     client.force_login(create_user)
     return client

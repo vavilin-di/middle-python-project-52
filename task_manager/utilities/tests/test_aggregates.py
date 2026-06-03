@@ -51,7 +51,7 @@ class TestArrayAggregationSQLite:
         expected_template = "%(function)s(%(distinct)s%(expressions)s)"
         assert agg.ArrayAggregation.template == expected_template
 
-    def test_can_be_used_in_annotation(self, db):
+    def test_can_be_used_in_annotation(self, db, existing_password: str):
         """ArrayAggregation должен работать в annotate() на SQLite.
 
         Интеграционный тест: создаём модель с M2M и проверяем,
@@ -65,8 +65,8 @@ class TestArrayAggregationSQLite:
         from task_manager.utilities.aggregates import ArrayAggregation
 
         status = Status.objects.create(name="Status")
-        author = User.objects.create_user(username="author", password="pass123")
-        executor = User.objects.create_user(username="executor", password="pass123")
+        author = User.objects.create_user(username="author", password=existing_password)
+        executor = User.objects.create_user(username="executor", password=existing_password)
 
         label1 = Label.objects.create(name="Bug")
         label2 = Label.objects.create(name="Feature")

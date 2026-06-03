@@ -20,11 +20,11 @@ class TestUserDeleteView:
         assert "object" in response.context
         assert any(t.name == "users/delete.html" for t in response.templates)
 
-    def test_delete_user_get_other(self, authenticated_client, db):
+    def test_delete_user_get_other(self, authenticated_client, db, other_user_password: str):
         """Пользователь не может удалить чужой профиль - редирект с сообщением об ошибке."""
         other_user = User.objects.create_user(
             username="otheruser",
-            password="otherpass123",
+            password=other_user_password,
         )
         url = reverse("users:delete", kwargs={"pk": other_user.pk})
         response = authenticated_client.get(url, follow=True)
@@ -51,11 +51,11 @@ class TestUserDeleteView:
         with pytest.raises(User.DoesNotExist):
             User.objects.get(pk=create_user.pk)
 
-    def test_delete_user_post_other(self, authenticated_client, db):
+    def test_delete_user_post_other(self, authenticated_client, db, other_user_password: str):
         """Пользователь не может удалить чужой профиль через POST."""
         other_user = User.objects.create_user(
             username="otheruser",
-            password="otherpass123",
+            password=other_user_password,
         )
         url = reverse("users:delete", kwargs={"pk": other_user.pk})
         response = authenticated_client.post(url, follow=True)

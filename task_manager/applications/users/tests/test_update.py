@@ -20,11 +20,11 @@ class TestUserUpdateView:
         assert "form" in response.context
         assert any(t.name == "users/update.html" for t in response.templates)
 
-    def test_update_user_get_other(self, authenticated_client, db):
+    def test_update_user_get_other(self, authenticated_client, db, other_user_password: str):
         """Пользователь не может редактировать чужой профиль - редирект с сообщением об ошибке."""
         other_user = User.objects.create_user(
             username="otheruser",
-            password="otherpass123",
+            password=other_user_password,
         )
         url = reverse("users:update", kwargs={"pk": other_user.pk})
         response = authenticated_client.get(url, follow=True)

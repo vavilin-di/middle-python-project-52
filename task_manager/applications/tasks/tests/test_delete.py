@@ -30,11 +30,11 @@ class TestTaskDeleteView:
         assert "object" in response.context
         assert any(t.name == "tasks/delete.html" for t in response.templates)
 
-    def test_delete_task_get_other_user(self, authenticated_client, create_task, db):
+    def test_delete_task_get_other_user(self, authenticated_client, create_task, db, other_user_password: str):
         """Пользователь не может получить форму удаления чужой задачи — редирект."""
         other_user = User.objects.create_user(
             username="otheruser",
-            password="otherpass123",
+            password=other_user_password,
         )
         # Меняем автора задачи на другого пользователя
         create_task.author = other_user
@@ -61,11 +61,11 @@ class TestTaskDeleteView:
         with pytest.raises(Task.DoesNotExist):
             Task.objects.get(pk=create_task.pk)
 
-    def test_delete_task_post_other_user(self, authenticated_client, create_task, db):
+    def test_delete_task_post_other_user(self, authenticated_client, create_task, db, other_user_password: str):
         """Пользователь не может удалить чужую задачу через POST."""
         other_user = User.objects.create_user(
             username="otheruser",
-            password="otherpass123",
+            password=other_user_password,
         )
         create_task.author = other_user
         create_task.save()
